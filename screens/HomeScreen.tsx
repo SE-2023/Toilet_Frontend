@@ -5,7 +5,9 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Platform, PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import '../config/axiosconfig';
+import {RootStackParamList} from '../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
 /*const initialState = {
   latitude,
   longitud:null,
@@ -43,6 +45,8 @@ enum MapType {
 }
 
 const HomeScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [pos, setPos] = useState<Position>({
     latitude: 0,
     longitude: 0,
@@ -71,8 +75,6 @@ const HomeScreen = () => {
   //   }
   // ];
   const [toiletMarkers, setToiletMarkers] = useState<Position[]>([]);
-  const [forceRefresh, setForceRefresh] = useState(0);
-  const [isShowLocation, setIsShowLocation] = useState(false);
   useEffect(() => {
     Geolocation.getCurrentPosition(
       position => {
@@ -103,10 +105,6 @@ const HomeScreen = () => {
       setToiletMarkers(aom.data);
       // setIsShowLocation((prev) => !prev);
       // setForceRefresh(Math.floor(Math.random() * 100));
-      setTimeout(() => {
-        setIsShowLocation(prev => !prev);
-        setForceRefresh(Math.floor(Math.random() * 100));
-      }, 1000);
     };
     fetchData();
     // const aom: any = await getLocation();
@@ -141,10 +139,10 @@ const HomeScreen = () => {
   return (
     <View style={{flex: 1}}>
       <MapView
-        onUserLocationChange={e => {
-          console.log('locationChange', e.nativeEvent);
-        }}
-        showsUserLocation={isShowLocation}
+        // onUserLocationChange={e => {
+        //   console.log('locationChange', e.nativeEvent);
+        // }}
+        showsUserLocation={true}
         style={{flex: 1}}
         provider={PROVIDER_GOOGLE}
         region={pos}
@@ -153,8 +151,7 @@ const HomeScreen = () => {
         showsMyLocationButton={true}
         zoomControlEnabled={true}
         showsBuildings={true}
-        toolbarEnabled={true}
-        key={forceRefresh}>
+        toolbarEnabled={true}>
         {/* {toiletMarkers?.length > 0
           ? toiletMarkers.map((item, index) => {
               console.log('item', item);
@@ -192,6 +189,10 @@ const HomeScreen = () => {
           onPress={() => setCurrentType(MapType.standard)}
         />
         <Button title="hybrid" onPress={() => setCurrentType(MapType.hybrid)} />
+        <Button
+          title="Profile"
+          onPress={() => navigation.navigate('Profile')}
+        />
       </View>
     </View>
   );

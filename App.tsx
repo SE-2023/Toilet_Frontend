@@ -1,219 +1,34 @@
-// import {StyleSheet, Text, View} from 'react-native';
-// import React from 'react';
-// import '../toilet/config/axiosconfig';
-// import HomeScreen from './screens/HomeScreen';
-// const App = () => {
-//   return (
-//     <View>
-//       <HomeScreen />
-//     </View>
-//   );
-// };
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import './config/axiosconfig';
+import HomeScreen from './screens/HomeScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import Profile from './screens/Profile';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+export type RootStackParamList = {
+  Home: undefined;
+  Profile: undefined;
+};
 
-// export default App;
-// const styles = StyleSheet.create({
-//   map: {
-//     ...StyleSheet.absoluteFillObject,
-//   },
-// });
-//aom6dasdas
-// const styles = StyleSheet.create({});
-import {StyleSheet, Text, View, Button, Alert} from 'react-native';
-import {ActivityIndicator} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {Platform, PermissionsAndroid} from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
-import {getLocation} from './services/location';
-import '../toilet/config/axiosconfig';
-/*const initialState = {
-  latitude,
-  longitud:null,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
-}*/
-async function requestPermissions() {
-  if (Platform.OS === 'ios') {
-    const auth = await Geolocation.requestAuthorization('whenInUse');
-    if (auth === 'granted') {
-      // do something if granted...
-    }
-  }
-
-  if (Platform.OS === 'android') {
-    await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    );
-    if ('granted' === PermissionsAndroid.RESULTS.GRANTED) {
-      // do something if granted...
-    }
-  }
-}
-interface Position {
-  latitude: number;
-  longitude: number;
-  latitudeDelta: number;
-  longitudeDelta: number;
-}
-enum MapType {
-  standard = 'standard',
-  satellite = 'satellite',
-  hybrid = 'hybrid',
-  terrain = 'terrain',
-}
-
+// const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createBottomTabNavigator<RootStackParamList>();
 const App = () => {
-  const [pos, setPos] = useState<Position>({
-    latitude: 0,
-    longitude: 0,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
-  const [currentType, setCurrentType] = useState(MapType.standard);
-  // const mockUp = [
-  //   {
-  //     latitude: 0,
-  //     longitude: 0,
-  //     latitudeDelta: 0.0922,
-  //     longitudeDelta: 0.0421
-  //   },
-  //   {
-  //     latitude: 13.775675675655555,
-  //     longitude: 100.43290053771605,
-  //     latitudeDelta: 0.0922,
-  //     longitudeDelta: 0.0421
-  //   },
-  //   {
-  //     latitude: 13.8756756756788451,
-  //     longitude: 100.43290053771605,
-  //     latitudeDelta: 0.0922,
-  //     longitudeDelta: 0.0421
-  //   }
-  // ];
-  const [toiletMarkers, setToiletMarkers] = useState<Position[]>([]);
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setPos({
-          ...pos,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-        console.log('position', position);
-      },
-      err => {
-        console.log('err', err);
-      },
-      {
-        enableHighAccuracy: true,
-      },
-    );
-  }, []);
-  // useEffect(() => {
-  //   setToiletMarkers(mockUp);
-  // }, []);
-  // useEffect(() => {}, [toiletMarkers]);
-  // console.log(toiletMarkers);
-  useEffect(() => {
-    const fetchData = async () => {
-      const aom: any = await getLocation();
-      console.log('value97', aom);
-      setToiletMarkers(aom.data);
-      // setIsShowLocation((prev) => !prev);
-      // setForceRefresh(Math.floor(Math.random() * 100));
-    };
-    fetchData();
-    // const aom: any = await getLocation();
-    // console.log('value97', aom);
-    // setToiletMarkers(aom);
-  }, []);
-  const RenderLocation = () => {
-    // if (toiletMarkers.length === 0) {
-    //   return <Text> no data </Text>;
-    // }dasdas
-    console.log('data 115', toiletMarkers);
-    return (
-      <>
-        {toiletMarkers.map((item: any, index) => {
-          return (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-              title={item.title}></Marker>
-          );
-        })}
-      </>
-    );
-  };
-
-  if (toiletMarkers.length === 0) {
-    return <Text> reloading </Text>;
-  }
   return (
-    <View style={{flex: 1}}>
-      <MapView
-        // onUserLocationChange={e => {
-        //   console.log('locationChange', e.nativeEvent);
-        // }}
-        showsUserLocation={true}
-        style={{flex: 1}}
-        provider={PROVIDER_GOOGLE}
-        region={pos}
-        mapType={currentType}
-        followsUserLocation={true}
-        showsMyLocationButton={true}
-        zoomControlEnabled={true}
-        showsBuildings={true}
-        toolbarEnabled={true}>
-        {/* {toiletMarkers?.length > 0
-          ? toiletMarkers.map((item, index) => {
-              console.log('item', item);
-              return <Marker key={index} coordinate={item} />;
-            })
-          : null} */}
-
-        {/* {toiletMarkers.length > 0 ? (
-          <>
-            <Marker
-              key={0}
-              coordinate={{
-                latitude: -13.8756756756788451,
-                longitude: 100.43290053771605
-              }}
-            />
-            <Text>{toiletMarkers[0].latitude}</Text>
-          </>
-        ) : null} */}
-        {/* <Marker key={0} coordinate={toiletMarkers[0]} /> */}
-        <RenderLocation></RenderLocation>
-        <Marker title="test" description="KMUTT" coordinate={pos} />
-        {/* <Marker
-          title='test'
-          description='KMUTT'
-          coordinate={{
-            latitude: -27.8756756756788451,
-            longitude: 100.43290053771605
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
           }}
-        /> */}
-      </MapView>
-      <View>
-        <Button
-          title="standard"
-          onPress={() => setCurrentType(MapType.standard)}
         />
-        <Button title="hybrid" onPress={() => setCurrentType(MapType.hybrid)} />
-      </View>
-    </View>
+        <Stack.Screen name="Profile" component={Profile} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
+const styles = StyleSheet.create({});
