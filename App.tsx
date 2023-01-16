@@ -16,7 +16,7 @@
 //     ...StyleSheet.absoluteFillObject,
 //   },
 // });
-//aom66666666666666666
+//aom68888
 // const styles = StyleSheet.create({});
 import {StyleSheet, Text, View, Button, Alert} from 'react-native';
 import {ActivityIndicator} from 'react-native';
