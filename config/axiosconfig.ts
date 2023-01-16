@@ -1,6 +1,6 @@
 import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
-import {API_URL} from '@env';
-axios.defaults.baseURL = API_URL;
+import Config from 'react-native-config';
+axios.defaults.baseURL = Config.API_URL;
 const onRequest = (config: any): AxiosRequestConfig => {
   const token = 'token';
   config.headers!.Authorization = 'Bearer ' + 'ABCD';

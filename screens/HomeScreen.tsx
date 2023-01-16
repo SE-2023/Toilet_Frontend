@@ -5,7 +5,7 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Platform, PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import './config/axiosconfig';
+import '../config/axiosconfig';
 /*const initialState = {
   latitude,
   longitud:null,
