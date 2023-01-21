@@ -183,7 +183,7 @@ const HomeScreen = () => {
           }}
         /> */}
       </MapView>
-      <View>
+      {/* <View>
         <Button
           title="standard"
           onPress={() => setCurrentType(MapType.standard)}
@@ -193,7 +193,7 @@ const HomeScreen = () => {
           title="Profile"
           onPress={() => navigation.navigate('Profile')}
         />
-      </View>
+      </View> */}
     </View>
   );
 };
