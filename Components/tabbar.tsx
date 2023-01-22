@@ -1,26 +1,29 @@
 import React, { useReducer, useRef } from 'react'
 import { StatusBar, StyleSheet, View, Text, Pressable, LayoutChangeEvent } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { BottomTabBarProps, BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MapTrifold, Heart, Plus, SquaresFour, User } from 'phosphor-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import Animated, { useAnimatedStyle, withTiming, useDerivedValue, color } from 'react-native-reanimated';
-import Profile from '../screens/Profile';
 import HomeScreen from '../screens/HomeScreen';
+import Profile from '../screens/Profile';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';
-import Page1 from '../screens/Page1';
-// import MapTrifold from '../assets/MapTrifold.svg';
+import LogoutProfile from '../screens/LogoutProfile'
+import UpdateProfile from '../screens/UpdateProfile'
+
 
 const Tab = createBottomTabNavigator()
 const profile = 'Profile'
 const homeScreen ='HomeScreen'
 const login = 'Login'
 const signUp = 'SignUp'
-const page1 = 'Page1'
+const logoutProfile = 'LogoutProfile'
+const updateProfile = 'UpdateProfile'
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg)
+
 
 function Tabbars() {
   return (
@@ -28,6 +31,7 @@ function Tabbars() {
       <StatusBar barStyle='light-content'/>
       <NavigationContainer>
         <Tab.Navigator
+          screenOptions={{tabBarHideOnKeyboard: true}}
           tabBar={(props) => <AnimatedTabBar {...props} />}
         >
           <Tab.Screen
@@ -39,25 +43,26 @@ function Tabbars() {
             }}
           />
           <Tab.Screen
-            name={page1}
-            component={Page1}
+            name={logoutProfile}
+            component={LogoutProfile}
             options={{
               headerShown: false,
               tabBarIcon: ({color, size}) => (<Heart color='#FFA897' size={28} weight="fill" />)
             }}
           />
           <Tab.Screen
-            name={signUp}
-            component={SignUp}
+            name={login}
+            component={Login}
             options={{
               headerShown: false,
-              tabBarIcon: ({color, size}) => (<Plus color='#FFA897' size={28} weight="fill" />)
+              tabBarIcon: ({color, size}) => (<Plus color='#FFA897' size={28} weight="fill" />),
             }}
           />
           <Tab.Screen
-            name='Cartoon'
-            component={PlaceholderScreen}
+            name={updateProfile}
+            component={UpdateProfile}
             options={{
+              headerShown: false,
               tabBarIcon: ({color, size}) => (<SquaresFour color='#FFA897' size={28} weight="fill" />)
             }}
           />
@@ -173,7 +178,11 @@ const TabBarComponent = ({ active, options, onLayout, onPress }: TabBarComponent
         style={[styles.componentCircle, animatedComponentCircleStyles]}
       />
       <Animated.View style={[styles.iconContainer, animatedIconContainerStyles]}>
-        {options.tabBarIcon ? options.tabBarIcon({}) : <Text>?</Text>}
+        {options.tabBarIcon ? options.tabBarIcon({
+          focused: false,
+          color: '',
+          size: 0
+        }) : <Text>?</Text>}
       </Animated.View>
     </Pressable>
   )

@@ -50,6 +50,7 @@ function Login({navigation}: {navigation: any}) {
             label='Email'
             value={email}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setEmail(text)}
           />
@@ -60,6 +61,7 @@ function Login({navigation}: {navigation: any}) {
             label='Password'
             value={password}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setPassword(text)}
           />
@@ -114,8 +116,13 @@ function Login({navigation}: {navigation: any}) {
 
 const theme = {
   colors: {
-    primary: '#6D7DD3',
+    primary: '#6D7DD3'
   },
+  fonts: {
+    regular: {
+      fontFamily: 'Fredoka-Regular'
+    }
+  }
 };
 
 const styles = StyleSheet.create({
@@ -187,6 +194,10 @@ const styles = StyleSheet.create({
     color: '#F4F6FD',
     paddingLeft: 16,
     paddingRight: 16
+  },
+  bgTextInput: {
+    backgroundColor: '#F4F6FD',
+    fontFamily: 'Fredoka-Regular'
   }
 })
 export default Login

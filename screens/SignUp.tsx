@@ -5,7 +5,6 @@ import { CaretLeft, CaretRight, EnvelopeSimple, Key } from 'phosphor-react-nativ
 import LinearGradient from 'react-native-linear-gradient'
 import { TextInput } from 'react-native-paper';
 // import OutlineInput from 'react-native-outline-input'
-// import { TextInput } from 'react-native-paper'
 
 const { width } = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -43,6 +42,7 @@ function SignUp({navigation}: {navigation: any}) {
             label='Fristname'
             value={fristname}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setFristname(text)}
           />
@@ -53,6 +53,7 @@ function SignUp({navigation}: {navigation: any}) {
             label='Lastname'
             value={lastname}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setLastname(text)}
           />
@@ -65,6 +66,7 @@ function SignUp({navigation}: {navigation: any}) {
             label='Phone number'
             value={phoneNum}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setPhoneNum(text)}
           />
@@ -75,6 +77,7 @@ function SignUp({navigation}: {navigation: any}) {
             label='Email'
             value={email}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setEmail(text)}
           />
@@ -85,6 +88,7 @@ function SignUp({navigation}: {navigation: any}) {
             label='Password'
             value={password}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setPassword(text)}
           />
@@ -95,6 +99,7 @@ function SignUp({navigation}: {navigation: any}) {
             label='Confirm Password'
             value={conPassword}
             theme = {theme}
+            style={styles.bgTextInput}
             mode = 'outlined'
             onChangeText={text => setConPassword(text)}
           />
@@ -149,8 +154,13 @@ function SignUp({navigation}: {navigation: any}) {
 
 const theme = {
   colors: {
-    primary: '#6D7DD3',
+    primary: '#6D7DD3'
   },
+  fonts: {
+    regular: {
+      fontFamily: 'Fredoka-Regular'
+    }
+  }
 };
 
 const styles = StyleSheet.create({
@@ -226,6 +236,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: -56,
     left: 197
+  },
+  bgTextInput: {
+    backgroundColor: '#F4F6FD',
+    fontFamily: 'Fredoka-Regular'
   }
 })
 
