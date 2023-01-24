@@ -5,7 +5,7 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Platform, PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import {RootStackParamList} from '../App';
+
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 /*const initialState = {
@@ -43,10 +43,13 @@ enum MapType {
   hybrid = 'hybrid',
   terrain = 'terrain',
 }
-
+// export type RootStackParamList = {
+//   Home: undefined;
+//   Profile: undefined;
+// };
 const HomeScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  // const navigation =
+  //   useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [pos, setPos] = useState<Position>({
     latitude: 0,
     longitude: 0,
@@ -134,7 +137,11 @@ const HomeScreen = () => {
   };
 
   if (toiletMarkers.length === 0) {
-    return <Text> reloading </Text>;
+    return (
+      <View>
+        <Text> reloading </Text>
+      </View>
+    );
   }
   return (
     <View style={{flex: 1}}>

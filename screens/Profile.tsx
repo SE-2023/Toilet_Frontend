@@ -1,48 +1,60 @@
-import React from 'react'
-import { SafeAreaView, View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Button } from 'react-native'
-import bgSUKA from '../assets/bgSUKA_4.png'
-import profile from '../assets/profile.jpg'
-import LinearGradient from 'react-native-linear-gradient'
-import { Bell, PencilSimple, Toilet, CaretRight, ClockCounterClockwise, SignOut } from 'phosphor-react-native'
+import React from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
+import bgSUKA from '../assets/bgSUKA_4.png';
+import profile from '../assets/profile.jpg';
+import LinearGradient from 'react-native-linear-gradient';
+import {
+  Bell,
+  PencilSimple,
+  Toilet,
+  CaretRight,
+  ClockCounterClockwise,
+  SignOut,
+} from 'phosphor-react-native';
+import Page1 from './Page1';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
 
 function Profile() {
   return (
     <SafeAreaView style={styles.container}>
-
+      <Page1 />
       <View style={{alignItems: 'center'}}>
         <View
           // borderBottomLeftRadius={60}
           // overflow='hidden'
-          height={height * 0.4}
-        >
-          <Image
-            source={bgSUKA}
-            style={{width, height}}
-          />
+          height={height * 0.4}>
+          <Image source={bgSUKA} style={{width, height}} />
         </View>
       </View>
 
       <Text style={styles.title}>Profile</Text>
 
-      <LinearGradient colors={['#FAC353', '#FFA897']} style={styles.btnCircle_44}>
-        <Bell size={24} weight="fill" color='#2C2F4A' />
+      <LinearGradient
+        colors={['#FAC353', '#FFA897']}
+        style={styles.btnCircle_44}>
+        <Bell size={24} weight="fill" color="#2C2F4A" />
       </LinearGradient>
 
       <View style={styles.box}>
         <TouchableOpacity style={styles.btnCircle_34}>
-          <PencilSimple size={18} weight="fill" color='#FFA897' />
+          <PencilSimple size={18} weight="fill" color="#FFA897" />
         </TouchableOpacity>
 
         <View style={styles.circle}></View>
 
-        <Image
-          source={profile}
-          style={styles.profile}
-        />
+        <Image source={profile} style={styles.profile} />
 
         <Text style={styles.name}>Poppy Brown</Text>
         <View>
@@ -53,50 +65,45 @@ function Profile() {
 
       <View style={styles.btnRectangle}>
         <View style={styles.itemLeft}>
-
           <TouchableOpacity style={styles.bgIconMyToilet}>
-            <Toilet size={22} weight="fill" color='#2C2F4A' />
+            <Toilet size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
           <Text style={styles.textBody}>My Toilet</Text>
         </View>
-        <CaretRight size={22} weight="bold" color='#2C2F4A' />
+        <CaretRight size={22} weight="bold" color="#2C2F4A" />
       </View>
 
       <View style={styles.btnRectangle_2}>
         <View style={styles.itemLeft}>
-
           <TouchableOpacity style={styles.bgIconHistory}>
-            <ClockCounterClockwise size={22} weight="fill" color='#2C2F4A' />
+            <ClockCounterClockwise size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
           <Text style={styles.textBody}>History</Text>
         </View>
-        <CaretRight size={22} weight="bold" color='#2C2F4A' />
+        <CaretRight size={22} weight="bold" color="#2C2F4A" />
       </View>
 
       <View style={styles.btnRectangle_2}>
         <View style={styles.itemLeft}>
-
           <TouchableOpacity style={styles.bgIconLogout}>
-            <SignOut size={22} weight="fill" color='#2C2F4A' />
+            <SignOut size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
           <Text style={styles.textBody}>Logout</Text>
         </View>
-        <CaretRight size={22} weight="bold" color='#2C2F4A' />
+        <CaretRight size={22} weight="bold" color="#2C2F4A" />
       </View>
-
     </SafeAreaView>
-    
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: "#E5EAFA",
-    paddingHorizontal: 16
+    flex: 1,
+    backgroundColor: '#E5EAFA',
+    paddingHorizontal: 16,
   },
 
   // Header
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
     right: 16,
     elevation: 2,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   // Profile
@@ -128,7 +135,7 @@ const styles = StyleSheet.create({
     height: 199,
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    elevation: 4
+    elevation: 4,
   },
   name: {
     alignSelf: 'center',
@@ -136,20 +143,20 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#2C2F4A',
     paddingTop: 26,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   phoneNum: {
     alignSelf: 'center',
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
     color: '#777790',
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   email: {
     alignSelf: 'center',
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
-    color: '#777790'
+    color: '#777790',
   },
   circle: {
     alignSelf: 'center',
@@ -157,14 +164,14 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 100,
     marginTop: -60,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   profile: {
     alignSelf: 'center',
     width: 104,
     height: 104,
     borderRadius: 100,
-    marginTop: -112
+    marginTop: -112,
   },
   btnCircle_34: {
     position: 'absolute',
@@ -177,7 +184,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 2
+    zIndex: 2,
   },
 
   // Footer
@@ -192,12 +199,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   itemLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   bgIconMyToilet: {
     backgroundColor: '#9CA7E5',
@@ -206,12 +213,12 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15
+    marginRight: 15,
   },
   textBody: {
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
-    color: '#2C2F4A'
+    color: '#2C2F4A',
   },
 
   btnRectangle_2: {
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   bgIconHistory: {
     backgroundColor: '#FFB5A6',
@@ -233,7 +240,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15
+    marginRight: 15,
   },
   bgIconLogout: {
     backgroundColor: '#FC8066',
@@ -242,8 +249,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15
-  }
-})
+    marginRight: 15,
+  },
+});
 
-export default Profile
+export default Profile;

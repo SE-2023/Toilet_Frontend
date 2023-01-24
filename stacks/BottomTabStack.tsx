@@ -1,0 +1,52 @@
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import HomeScreen from '../screens/HomeScreen';
+import Profile from '../screens/Profile';
+export type BottomTabParamList = {
+  Home: undefined;
+  Profile: undefined;
+  // AddToilet: undefined;
+  // Cartoon: undefined;
+  // AddList: undefined;
+};
+
+const BottomTabStack = () => {
+  const Stack = createBottomTabNavigator<BottomTabParamList>();
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          height: 65,
+          paddingBottom: 5,
+        },
+      }}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'หน้าแรก',
+          tabBarLabelStyle: {
+            fontSize: 15,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'หน้าแรก',
+          tabBarLabelStyle: {
+            fontSize: 15,
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export default BottomTabStack;
+
+const styles = StyleSheet.create({});
