@@ -25,7 +25,6 @@ import Page1 from './Page1';
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
-
 function Profile() {
   return (
     <SafeAreaView style={styles.container}>

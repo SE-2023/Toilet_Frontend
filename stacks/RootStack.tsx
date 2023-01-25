@@ -5,10 +5,12 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import BottomTabStack, {BottomTabParamList} from './BottomTabStack';
 import AuthStack from './AuthStack';
 import AuthContext from '../context/AuthContext';
+import Login from '../screens/Login';
 
 export type RootStackList = {
   AuthStack: undefined;
   MainStack: NavigatorScreenParams<BottomTabParamList>;
+  Login: undefined;
 };
 
 const RootStack = () => {
@@ -27,6 +29,7 @@ const RootStack = () => {
         ) : (
           <Stack.Screen name="AuthStack" component={AuthStack} />
         )}
+        {/* <Stack.Screen name="Login" component={Login} /> */}
       </Stack.Navigator>
     </AuthContext.Provider>
   );

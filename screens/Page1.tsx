@@ -15,13 +15,21 @@ import {
   EnvelopeSimple,
   Key,
 } from 'phosphor-react-native';
-import {useNavigation} from '@react-navigation/native';
+import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthTabParamList} from '../stacks/AuthStack';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {BottomTabParamList} from '../stacks/BottomTabStack';
+import {RootStackList} from '../stacks/RootStack';
+
+type CompositeNavigation = CompositeNavigationProp<
+  StackNavigationProp<RootStackList>,
+  StackNavigationProp<AuthTabParamList>
+>;
 
 const Page1 = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AuthTabParamList>>();
+  const navigation = useNavigation<CompositeNavigation>();
   return (
     <View>
       <TouchableOpacity
