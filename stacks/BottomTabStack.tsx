@@ -21,7 +21,6 @@ export type NaviTabParamList = {
 
 const BottomTabStack = () => {
   const Stack = createBottomTabNavigator<BottomTabParamList>();
-  const StackNA = createNativeStackNavigator<NaviTabParamList>();
   return (
     <>
       <Stack.Navigator

@@ -23,18 +23,13 @@ import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import {RootStackList} from '../stacks/RootStack';
 
-type CompositeNavigation = CompositeNavigationProp<
-  StackNavigationProp<RootStackList>,
-  StackNavigationProp<AuthTabParamList>
->;
-
 const Page1 = () => {
-  const navigation = useNavigation<CompositeNavigation>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   return (
     <View>
       <TouchableOpacity
         style={styles.btnBack}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() => navigation.navigate('AuthStack', {screen: 'Login'})}>
         <CaretLeft
           size={24}
           weight="bold"

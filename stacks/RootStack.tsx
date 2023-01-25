@@ -1,21 +1,36 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import BottomTabStack, {BottomTabParamList} from './BottomTabStack';
-import AuthStack from './AuthStack';
+import AuthStack, {AuthTabParamList} from './AuthStack';
 import AuthContext from '../context/AuthContext';
 import Login from '../screens/Login';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export type RootStackList = {
-  AuthStack: undefined;
+  AuthStack: NavigatorScreenParams<AuthTabParamList>;
   MainStack: NavigatorScreenParams<BottomTabParamList>;
-  Login: undefined;
 };
 
 const RootStack = () => {
   const Stack = createNativeStackNavigator<RootStackList>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // useEffect(() => {
+  //   const checkTokenInStorage = async () => {
+  //     await AsyncStorage.getItem("token").then((token) => {
+  //       console.log("token in storage", token);
+  //       if (token) {
+  //         // setIsLoggedIn(String(token).length > 0 ? true : false);
+  //         setIsLoggedIn(true);
+  //       } else {
+  //         setIsLoggedIn(false);
+  //       }
+  //     });
+  //   };
+  //   checkTokenInStorage();
+  // }, []);
   return (
     <AuthContext.Provider
       value={{isLoggedIn: isLoggedIn, setLoggedIn: setIsLoggedIn}}>
@@ -24,11 +39,11 @@ const RootStack = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {isLoggedIn ? (
-          <Stack.Screen name="MainStack" component={BottomTabStack} />
-        ) : (
-          <Stack.Screen name="AuthStack" component={AuthStack} />
-        )}
+        {/* {isLoggedIn ? ( */}
+        <Stack.Screen name="MainStack" component={BottomTabStack} />
+        {/* ) : ( */}
+        <Stack.Screen name="AuthStack" component={AuthStack} />
+        {/* )} */}
         {/* <Stack.Screen name="Login" component={Login} /> */}
       </Stack.Navigator>
     </AuthContext.Provider>
