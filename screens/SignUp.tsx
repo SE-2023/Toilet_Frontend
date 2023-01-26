@@ -1,12 +1,28 @@
-import React, { useState } from 'react'
-import { SafeAreaView, View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Button } from 'react-native'
-import bgSUKA from '../assets/bgSUKA.png'
-import { CaretLeft, CaretRight, EnvelopeSimple, Key } from 'phosphor-react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import { TextInput } from 'react-native-paper';
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Button,
+  Platform,
+} from 'react-native';
+import bgSUKA from '../assets/bgSUKA.png';
+import {
+  CaretLeft,
+  CaretRight,
+  EnvelopeSimple,
+  Key,
+} from 'phosphor-react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {TextInput} from 'react-native-paper';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import OutlineInput from 'react-native-outline-input'
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
 
@@ -19,18 +35,15 @@ function SignUp({navigation}: {navigation: any}) {
   const [conPassword, setConPassword] = useState('');
 
   return (
-    <SafeAreaView style={styles.container}>
-
+    <KeyboardAwareScrollView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={{alignItems: 'center'}}>
         <View
           // borderBottomLeftRadius={60}
           // overflow='hidden'
-          height={height * 0.4}
-        >
-          <Image
-            source={bgSUKA}
-            style={{width, height}}
-          />
+          height={height * 0.4}>
+          <Image source={bgSUKA} style={{width, height}} />
         </View>
       </View>
 
@@ -39,22 +52,22 @@ function SignUp({navigation}: {navigation: any}) {
       <View style={styles.textInputSmall}>
         <View>
           <TextInput
-            label='Fristname'
+            label="Fristname"
             value={fristname}
-            theme = {theme}
+            theme={theme}
             style={styles.bgTextInput}
-            mode = 'outlined'
+            mode="outlined"
             onChangeText={text => setFristname(text)}
           />
         </View>
 
         <View style={styles.textInputRight}>
           <TextInput
-            label='Lastname'
+            label="Lastname"
             value={lastname}
-            theme = {theme}
+            theme={theme}
             style={styles.bgTextInput}
-            mode = 'outlined'
+            mode="outlined"
             onChangeText={text => setLastname(text)}
           />
         </View>
@@ -63,110 +76,136 @@ function SignUp({navigation}: {navigation: any}) {
       <View style={styles.textInput}>
         <View style={{paddingBottom: 20}}>
           <TextInput
-            label='Phone number'
+            label="Phone number"
             value={phoneNum}
-            theme = {theme}
+            theme={theme}
             style={styles.bgTextInput}
-            mode = 'outlined'
+            mode="outlined"
             onChangeText={text => setPhoneNum(text)}
           />
         </View>
 
         <View style={{paddingBottom: 20}}>
           <TextInput
-            label='Email'
+            label="Email"
             value={email}
-            theme = {theme}
+            theme={theme}
             style={styles.bgTextInput}
-            mode = 'outlined'
+            mode="outlined"
             onChangeText={text => setEmail(text)}
           />
         </View>
-        
+
         <View style={{paddingBottom: 20}}>
           <TextInput
-            label='Password'
+            label="Password"
             value={password}
-            theme = {theme}
+            theme={theme}
             style={styles.bgTextInput}
-            mode = 'outlined'
+            mode="outlined"
+            secureTextEntry
+            // right={<TextInput.Icon icon="eye" />}
             onChangeText={text => setPassword(text)}
           />
         </View>
 
         <View>
           <TextInput
-            label='Confirm Password'
+            label="Confirm Password"
             value={conPassword}
-            theme = {theme}
+            theme={theme}
             style={styles.bgTextInput}
-            mode = 'outlined'
+            mode="outlined"
+            secureTextEntry
+            // right={<TextInput.Icon icon="eye" />}
             onChangeText={text => setConPassword(text)}
           />
         </View>
       </View>
-        
+
       <Text style={styles.textBody}>
         Already have account?
-        <Text style={styles.textButton} onPress={() => navigation.navigate('Login')}> LOG IN</Text>
-      </Text>
-      
-      <View style={styles.btnContinuePosition}>
-      <LinearGradient colors={['#FAC353', '#FFA897']} style={styles.btnContinue}>
-        <Text style={{color: '#2C2F4A', fontFamily: 'Fredoka-SemiBold', fontSize: 16, position: 'absolute', left: 22, top: 14}}>
-          CONTINUE
+        <Text
+          style={styles.textButton}
+          onPress={() => navigation.navigate('Login')}>
+          {' '}
+          LOG IN
         </Text>
-        <CaretRight
+      </Text>
+
+      <View style={styles.btnContinuePosition}>
+        <LinearGradient
+          colors={['#FAC353', '#FFA897']}
+          style={styles.btnContinue}>
+          <Text
+            style={{
+              color: '#2C2F4A',
+              fontFamily: 'Fredoka-SemiBold',
+              fontSize: 16,
+              position: 'absolute',
+              left: 22,
+              top: 14,
+            }}>
+            CONTINUE
+          </Text>
+          <CaretRight
             size={24}
-            weight='bold'
-            color='#2C2F4A'
+            weight="bold"
+            color="#2C2F4A"
             style={{
               position: 'absolute',
               right: 15,
-              top: 12
+              top: 12,
             }}
           />
-      </LinearGradient>
+        </LinearGradient>
       </View>
 
       <View style={styles.btnBackPosition}>
         <TouchableOpacity style={styles.btnBack}>
           <CaretLeft
             size={24}
-            weight='bold'
-            color='#FFA897'
+            weight="bold"
+            color="#FFA897"
             style={{
               position: 'absolute',
               left: 15,
-              top: 12
+              top: 12,
             }}
           />
-          <Text style={{color: '#FFA897', fontFamily: 'Fredoka-SemiBold', fontSize: 16, position: 'absolute', right: 22, top: 14}}>
+          <Text
+            style={{
+              color: '#FFA897',
+              fontFamily: 'Fredoka-SemiBold',
+              fontSize: 16,
+              position: 'absolute',
+              right: 22,
+              top: 14,
+            }}>
             MAP
           </Text>
           {/* <GradientText text= 'MAP' style={{fontFamily: 'Fredoka-SemiBold', fontSize: 16}}/> */}
         </TouchableOpacity>
       </View>
-      
-    </SafeAreaView>
-  )
+    </KeyboardAwareScrollView>
+  );
 }
 
 const theme = {
   colors: {
-    primary: '#6D7DD3'
+    primary: '#6D7DD3',
   },
   fonts: {
     regular: {
-      fontFamily: 'Fredoka-Regular'
-    }
-  }
+      fontFamily: 'Fredoka-Regular',
+    },
+  },
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: "#F4F6FD"
+    flex: 1,
+    backgroundColor: '#F4F6FD',
   },
   title: {
     position: 'absolute',
@@ -174,19 +213,19 @@ const styles = StyleSheet.create({
     left: '28%',
     fontFamily: 'Fredoka-SemiBold',
     fontSize: 64,
-    color: '#2C2F4A'
+    color: '#2C2F4A',
   },
   textBody: {
     paddingBottom: 32,
     textAlign: 'center',
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
-    color: '#2C2F4A'
+    color: '#2C2F4A',
   },
   textButton: {
     fontFamily: 'Fredoka-SemiBold',
     fontSize: 16,
-    color: '#6D7DD3'
+    color: '#6D7DD3',
   },
 
   btnContinue: {
@@ -197,11 +236,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
-    elevation: 2
+    elevation: 2,
   },
   btnContinuePosition: {
     paddingRight: 16,
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
 
   btnBack: {
@@ -213,34 +252,34 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
-    elevation: 2
+    elevation: 2,
   },
   btnBackPosition: {
     position: 'relative',
     bottom: 48,
     paddingLeft: 16,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   textInput: {
     color: '#F4F6FD',
     paddingLeft: 16,
     paddingRight: 16,
-    top: -36
+    top: -36,
   },
   textInputSmall: {
     color: '#F4F6FD',
     width: 198,
-    paddingLeft: 16
+    paddingLeft: 16,
   },
   textInputRight: {
     position: 'relative',
     top: -56,
-    left: 197
+    left: 197,
   },
   bgTextInput: {
     backgroundColor: '#F4F6FD',
-    fontFamily: 'Fredoka-Regular'
-  }
-})
+    fontFamily: 'Fredoka-Regular',
+  },
+});
 
-export default SignUp
+export default SignUp;

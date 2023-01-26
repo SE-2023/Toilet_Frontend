@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   SafeAreaView,
   View,
@@ -21,80 +21,100 @@ import {
   SignOut,
 } from 'phosphor-react-native';
 import Page1 from './Page1';
-
+import RequireLogin from '../components/RequireLogin';
+import AuthContext from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackList} from '../stacks/RootStack';
+// const {isLoggedIn} = useContext(AuthContext);
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
+
 function Profile() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
+  const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
+  const handleLogout = async () => {
+    setLoggedIn(false);
+    await AsyncStorage.removeItem('token');
+    navigation.replace('MainStack', {screen: 'Home'});
+  };
   return (
-    <SafeAreaView style={styles.container}>
-      <Page1 />
-      <View style={{alignItems: 'center'}}>
-        <View
-          // borderBottomLeftRadius={60}
-          // overflow='hidden'
-          height={height * 0.4}>
-          <Image source={bgSUKA} style={{width, height}} />
+    <RequireLogin>
+      <SafeAreaView style={styles.container}>
+        <View style={{alignItems: 'center'}}>
+          <View
+            // borderBottomLeftRadius={60}
+            // overflow='hidden'
+            height={height * 0.4}>
+            <Image source={bgSUKA} style={{width, height}} />
+          </View>
         </View>
-      </View>
 
-      <Text style={styles.title}>Profile</Text>
+        <Text style={styles.title}>Profile</Text>
+        <LinearGradient
+          colors={['#FAC353', '#FFA897']}
+          style={styles.btnCircle_44}>
+          <Bell size={24} weight="fill" color="#2C2F4A" />
+        </LinearGradient>
 
-      <LinearGradient
-        colors={['#FAC353', '#FFA897']}
-        style={styles.btnCircle_44}>
-        <Bell size={24} weight="fill" color="#2C2F4A" />
-      </LinearGradient>
-
-      <View style={styles.box}>
-        <TouchableOpacity style={styles.btnCircle_34}>
-          <PencilSimple size={18} weight="fill" color="#FFA897" />
-        </TouchableOpacity>
-
-        <View style={styles.circle}></View>
-
-        <Image source={profile} style={styles.profile} />
-
-        <Text style={styles.name}>Poppy Brown</Text>
-        <View>
-          <Text style={styles.phoneNum}>085-578-0890</Text>
-          <Text style={styles.email}>PoPy_B@example.com</Text>
-        </View>
-      </View>
-
-      <View style={styles.btnRectangle}>
-        <View style={styles.itemLeft}>
-          <TouchableOpacity style={styles.bgIconMyToilet}>
-            <Toilet size={22} weight="fill" color="#2C2F4A" />
+        <View style={styles.box}>
+          <TouchableOpacity
+            style={styles.btnCircle_34}
+            onPress={() =>
+              navigation.navigate('ProfileStack', {screen: 'UpdateProfile'})
+            }>
+            <PencilSimple size={18} weight="fill" color="#FFA897" />
           </TouchableOpacity>
 
-          <Text style={styles.textBody}>My Toilet</Text>
+          <View style={styles.circle}></View>
+
+          <Image source={profile} style={styles.profile} />
+
+          <Text style={styles.name}>Poppy Brown</Text>
+          <View>
+            <Text style={styles.phoneNum}>085-578-0890</Text>
+            <Text style={styles.email}>PoPy_B@example.com</Text>
+          </View>
         </View>
-        <CaretRight size={22} weight="bold" color="#2C2F4A" />
-      </View>
 
-      <View style={styles.btnRectangle_2}>
-        <View style={styles.itemLeft}>
-          <TouchableOpacity style={styles.bgIconHistory}>
-            <ClockCounterClockwise size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
+        <View style={styles.btnRectangle}>
+          <View style={styles.itemLeft}>
+            <TouchableOpacity style={styles.bgIconMyToilet}>
+              <Toilet size={22} weight="fill" color="#2C2F4A" />
+            </TouchableOpacity>
 
-          <Text style={styles.textBody}>History</Text>
+            <Text style={styles.textBody}>My Toilet</Text>
+          </View>
+          <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </View>
-        <CaretRight size={22} weight="bold" color="#2C2F4A" />
-      </View>
 
-      <View style={styles.btnRectangle_2}>
-        <View style={styles.itemLeft}>
-          <TouchableOpacity style={styles.bgIconLogout}>
-            <SignOut size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
+        <View style={styles.btnRectangle_2}>
+          <View style={styles.itemLeft}>
+            <TouchableOpacity style={styles.bgIconHistory}>
+              <ClockCounterClockwise size={22} weight="fill" color="#2C2F4A" />
+            </TouchableOpacity>
 
-          <Text style={styles.textBody}>Logout</Text>
+            <Text style={styles.textBody}>History</Text>
+          </View>
+          <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </View>
-        <CaretRight size={22} weight="bold" color="#2C2F4A" />
-      </View>
-    </SafeAreaView>
+
+        <View style={styles.btnRectangle_2}>
+          <View style={styles.itemLeft}>
+            <TouchableOpacity
+              style={styles.bgIconLogout}
+              onPress={handleLogout}>
+              <SignOut size={22} weight="fill" color="#2C2F4A" />
+            </TouchableOpacity>
+
+            <Text style={styles.textBody}>Logout</Text>
+          </View>
+          <CaretRight size={22} weight="bold" color="#2C2F4A" />
+        </View>
+      </SafeAreaView>
+    </RequireLogin>
   );
 }
 

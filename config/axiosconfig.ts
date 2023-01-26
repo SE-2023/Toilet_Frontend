@@ -1,9 +1,12 @@
 import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import Config from 'react-native-config';
+import {getToken} from '../services/auth';
 axios.defaults.baseURL = Config.API_URL;
-const onRequest = (config: any): AxiosRequestConfig => {
-  const token = 'token';
-  config.headers!.Authorization = 'Bearer ' + 'ABCD';
+const onRequest = async (config: any) => {
+  config.headers!.Authorization = 'Bearer ' + getToken();
+
+  console.log('config ', config);
+
   return config;
 };
 const onRequestError = (err: AxiosError): Promise<AxiosError> => {

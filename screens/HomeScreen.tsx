@@ -104,7 +104,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       const aom: any = await getLocation();
-      console.log('value97', aom);
+      // console.log('value97', aom);
       setToiletMarkers(aom.data);
       // setIsShowLocation((prev) => !prev);
       // setForceRefresh(Math.floor(Math.random() * 100));
@@ -118,7 +118,7 @@ const HomeScreen = () => {
     // if (toiletMarkers.length === 0) {
     //   return <Text> no data </Text>;
     // }dasdas
-    console.log('data 115', toiletMarkers);
+    // console.log('data 115', toiletMarkers);
     return (
       <>
         {toiletMarkers.map((item: any, index) => {

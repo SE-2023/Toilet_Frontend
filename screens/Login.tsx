@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Button,
+  Platform,
 } from 'react-native';
 import LogoSUKA from '../assets/LogoSUKA.png';
 import bgSUKA from '../assets/bgSUKA.png';
@@ -22,6 +23,8 @@ import {Colors} from '../components/colors';
 import {TextInput} from 'react-native-paper';
 import {signIn} from '../services/auth';
 import AuthContext from '../context/AuthContext';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import OutlineInput from 'react-native-outline-input'
 // import * as Icon from 'phosphor-react-native'
 // import { TextInput } from 'react-native-paper'
@@ -35,17 +38,24 @@ function Login({navigation}: {navigation: any}) {
   const [password, setPassword] = useState('0008');
   const {setLoggedIn} = useContext(AuthContext);
   const hardleLogin = async () => {
-    const res = await signIn({
+    const res: any = await signIn({
       email: email,
       password: password,
     });
-    console.log(res);
-    setLoggedIn(true);
+    console.log('res token', res);
+    if (res.message === 'success') {
+      AsyncStorage.setItem('token', res.token);
+      setLoggedIn(true);
+      console.log('token kkkkkkkkkk');
+      navigation.replace('MainStack', {screen: 'Home'});
+    }
   };
 
   // const [text, setText] = React.useState('');
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={{alignItems: 'center'}}>
         <View
           // borderBottomLeftRadius={60}
@@ -79,6 +89,8 @@ function Login({navigation}: {navigation: any}) {
             theme={theme}
             style={styles.bgTextInput}
             mode="outlined"
+            secureTextEntry
+            // right={<TextInput.Icon icon="eye" />}
             onChangeText={text => setPassword(text)}
           />
         </View>
@@ -150,7 +162,7 @@ function Login({navigation}: {navigation: any}) {
           {/* <GradientText text= 'MAP' style={{fontFamily: 'Fredoka-SemiBold', fontSize: 16}}/> */}
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 }
 
