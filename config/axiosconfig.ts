@@ -3,7 +3,13 @@ import Config from 'react-native-config';
 import {getToken} from '../services/auth';
 axios.defaults.baseURL = Config.API_URL;
 const onRequest = async (config: any) => {
-  config.headers!.Authorization = 'Bearer ' + getToken();
+  let token = '';
+
+  await getToken().then(value => {
+    token = value ? String(value) : '';
+  });
+
+  config.headers!.Authorization = 'Bearer ' + token;
 
   console.log('config ', config);
 

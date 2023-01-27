@@ -34,12 +34,14 @@ import Cartoon from '../screens/Cartoon';
 import AddList from '../screens/AddList';
 import Login from '../screens/Login';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigatorScreenParams} from '@react-navigation/native';
+import ProfileStack, {ProfileParamList} from './ProfileStack';
 export type BottomTabParamList = {
   Home: undefined;
-  Profile: undefined;
+  AddList: undefined;
   AddToilet: undefined;
   Cartoon: undefined;
-  AddList: undefined;
+  ProfileStack: NavigatorScreenParams<ProfileParamList>;
 };
 export type NaviTabParamList = {
   Login: undefined;
@@ -56,88 +58,77 @@ const BottomTabStack = () => {
         initialRouteName="Home"
         screenOptions={{
           headerShown: false,
-          tabBarHideOnKeyboard: true
+          tabBarHideOnKeyboard: true,
           // tabBarStyle: {
           //   height: 65,
           //   paddingBottom: 5,
           // },
         }}
-        tabBar={props => <AnimatedTabBar {...props} />}
-        >
+        tabBar={props => <AnimatedTabBar {...props} />}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={
-            {
-              // tabBarLabel: 'หน้าแรก',
-              // tabBarLabelStyle: {
-              //   fontSize: 15,
-              // },
-              tabBarIcon: ({color, size}) => (
-                <MapTrifold color="#FFA897" size={28} weight="fill" />
-              ),
-            }
-          }
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={
-            {
-              // tabBarLabel: 'หน้าแรก',
-              // tabBarLabelStyle: {
-              //   fontSize: 15,
-              // },
-              tabBarIcon: ({color, size}) => (
-                <Heart color="#FFA897" size={28} weight="fill" />
-              ),
-            }
-          }
-        />
-        <Stack.Screen
-          name="AddToilet"
-          component={AddToilet}
-          options={
-            {
-              // tabBarLabel: 'หน้าแรก',
-              // tabBarLabelStyle: {
-              //   fontSize: 15,
-              // },
-              tabBarIcon: ({color, size}) => (
-                <Plus color="#FFA897" size={28} weight="fill" />
-              ),
-            }
-          }
-        />
-        <Stack.Screen
-          name="Cartoon"
-          component={Cartoon}
-          options={
-            {
-              // tabBarLabel: 'หน้าแรก',
-              // tabBarLabelStyle: {
-              //   fontSize: 15,
-              // },
-              tabBarIcon: ({color, size}) => (
-                <SquaresFour color="#FFA897" size={28} weight="fill" />
-              ),
-            }
-          }
+          options={{
+            // tabBarLabel: 'หน้าแรก',
+            // tabBarLabelStyle: {
+            //   fontSize: 15,
+            // },
+            tabBarIcon: ({color, size}) => (
+              <MapTrifold color="#FFA897" size={28} weight="fill" />
+            ),
+          }}
         />
         <Stack.Screen
           name="AddList"
           component={AddList}
-          options={
-            {
-              // tabBarLabel: 'หน้าแรก',
-              // tabBarLabelStyle: {
-              //   fontSize: 15,
-              // },
-              tabBarIcon: ({color, size}) => (
-                <User color="#FFA897" size={28} weight="fill" />
-              ),
-            }
-          }
+          options={{
+            // tabBarLabel: 'หน้าแรก',
+            // tabBarLabelStyle: {
+            //   fontSize: 15,
+            // },
+            tabBarIcon: ({color, size}) => (
+              <Heart color="#FFA897" size={28} weight="fill" />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="AddToilet"
+          component={AddToilet}
+          options={{
+            // tabBarLabel: 'หน้าแรก',
+            // tabBarLabelStyle: {
+            //   fontSize: 15,
+            // },
+            tabBarIcon: ({color, size}) => (
+              <Plus color="#FFA897" size={28} weight="fill" />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Cartoon"
+          component={Cartoon}
+          options={{
+            // tabBarLabel: 'หน้าแรก',
+            // tabBarLabelStyle: {
+            //   fontSize: 15,
+            // },
+            tabBarIcon: ({color, size}) => (
+              <SquaresFour color="#FFA897" size={28} weight="fill" />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="ProfileStack"
+          component={ProfileStack}
+          options={{
+            // tabBarLabel: 'หน้าแรก',
+            // tabBarLabelStyle: {
+            //   fontSize: 15,
+            // },
+            tabBarIcon: ({color, size}) => (
+              <User color="#FFA897" size={28} weight="fill" />
+            ),
+          }}
         />
       </Stack.Navigator>
     </>

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -27,6 +27,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackList} from '../stacks/RootStack';
+import {ProfileParamList} from '../stacks/ProfileStack';
+import {getProfile} from '../services/auth';
 // const {isLoggedIn} = useContext(AuthContext);
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -34,12 +36,23 @@ const height = width * aspectRatio;
 
 function Profile() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
+  const navigationProfile =
+    useNavigation<NativeStackNavigationProp<ProfileParamList>>();
   const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
   const handleLogout = async () => {
     setLoggedIn(false);
     await AsyncStorage.removeItem('token');
     navigation.replace('MainStack', {screen: 'Home'});
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const res = await getProfile();
+      console.log(res);
+    };
+    fetchProfile();
+  }, []);
+
   return (
     <RequireLogin>
       <SafeAreaView style={styles.container}>
@@ -47,7 +60,7 @@ function Profile() {
           <View
             // borderBottomLeftRadius={60}
             // overflow='hidden'
-            height={height * 0.4}>
+            style={{height: height * 0.4}}>
             <Image source={bgSUKA} style={{width, height}} />
           </View>
         </View>
@@ -62,9 +75,7 @@ function Profile() {
         <View style={styles.box}>
           <TouchableOpacity
             style={styles.btnCircle_34}
-            onPress={() =>
-              navigation.navigate('ProfileStack', {screen: 'UpdateProfile'})
-            }>
+            onPress={() => navigationProfile.navigate('UpdateProfile')}>
             <PencilSimple size={18} weight="fill" color="#FFA897" />
           </TouchableOpacity>
 

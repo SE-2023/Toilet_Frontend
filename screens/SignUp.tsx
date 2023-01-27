@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -21,19 +21,40 @@ import LinearGradient from 'react-native-linear-gradient';
 import {TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import OutlineInput from 'react-native-outline-input'
+import {signUp} from '../services/auth';
+import AuthContext from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
 
 function SignUp({navigation}: {navigation: any}) {
-  const [fristname, setFristname] = useState('');
+  const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
-
+  const {setLoggedIn} = useContext(AuthContext);
+  const handleSignUp = async () => {
+    const res: any = await signUp({
+      firstname: firstname,
+      lastname: lastname,
+      phone: phoneNum,
+      email: email,
+      password: password,
+      conPassword: conPassword,
+    });
+    console.log('res token', res);
+    if (res.message === 'created') {
+      AsyncStorage.setItem('token', res.token);
+      setLoggedIn(true);
+      console.log('token kkkkkkkkkk');
+      navigation.replace('MainStack', {screen: 'Home'});
+    }
+    console.log(res);
+  };
   return (
     <KeyboardAwareScrollView
       style={styles.container}
@@ -53,11 +74,11 @@ function SignUp({navigation}: {navigation: any}) {
         <View>
           <TextInput
             label="Fristname"
-            value={fristname}
+            value={firstname}
             theme={theme}
             style={styles.bgTextInput}
             mode="outlined"
-            onChangeText={text => setFristname(text)}
+            onChangeText={text => setFirstname(text)}
           />
         </View>
 
@@ -134,31 +155,33 @@ function SignUp({navigation}: {navigation: any}) {
       </Text>
 
       <View style={styles.btnContinuePosition}>
-        <LinearGradient
-          colors={['#FAC353', '#FFA897']}
-          style={styles.btnContinue}>
-          <Text
-            style={{
-              color: '#2C2F4A',
-              fontFamily: 'Fredoka-SemiBold',
-              fontSize: 16,
-              position: 'absolute',
-              left: 22,
-              top: 14,
-            }}>
-            CONTINUE
-          </Text>
-          <CaretRight
-            size={24}
-            weight="bold"
-            color="#2C2F4A"
-            style={{
-              position: 'absolute',
-              right: 15,
-              top: 12,
-            }}
-          />
-        </LinearGradient>
+        <TouchableOpacity onPress={handleSignUp}>
+          <LinearGradient
+            colors={['#FAC353', '#FFA897']}
+            style={styles.btnContinue}>
+            <Text
+              style={{
+                color: '#2C2F4A',
+                fontFamily: 'Fredoka-SemiBold',
+                fontSize: 16,
+                position: 'absolute',
+                left: 22,
+                top: 14,
+              }}>
+              CONTINUE
+            </Text>
+            <CaretRight
+              size={24}
+              weight="bold"
+              color="#2C2F4A"
+              style={{
+                position: 'absolute',
+                right: 15,
+                top: 12,
+              }}
+            />
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.btnBackPosition}>

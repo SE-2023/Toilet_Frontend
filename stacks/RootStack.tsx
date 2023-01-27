@@ -13,7 +13,7 @@ import ProfileStack, {ProfileParamList} from './ProfileStack';
 export type RootStackList = {
   AuthStack: NavigatorScreenParams<AuthTabParamList>;
   MainStack: NavigatorScreenParams<BottomTabParamList>;
-  ProfileStack: NavigatorScreenParams<ProfileParamList>;
+  // ProfileStack: NavigatorScreenParams<ProfileParamList>;
 };
 
 const RootStack = () => {
@@ -45,7 +45,7 @@ const RootStack = () => {
         <Stack.Screen name="MainStack" component={BottomTabStack} />
         {/* ) : ( */}
         <Stack.Screen name="AuthStack" component={AuthStack} />
-        <Stack.Screen name="ProfileStack" component={ProfileStack} />
+        {/* <Stack.Screen name="ProfileStack" component={ProfileStack} /> */}
         {/* )} */}
         {/* <Stack.Screen name="Login" component={Login} /> */}
       </Stack.Navigator>
