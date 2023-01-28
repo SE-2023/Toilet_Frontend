@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,6 +8,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Button,
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import profile from '../assets/profile.jpg';
@@ -34,27 +36,82 @@ const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
 
+export interface IProfile {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  email: string;
+  profile_picture: string;
+}
+
 function Profile() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   const navigationProfile =
     useNavigation<NativeStackNavigationProp<ProfileParamList>>();
+  const [profile, setProfile] = React.useState<IProfile>({
+    _id: '',
+    firstname: '',
+    lastname: '',
+    phone: '',
+    email: '',
+    profile_picture:
+      'http://res.cloudinary.com/di71vwint/image/upload/v1674291349/images/nsopymczagslnr78yyv5.png',
+  });
+  const [refreshing, setRefreshing] = React.useState(false);
   const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
   const handleLogout = async () => {
     setLoggedIn(false);
     await AsyncStorage.removeItem('token');
     navigation.replace('MainStack', {screen: 'Home'});
   };
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await getProfile().finally(() => {
+      setRefreshing(false);
+    });
+  };
+  // const [firstname, setFirstname] = useState<IProfile['firstname']>('');
+  // const [lastname, setLastname] = useState<IProfile['lastname']>('');
+  // const [phone, setPhone] = useState<IProfile['phone']>('');
+  // const [email, setEmail] = useState<IProfile['email']>('');
+
+  const getUserProfile = async () => {
+    const {data} = await getProfile();
+    console.log('user profile ', data);
+    setProfile(data);
+  };
+  const onSubmitEditProfile = () => {
+    console.log('call api update profile');
+  };
+
+  const gotoEdit = () => {
+    navigationProfile.navigate('UpdateProfile', {
+      _id: profile._id,
+      firstname: profile.firstname,
+      lastname: profile.lastname,
+      phone: profile.phone,
+      email: profile.email,
+    });
+  };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const res = await getProfile();
-      console.log(res);
-    };
-    fetchProfile();
+    getUserProfile();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     const res = await getProfile();
+  //     console.log(res);
+  //   };
+  //   fetchProfile();
+  // }, []);
+
   return (
-    <RequireLogin>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <SafeAreaView style={styles.container}>
         <View style={{alignItems: 'center'}}>
           <View
@@ -73,20 +130,23 @@ function Profile() {
         </LinearGradient>
 
         <View style={styles.box}>
-          <TouchableOpacity
-            style={styles.btnCircle_34}
-            onPress={() => navigationProfile.navigate('UpdateProfile')}>
+          <TouchableOpacity style={styles.btnCircle_34} onPress={gotoEdit}>
             <PencilSimple size={18} weight="fill" color="#FFA897" />
           </TouchableOpacity>
 
           <View style={styles.circle}></View>
 
-          <Image source={profile} style={styles.profile} />
+          <Image
+            source={{uri: profile.profile_picture}}
+            style={styles.profile}
+          />
 
-          <Text style={styles.name}>Poppy Brown</Text>
+          <Text style={styles.name}>
+            {profile.firstname} {profile.lastname}
+          </Text>
           <View>
-            <Text style={styles.phoneNum}>085-578-0890</Text>
-            <Text style={styles.email}>PoPy_B@example.com</Text>
+            <Text style={styles.phoneNum}>{profile.phone}</Text>
+            <Text style={styles.email}>{profile.email}</Text>
           </View>
         </View>
 
@@ -125,7 +185,7 @@ function Profile() {
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </View>
       </SafeAreaView>
-    </RequireLogin>
+    </ScrollView>
   );
 }
 

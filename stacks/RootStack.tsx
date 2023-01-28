@@ -13,7 +13,7 @@ import ProfileStack, {ProfileParamList} from './ProfileStack';
 export type RootStackList = {
   AuthStack: NavigatorScreenParams<AuthTabParamList>;
   MainStack: NavigatorScreenParams<BottomTabParamList>;
-  // ProfileStack: NavigatorScreenParams<ProfileParamList>;
+  ProfileStack: NavigatorScreenParams<ProfileParamList>;
 };
 
 const RootStack = () => {

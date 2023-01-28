@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -15,29 +15,59 @@ import profile from '../assets/profile.jpg';
 import {Check, Camera, X} from 'phosphor-react-native';
 import {TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ProfileParamList} from '../stacks/ProfileStack';
+import {updateProfile} from '../services/user';
+
+export interface IProfileEdit {
+  firstname: string;
+  lastname: string;
+  phone: string;
+  email: string;
+}
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
 
 function UpdateProfile() {
-  const [fristname, setFristname] = useState('');
+  const {params} = useRoute<RouteProp<ProfileParamList, 'UpdateProfile'>>();
+  const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ProfileParamList>>();
+  console.log('props edit profile', params);
+  const onSubmit = async () => {
+    const body = {
+      firstname: firstname,
+      lastname: lastname,
+      phone: phoneNum,
+    };
+    await updateProfile(params._id, body);
+    navigation.goBack();
+  };
+  useEffect(() => {
+    setFirstname(params.firstname);
+    setLastname(params.lastname);
+    setPhoneNum(params.phone);
+  }, []);
 
   return (
     <KeyboardAwareScrollView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <SafeAreaView style={styles.space}>
         <View style={{alignItems: 'center'}}>
           <View
             // borderBottomLeftRadius={60}
             // overflow='hidden'
-            height={height * 0.4}>
+            style={{height: height * 0.4}}>
             <Image source={bgSUKA} style={{width, height}} />
           </View>
         </View>
@@ -46,7 +76,7 @@ function UpdateProfile() {
           <X size={24} weight="fill" color="#D75D5D" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnCheck_44}>
+        <TouchableOpacity style={styles.btnCheck_44} onPress={onSubmit}>
           <Check size={24} weight="fill" color="#31C596" />
         </TouchableOpacity>
 
@@ -63,18 +93,18 @@ function UpdateProfile() {
             <View>
               <TextInput
                 label="Fristname"
-                value={fristname}
+                defaultValue={params.firstname}
                 theme={theme}
                 style={styles.bgTextInput}
                 mode="outlined"
-                onChangeText={text => setFristname(text)}
+                onChangeText={text => setFirstname(text)}
               />
             </View>
 
             <View style={styles.textInputRight}>
               <TextInput
                 label="Lastname"
-                value={lastname}
+                defaultValue={params.lastname}
                 theme={theme}
                 style={styles.bgTextInput}
                 mode="outlined"
@@ -87,7 +117,7 @@ function UpdateProfile() {
             <View style={{paddingBottom: 20}}>
               <TextInput
                 label="Phone number"
-                value={phoneNum}
+                defaultValue={params.phone}
                 theme={theme}
                 style={styles.bgTextInput}
                 mode="outlined"
@@ -98,7 +128,7 @@ function UpdateProfile() {
             <View style={{paddingBottom: 20}}>
               <TextInput
                 label="Email"
-                value={email}
+                defaultValue={params.email}
                 theme={theme}
                 style={styles.bgTextInput}
                 mode="outlined"

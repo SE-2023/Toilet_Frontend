@@ -9,7 +9,7 @@ const onRequest = async (config: any) => {
     token = value ? String(value) : '';
   });
 
-  config.headers!.Authorization = 'Bearer ' + token;
+  config.headers['Authorization'] = 'Bearer ' + token;
 
   console.log('config ', config);
 
