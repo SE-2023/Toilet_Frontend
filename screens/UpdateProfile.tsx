@@ -49,7 +49,7 @@ function UpdateProfile() {
       phone: phoneNum,
     };
     await updateProfile(params._id, body);
-    navigation.goBack();
+    navigation.replace('Profile');
   };
   useEffect(() => {
     setFirstname(params.firstname);
@@ -72,7 +72,7 @@ function UpdateProfile() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.btnX_44}>
+        <TouchableOpacity style={styles.btnX_44} onPress={navigation.goBack}>
           <X size={24} weight="fill" color="#D75D5D" />
         </TouchableOpacity>
 

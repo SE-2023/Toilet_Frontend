@@ -5,6 +5,7 @@ import BottomTabStack from './stacks/BottomTabStack';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './stacks/AuthStack';
 import RootStack from './stacks/RootStack';
+import Buttonmap from './components/Buttonmap';
 
 const App = () => {
   return (

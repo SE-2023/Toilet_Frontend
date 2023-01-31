@@ -1,13 +1,22 @@
-import {StyleSheet, Text, View, Button, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Platform, PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-
+import {StackSimple} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
+import Buttonmap from '../components/Buttonmap';
+import {SafeAreaView} from 'react-native-safe-area-context';
 /*const initialState = {
   latitude,
   longitud:null,
@@ -57,26 +66,17 @@ const HomeScreen = () => {
     longitudeDelta: 0.0421,
   });
   const [currentType, setCurrentType] = useState(MapType.standard);
-  // const mockUp = [
-  //   {
-  //     latitude: 0,
-  //     longitude: 0,
-  //     latitudeDelta: 0.0922,
-  //     longitudeDelta: 0.0421
-  //   },
-  //   {
-  //     latitude: 13.775675675655555,
-  //     longitude: 100.43290053771605,
-  //     latitudeDelta: 0.0922,
-  //     longitudeDelta: 0.0421
-  //   },
-  //   {
-  //     latitude: 13.8756756756788451,
-  //     longitude: 100.43290053771605,
-  //     latitudeDelta: 0.0922,
-  //     longitudeDelta: 0.0421
-  //   }
-  // ];
+  const [aom, setaom] = useState(true);
+  function callBoth() {
+    if (aom === true) {
+      setCurrentType(MapType.hybrid);
+      setaom(false);
+    } else {
+      setCurrentType(MapType.standard);
+      setaom(true);
+    }
+  }
+
   const [toiletMarkers, setToiletMarkers] = useState<Position[]>([]);
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -96,11 +96,6 @@ const HomeScreen = () => {
       },
     );
   }, []);
-  // useEffect(() => {
-  //   setToiletMarkers(mockUp);
-  // }, []);
-  // useEffect(() => {}, [toiletMarkers]);
-  // console.log(toiletMarkers);
   useEffect(() => {
     const fetchData = async () => {
       const aom: any = await getLocation();
@@ -115,9 +110,6 @@ const HomeScreen = () => {
     // setToiletMarkers(aom);
   }, []);
   const RenderLocation = () => {
-    // if (toiletMarkers.length === 0) {
-    //   return <Text> no data </Text>;
-    // }dasdas
     // console.log('data 115', toiletMarkers);
     return (
       <>
@@ -159,48 +151,25 @@ const HomeScreen = () => {
         zoomControlEnabled={true}
         showsBuildings={true}
         toolbarEnabled={true}>
-        {/* {toiletMarkers?.length > 0
-          ? toiletMarkers.map((item, index) => {
-              console.log('item', item);
-              return <Marker key={index} coordinate={item} />;
-            })
-          : null} */}
-
-        {/* {toiletMarkers.length > 0 ? (
-          <>
-            <Marker
-              key={0}
-              coordinate={{
-                latitude: -13.8756756756788451,
-                longitude: 100.43290053771605
-              }}
-            />
-            <Text>{toiletMarkers[0].latitude}</Text>
-          </>
-        ) : null} */}
-        {/* <Marker key={0} coordinate={toiletMarkers[0]} /> */}
         <RenderLocation></RenderLocation>
         <Marker title="test" description="KMUTT" coordinate={pos} />
-        {/* <Marker
-          title='test'
-          description='KMUTT'
-          coordinate={{
-            latitude: -27.8756756756788451,
-            longitude: 100.43290053771605
-          }}
-        /> */}
       </MapView>
-      {/* <View>
-        <Button
-          title="standard"
-          onPress={() => setCurrentType(MapType.standard)}
-        />
-        <Button title="hybrid" onPress={() => setCurrentType(MapType.hybrid)} />
-        <Button
-          title="Profile"
-          onPress={() => navigation.navigate('Profile')}
-        />
-      </View> */}
+      <View
+        style={{
+          position: 'absolute', //use absolute position to show button on top of the map
+          top: 25, //for center align
+          right: 25,
+          alignSelf: 'flex-end', //for align to right
+        }}>
+        <SafeAreaView>
+          <TouchableOpacity
+            // colors={['#FAC353', '#FFA897']}
+            style={styles.btnStackSimple_44}
+            onPress={callBoth}>
+            <StackSimple size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
     </View>
   );
 };
@@ -210,5 +179,16 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  btnStackSimple_44: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: '#F4F6FD',
+    top: 35,
+    left: 16,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
