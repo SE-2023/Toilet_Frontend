@@ -41,9 +41,7 @@ function UpdateProfile() {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
-  const [profilePicture, setprofilePicture] = useState(
-    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fcampus%2F1396205%2F&psig=AOvVaw0ckGPXqJGrYg0WY9yn72A6&ust=1675321175511000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCEpfDf8_wCFQAAAAAdAAAAABAE',
-  );
+  const [profilePicture, setprofilePicture] = useState('');
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
   const navigation =
@@ -61,6 +59,7 @@ function UpdateProfile() {
   };
   const chooseImage = async () => {
     let options: any = {
+      includeBase64: true,
       title: 'Select Image',
       customButtons: [
         {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
@@ -71,7 +70,7 @@ function UpdateProfile() {
       },
     };
     launchImageLibrary(options, async (response: any) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -83,10 +82,11 @@ function UpdateProfile() {
         // const pic = await fileToBase64(response.assets);
         // console.log(pic);
 
-        const source: any = response.assets[0].uri;
-
+        // const source: any = response.assets[0].uri;
+        // const aom = await fileToBase64(source);
         // You can also display the image using data:
-        // const source: any = {uri: 'data:image/jpeg;base64,' + response.data};
+        const source: any =
+          'data:image/jpeg;base64,' + response.assets[0].base64;
         console.log(source);
         // this.setState({
         //  filePath: response,
@@ -94,7 +94,7 @@ function UpdateProfile() {
         //  fileUri: response.uri
         // });
         setprofilePicture(source);
-        console.log('data95', profilePicture);
+        // console.log('data95', profilePicture);
       }
     });
   };
