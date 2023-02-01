@@ -41,7 +41,9 @@ function UpdateProfile() {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
-  const [profilePicture, setprofilePicture] = useState('');
+  const [profilePicture, setprofilePicture] = useState(
+    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fcampus%2F1396205%2F&psig=AOvVaw0ckGPXqJGrYg0WY9yn72A6&ust=1675321175511000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCEpfDf8_wCFQAAAAAdAAAAABAE',
+  );
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
   const navigation =
@@ -81,7 +83,7 @@ function UpdateProfile() {
         // const pic = await fileToBase64(response.assets);
         // console.log(pic);
 
-        const source: any = {uri: response.assets.uri};
+        const source: any = response.assets[0].uri;
 
         // You can also display the image using data:
         // const source: any = {uri: 'data:image/jpeg;base64,' + response.data};
@@ -92,6 +94,7 @@ function UpdateProfile() {
         //  fileUri: response.uri
         // });
         setprofilePicture(source);
+        console.log('data95', profilePicture);
       }
     });
   };
@@ -180,7 +183,7 @@ function UpdateProfile() {
                 theme={theme}
                 style={styles.bgTextInput}
                 mode="outlined"
-                onChangeText={text => setEmail(text)}
+                onChangeText={text => setprofilePicture(text)}
               />
             </View>
 
