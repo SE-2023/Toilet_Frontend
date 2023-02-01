@@ -41,7 +41,9 @@ function UpdateProfile() {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
-  const [profilePicture, setprofilePicture] = useState('');
+  const [profilePicture, setprofilePicture] = useState(
+    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fnews%2F&psig=AOvVaw2LozT_eZjCaKky5wHekfdr&ust=1675358692831000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPD1ltLr9PwCFQAAAAAdAAAAABAE',
+  );
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
   const navigation =
@@ -103,6 +105,7 @@ function UpdateProfile() {
     setFirstname(params.firstname);
     setLastname(params.lastname);
     setPhoneNum(params.phone);
+    setprofilePicture(params.profile_picture);
   }, []);
 
   return (
@@ -135,10 +138,7 @@ function UpdateProfile() {
 
           <View style={styles.circle}></View>
 
-          <Image
-            source={{uri: params.profile_picture}}
-            style={styles.profile}
-          />
+          <Image source={{uri: profilePicture}} style={styles.profile} />
 
           <View style={styles.textInputSmall}>
             <View>
