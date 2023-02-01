@@ -92,6 +92,7 @@ function Profile() {
       lastname: profile.lastname,
       phone: profile.phone,
       email: profile.email,
+      profile_picture: profile.profile_picture,
     });
   };
 

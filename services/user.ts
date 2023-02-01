@@ -5,6 +5,7 @@ interface IupdateUser {
   lastname: string;
   phone: string;
   //   email: string;
+  profile_picture: string;
 }
 
 export const updateProfile = async (uid: string, body: IupdateUser) => {

@@ -19,6 +19,7 @@ export type ProfileParamList = {
     email: string;
     // setEmail: (value: string) => void;
     // onSubmit: () => void;
+    profile_picture: string;
   };
 };
 const ProfileStack = () => {

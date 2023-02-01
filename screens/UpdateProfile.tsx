@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Button,
   Platform,
+  Alert,
 } from 'react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import profile from '../assets/profile.jpg';
@@ -19,12 +20,15 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ProfileParamList} from '../stacks/ProfileStack';
 import {updateProfile} from '../services/user';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {fileToBase64} from '../utils/convert';
 
 export interface IProfileEdit {
   firstname: string;
   lastname: string;
   phone: string;
   email: string;
+  profile_picture: string;
 }
 
 const {width} = Dimensions.get('window');
@@ -37,20 +41,61 @@ function UpdateProfile() {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
+  const [profilePicture, setprofilePicture] = useState('');
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
   const navigation =
     useNavigation<NativeStackNavigationProp<ProfileParamList>>();
-  console.log('props edit profile', params);
+  // console.log('props edit profile', params);
   const onSubmit = async () => {
     const body = {
       firstname: firstname,
       lastname: lastname,
       phone: phoneNum,
+      profile_picture: profilePicture,
     };
     await updateProfile(params._id, body);
     navigation.replace('Profile');
   };
+  const chooseImage = async () => {
+    let options: any = {
+      title: 'Select Image',
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, async (response: any) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        // const pic = await fileToBase64(response.assets);
+        // console.log(pic);
+
+        const source: any = {uri: response.assets.uri};
+
+        // You can also display the image using data:
+        // const source: any = {uri: 'data:image/jpeg;base64,' + response.data};
+        console.log(source);
+        // this.setState({
+        //  filePath: response,
+        //  fileData: response.data,
+        //  fileUri: response.uri
+        // });
+        setprofilePicture(source);
+      }
+    });
+  };
+
   useEffect(() => {
     setFirstname(params.firstname);
     setLastname(params.lastname);
@@ -81,13 +126,16 @@ function UpdateProfile() {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <TouchableOpacity style={styles.btnCircle_34}>
+          <TouchableOpacity style={styles.btnCircle_34} onPress={chooseImage}>
             <Camera size={18} weight="fill" color="#FFA897" />
           </TouchableOpacity>
 
           <View style={styles.circle}></View>
 
-          <Image source={profile} style={styles.profile} />
+          <Image
+            source={{uri: params.profile_picture}}
+            style={styles.profile}
+          />
 
           <View style={styles.textInputSmall}>
             <View>
