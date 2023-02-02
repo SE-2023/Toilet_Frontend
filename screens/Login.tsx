@@ -60,12 +60,12 @@ function Login({navigation}: {navigation: any}) {
         <View
           // borderBottomLeftRadius={60}
           // overflow='hidden'
-          height={height * 0.4}>
+          style={{height: height * 0.4}}>
           <Image source={bgSUKA} style={{width, height}} />
         </View>
       </View>
 
-      <Text style={styles.title}>Log In</Text>
+      <Text style={styles.title}>Sign In</Text>
       <View style={{alignItems: 'center'}}>
         <Image source={LogoSUKA} style={styles.logo} />
       </View>
@@ -120,7 +120,7 @@ function Login({navigation}: {navigation: any}) {
                 left: 22,
                 top: 14,
               }}>
-              CONTINUE
+              SIGN IN
             </Text>
             <CaretRight
               size={24}
@@ -157,7 +157,7 @@ function Login({navigation}: {navigation: any}) {
               right: 22,
               top: 14,
             }}>
-            MAP
+            BACK
           </Text>
           {/* <GradientText text= 'MAP' style={{fontFamily: 'Fredoka-SemiBold', fontSize: 16}}/> */}
         </TouchableOpacity>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 48,
-    width: 145,
+    width: 120,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 48,
-    width: 100,
+    width: 108,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,

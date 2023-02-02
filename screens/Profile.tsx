@@ -173,18 +173,17 @@ function Profile() {
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </View>
 
-        <View style={styles.btnRectangle_2}>
+        <TouchableOpacity style={styles.btnRectangle_2} onPress={handleLogout}>
           <View style={styles.itemLeft}>
-            <TouchableOpacity
-              style={styles.bgIconLogout}
-              onPress={handleLogout}>
+            <TouchableOpacity style={styles.bgIconLogout}>
               <SignOut size={22} weight="fill" color="#2C2F4A" />
             </TouchableOpacity>
 
             <Text style={styles.textBody}>Logout</Text>
           </View>
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
-        </View>
+        </TouchableOpacity>
+
       </SafeAreaView>
     </ScrollView>
   );

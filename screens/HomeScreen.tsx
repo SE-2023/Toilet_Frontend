@@ -184,10 +184,10 @@ const styles = StyleSheet.create({
     width: 39,
     height: 39,
     borderRadius: 3,
-    backgroundColor: '#F4F6FD',
+    backgroundColor: '#fff',
     top: 35,
     left: 13.5,
-    elevation: 2,
+    elevation: 3,
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.8

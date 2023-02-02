@@ -27,7 +27,7 @@ function LogoutProfile() {
         <View
           // borderBottomLeftRadius={60}
           // overflow='hidden'
-          height={height * 0.4}>
+          style={{height: height * 0.4}}>
           <Image source={bgSUKA} style={{width, height}} />
         </View>
       </View>
@@ -48,7 +48,7 @@ function LogoutProfile() {
               fontFamily: 'Fredoka-SemiBold',
               fontSize: 16,
             }}>
-            LOG IN
+            SIGN IN
           </Text>
         </TouchableOpacity>
 
