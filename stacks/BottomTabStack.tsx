@@ -36,10 +36,11 @@ import Login from '../screens/Login';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import ProfileStack, {ProfileParamList} from './ProfileStack';
+import AddToiletStack, {AddToiletParamList} from './AddToiletStack';
 export type BottomTabParamList = {
   Home: undefined;
   AddList: undefined;
-  AddToilet: undefined;
+  AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
   Cartoon: undefined;
   ProfileStack: NavigatorScreenParams<ProfileParamList>;
 };
@@ -92,8 +93,8 @@ const BottomTabStack = () => {
           }}
         />
         <Stack.Screen
-          name="AddToilet"
-          component={AddToilet}
+          name="AddToiletStack"
+          component={AddToiletStack}
           options={{
             // tabBarLabel: 'หน้าแรก',
             // tabBarLabelStyle: {
