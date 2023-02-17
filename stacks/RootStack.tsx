@@ -9,11 +9,12 @@ import Login from '../screens/Login';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProfileStack, {ProfileParamList} from './ProfileStack';
+import AddToiletStack, {AddToiletParamList} from './AddToiletStack';
 
 export type RootStackList = {
   AuthStack: NavigatorScreenParams<AuthTabParamList>;
   MainStack: NavigatorScreenParams<BottomTabParamList>;
-  ProfileStack: NavigatorScreenParams<ProfileParamList>;
+  // AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
 };
 
 const RootStack = () => {
@@ -40,11 +41,13 @@ const RootStack = () => {
         initialRouteName="MainStack"
         screenOptions={{
           headerShown: false,
+          statusBarHidden: true,
         }}>
         {/* {isLoggedIn ? ( */}
         <Stack.Screen name="MainStack" component={BottomTabStack} />
         {/* ) : ( */}
         <Stack.Screen name="AuthStack" component={AuthStack} />
+        {/* <Stack.Screen name="AddToiletStack" component={AddToiletStack} /> */}
         {/* <Stack.Screen name="ProfileStack" component={ProfileStack} /> */}
         {/* )} */}
         {/* <Stack.Screen name="Login" component={Login} /> */}

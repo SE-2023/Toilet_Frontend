@@ -5,10 +5,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthContext from '../context/AuthContext';
 import RequireLogin from '../components/RequireLogin';
 import AddToilet from '../screens/AddToilet';
-import AddT2 from '../screens/AddT2';
+import AddDetailToilet from '../screens/AddDetailToilet';
+import AddDetailToilet2 from '../screens/AddDetailToilet 2';
 export type AddToiletParamList = {
   AddToilet: undefined;
-  AddT2: {
+  AddDetailToilet2: {
     _id: string;
     latitude: number;
     longitude: number;
@@ -25,7 +26,7 @@ const AddToiletStack = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="AddToilet" component={AddToilet} />
-        <Stack.Screen name="AddT2" component={AddT2} />
+        <Stack.Screen name="AddDetailToilet2" component={AddDetailToilet2} />
       </Stack.Navigator>
     </RequireLogin>
   );

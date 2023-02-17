@@ -17,6 +17,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Buttonmap from '../components/Buttonmap';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ProfileParamList} from '../stacks/ProfileStack';
+import {BottomTabParamList} from '../stacks/BottomTabStack';
 /*const initialState = {
   latitude,
   longitud:null,
@@ -56,9 +58,13 @@ enum MapType {
 //   Home: undefined;
 //   Profile: undefined;
 // };
+
 const HomeScreen = () => {
-  // const navigation =
-  //   useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<BottomTabParamList>>();
+  const gotoDetails = () => {
+    navigation.navigate('AddList');
+  };
   const [pos, setPos] = useState<Position>({
     latitude: 0,
     longitude: 0,
@@ -121,7 +127,9 @@ const HomeScreen = () => {
                 latitude: item.latitude,
                 longitude: item.longitude,
               }}
-              title={item.title}></Marker>
+              title={item.title}
+              description={item._id}
+              onPress={gotoDetails}></Marker>
           );
         })}
       </>
@@ -190,6 +198,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: 0.8
+    opacity: 0.8,
   },
 });

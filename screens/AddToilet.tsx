@@ -50,7 +50,7 @@ const AddToilet = () => {
     getUserProfile();
   }, []);
   const gotoAddtoilet = () => {
-    navigation.navigate('AddT2', {
+    navigation.navigate('AddDetailToilet2', {
       _id: profile._id,
       latitude: pos.latitude,
       longitude: pos.longitude,
