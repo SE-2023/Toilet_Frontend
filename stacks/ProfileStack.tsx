@@ -31,6 +31,7 @@ const ProfileStack = () => {
         initialRouteName="Profile"
         screenOptions={{
           headerShown: false,
+          // navigationBarHidden: true,
         }}>
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="UpdateProfile" component={UpdateProfile} />

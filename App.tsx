@@ -6,12 +6,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './stacks/AuthStack';
 import RootStack from './stacks/RootStack';
 import Buttonmap from './components/Buttonmap';
+import AddDetailToilet from './screens/AddDetailToilet';
+import AddDetailToilet2 from './screens/AddDetailToilet 2';
 
 const App = () => {
   return (
     <NavigationContainer>
       <RootStack />
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <AddDetailToilet></AddDetailToilet>
+    // </NavigationContainer>
   );
 };
 

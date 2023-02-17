@@ -33,10 +33,18 @@ import AddToilet from '../screens/AddToilet';
 import Cartoon from '../screens/Cartoon';
 import AddList from '../screens/AddList';
 import Login from '../screens/Login';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigatorScreenParams} from '@react-navigation/native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+  useNavigation,
+} from '@react-navigation/native';
 import ProfileStack, {ProfileParamList} from './ProfileStack';
 import AddToiletStack, {AddToiletParamList} from './AddToiletStack';
+import {RootStackList} from './RootStack';
 export type BottomTabParamList = {
   Home: undefined;
   AddList: undefined;
@@ -47,11 +55,12 @@ export type BottomTabParamList = {
 export type NaviTabParamList = {
   Login: undefined;
 };
-
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 const BottomTabStack = () => {
   const Stack = createBottomTabNavigator<BottomTabParamList>();
+  const Stack2 = createBottomTabNavigator<RootStackList>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   return (
     <>
       <StatusBar barStyle="light-content" />
@@ -64,8 +73,7 @@ const BottomTabStack = () => {
           //   height: 65,
           //   paddingBottom: 5,
           // },
-        }}
-        tabBar={props => <AnimatedTabBar {...props} />}>
+        }}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -74,6 +82,7 @@ const BottomTabStack = () => {
             // tabBarLabelStyle: {
             //   fontSize: 15,
             // },
+
             tabBarIcon: ({color, size}) => (
               <MapTrifold color="#FFA897" size={28} weight="fill" />
             ),
@@ -87,6 +96,7 @@ const BottomTabStack = () => {
             // tabBarLabelStyle: {
             //   fontSize: 15,
             // },
+            tabBarStyle: {display: 'none'},
             tabBarIcon: ({color, size}) => (
               <Heart color="#FFA897" size={28} weight="fill" />
             ),
@@ -95,11 +105,16 @@ const BottomTabStack = () => {
         <Stack.Screen
           name="AddToiletStack"
           component={AddToiletStack}
+          // onPress={() =>
+          //   navigation.navigate('AddToiletStack', {screen: 'AddToilet'})
+          // }
           options={{
             // tabBarLabel: 'หน้าแรก',
             // tabBarLabelStyle: {
             //   fontSize: 15,
             // },
+            // tabBarStyle: {display: 'flex'},
+            tabBarHideOnKeyboard: true,
             tabBarIcon: ({color, size}) => (
               <Plus color="#FFA897" size={28} weight="fill" />
             ),
@@ -136,9 +151,9 @@ const BottomTabStack = () => {
   );
 };
 
-const PlaceholderScreen = () => {
-  return <View style={{flex: 1, backgroundColor: '#E5EAFA'}} />;
-};
+// const PlaceholderScreen = () => {
+//   return <View style={{flex: 1, backgroundColor: '#E5EAFA'}} />;
+// };
 
 const AnimatedTabBar = ({
   state: {index: activeIndex, routes},
@@ -152,7 +167,7 @@ const AnimatedTabBar = ({
   };
 
   const [layout, dispatch] = useReducer(reducer, []);
-  console.log(layout);
+  // console.log(layout);
 
   const handleLayout = (event: LayoutChangeEvent, index: number) => {
     dispatch({x: event.nativeEvent.layout.x, index});
@@ -176,7 +191,7 @@ const AnimatedTabBar = ({
         height={58}
         viewBox="0 0 110 60"
         style={[styles.activeBackground, animatedStyles]}
-        // fill="none"
+        fill="none"
         // {...props}
       >
         <Path
