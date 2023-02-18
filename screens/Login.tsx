@@ -37,6 +37,8 @@ function Login({navigation}: {navigation: any}) {
   const [email, setEmail] = useState('aom08@gmail.com');
   const [password, setPassword] = useState('0008');
   const {setLoggedIn} = useContext(AuthContext);
+  const [errorsEmail, setErrorsEmail] = useState('');
+  const [errorsPassword, setErrorsPassword] = useState('');
   const hardleLogin = async () => {
     const res: any = await signIn({
       email: email,
