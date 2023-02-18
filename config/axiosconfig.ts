@@ -24,6 +24,6 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
   return response.data;
 };
 const onResponseError = (err: AxiosError): Promise<AxiosError> => {
-  return Promise.reject(err);
+  return Promise.reject(err.response?.data);
 };
 axios.interceptors.response.use(onResponse, onResponseError);
