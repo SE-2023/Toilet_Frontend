@@ -30,6 +30,43 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
+import {BottomPopup} from '../components/BottomPopup';
+
+export const popuplist = [
+  {
+    id: 1,
+    icon: (
+      <Image
+        source={wc}
+        style={{
+          height: 24,
+          width: 24,
+        }}
+      />
+    ),
+    name: '  Public',
+  },
+  {
+    id: 2,
+    icon: <ForkKnife size={24} color="#2C2F4A" weight="fill" />,
+    name: '  Restaurant',
+  },
+  {
+    id: 3,
+    icon: <Tote size={24} color="#2C2F4A" weight="fill" />,
+    name: '  Store',
+  },
+  {
+    id: 4,
+    icon: <GasPump size={24} color="#2C2F4A" weight="fill" />,
+    name: '  Gas Station',
+  },
+  {
+    id: 5,
+    icon: <House size={24} color="#2C2F4A" weight="fill" />,
+    name: '  House',
+  },
+];
 
 const AddDetailToilet2 = () => {
   const [placeName, setPlaceName] = React.useState('');
@@ -49,29 +86,21 @@ const AddDetailToilet2 = () => {
   const [selectedTimeOpen, setSelectedTimeOpen] = useState('00 : 00');
   const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
   const [free, setfree] = useState(true);
-  // const {sendhandicap} = useContext(handicapContext);
+  let popupRef = React.createRef();
 
-  // useEffect(() => {
-  //   console.log(sendhandicap);
-  // }, [sendhandicap]);
-  // const showDatePicker = () => {
-  //   setDatePickerVisibility(true);
-  // };
-  // const hideDatePicker = () => {
-  //   setDatePickerVisibility(false);
-  // };
+  const onShowPopup = () => {
+    popupRef.show();
+  };
 
-  // const handleDateConfirm = date => {
-  //   console.warn("A date has been picked: ", date);
-  //   const dt = new Date(date);
-  //   const x = dt.toISOString().split('T');
-  //   const x1 = x[0].split('-');
-  //   console.log(x1[2] + '/' + x1[1] + '/' + x1[0]);
-  //   setSelectedDate(x1[2] + '/' + x1[1] + '/' + x1[0]);
-  //   hideDatePicker();
-  // };
+  const onClosePopup = () => {
+    popupRef.close();
+  };
 
   // OPEN
+  function padTo2Digits(num) {
+    return String(num).padStart(2, '0');
+  }
+
   const showTimeOpenPicker = () => {
     setTimeOpenPickerVisibility(true);
   };
@@ -81,10 +110,9 @@ const AddDetailToilet2 = () => {
   };
 
   const handleTimeOpenConfirm = (dateO: Date) => {
-    // console.warn("A date has been picked: ", date);
     const dtO = new Date(dateO);
-    // const x = dtO.toLocaleTimeString();
-    let timeO = dateO.getHours() + ' : ' + dateO.getMinutes();
+    const timeO =
+      padTo2Digits(dateO.getHours()) + ' : ' + padTo2Digits(dateO.getMinutes());
     console.log(timeO);
     setSelectedTimeOpen(timeO);
     hideTimeOpenPicker();
@@ -101,8 +129,8 @@ const AddDetailToilet2 = () => {
 
   const handleTimeCloseConfirm = (dateC: Date) => {
     const dtC = new Date(dateC);
-    // const y = dtC.toLocaleTimeString();
-    let timeC = dateC.getHours() + ' : ' + dateC.getMinutes();
+    const timeC =
+      padTo2Digits(dateC.getHours()) + ' : ' + padTo2Digits(dateC.getMinutes());
     console.log(timeC);
     setSelectedTimeClose(timeC);
     hideTimeClosePicker();
@@ -233,9 +261,16 @@ const AddDetailToilet2 = () => {
               <Text style={styles.textTypeLocation}>Public</Text>
             </View>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onShowPopup}>
               <Text style={styles.btnEdit}>EDIT</Text>
             </TouchableOpacity>
+            <BottomPopup
+              title="Type of location"
+              ref={target => (popupRef = target)}
+              onTouchOutside={onClosePopup}
+              data={popuplist}
+              animationType={'face'}
+            />
           </View>
         </View>
 
@@ -356,7 +391,6 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#2C2F4A',
-    // position: 'absolute',
     height: 52,
     width: '100%',
     zIndex: 1,

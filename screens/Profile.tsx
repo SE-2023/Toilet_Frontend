@@ -22,7 +22,6 @@ import {
   ClockCounterClockwise,
   SignOut,
 } from 'phosphor-react-native';
-import Page1 from './Page1';
 import RequireLogin from '../components/RequireLogin';
 import AuthContext from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -151,39 +150,38 @@ function Profile() {
           </View>
         </View>
 
-        <View style={styles.btnRectangle}>
+        <TouchableOpacity style={styles.btnRectangle}>
           <View style={styles.itemLeft}>
-            <TouchableOpacity style={styles.bgIconMyToilet}>
+            <View style={styles.bgIconMyToilet}>
               <Toilet size={22} weight="fill" color="#2C2F4A" />
-            </TouchableOpacity>
+            </View>
 
             <Text style={styles.textBody}>My Toilet</Text>
           </View>
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.btnRectangle_2}>
+        <TouchableOpacity style={styles.btnRectangle_2}>
           <View style={styles.itemLeft}>
-            <TouchableOpacity style={styles.bgIconHistory}>
+            <View style={styles.bgIconHistory}>
               <ClockCounterClockwise size={22} weight="fill" color="#2C2F4A" />
-            </TouchableOpacity>
+            </View>
 
             <Text style={styles.textBody}>History</Text>
           </View>
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
-        </View>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnRectangle_2} onPress={handleLogout}>
           <View style={styles.itemLeft}>
-            <TouchableOpacity style={styles.bgIconLogout}>
+            <View style={styles.bgIconLogout}>
               <SignOut size={22} weight="fill" color="#2C2F4A" />
-            </TouchableOpacity>
+            </View>
 
             <Text style={styles.textBody}>Logout</Text>
           </View>
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </TouchableOpacity>
-
       </SafeAreaView>
     </ScrollView>
   );
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 30,
-    top: 35,
+    top: 37,
     right: 16,
     elevation: 2,
     justifyContent: 'center',

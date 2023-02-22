@@ -8,6 +8,8 @@ import RootStack from './stacks/RootStack';
 import Buttonmap from './components/Buttonmap';
 import AddDetailToilet from './screens/AddDetailToilet';
 import AddDetailToilet2 from './screens/AddDetailToilet 2';
+import DetailToilet from './screens/DetailToilet';
+import Ratings from './screens/Ratings';
 
 const App = () => {
   return (
@@ -15,7 +17,7 @@ const App = () => {
       <RootStack />
     </NavigationContainer>
     // <NavigationContainer>
-    //   <AddDetailToilet></AddDetailToilet>
+    //   <Ratings />
     // </NavigationContainer>
   );
 };
