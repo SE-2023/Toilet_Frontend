@@ -37,17 +37,31 @@ function Login({navigation}: {navigation: any}) {
   const [email, setEmail] = useState('aom08@gmail.com');
   const [password, setPassword] = useState('0008');
   const {setLoggedIn} = useContext(AuthContext);
+  const [errorsEmail, setErrorsEmail] = useState('');
+  const [errorsPassword, setErrorsPassword] = useState('');
   const hardleLogin = async () => {
-    const res: any = await signIn({
-      email: email,
-      password: password,
-    });
-    console.log('res token', res);
-    if (res.message === 'success') {
-      AsyncStorage.setItem('token', res.token);
-      setLoggedIn(true);
-      console.log('token kkkkkkkkkk');
-      navigation.replace('MainStack', {screen: 'Home'});
+    try {
+      const res: any = await signIn({
+        email: email,
+        password: password,
+      });
+      console.log('res token', res);
+      if (res.message === 'success') {
+        AsyncStorage.setItem('token', res.token);
+        setLoggedIn(true);
+        console.log('token kkkkkkkkkk');
+        navigation.replace('MainStack', {screen: 'Home'});
+      }
+    } catch (err:any) {
+      setErrorsEmail('');
+      setErrorsPassword('');
+      err.errors.map( (item:any) => {
+        if(item.param === 'email'){
+          setErrorsEmail(item.msg);
+        } else if(item.param === 'password'){
+          setErrorsPassword(item.msg);
+        }
+      })
     }
   };
 
@@ -80,6 +94,7 @@ function Login({navigation}: {navigation: any}) {
             mode="outlined"
             onChangeText={text => setEmail(text)}
           />
+          <Text style={styles.error}>{errorsEmail}</Text>
         </View>
 
         <View>
@@ -93,6 +108,7 @@ function Login({navigation}: {navigation: any}) {
             // right={<TextInput.Icon icon="eye" />}
             onChangeText={text => setPassword(text)}
           />
+          <Text style={styles.error}>{errorsPassword}</Text>
         </View>
       </View>
 
@@ -251,5 +267,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
   },
+  error: {
+    color: 'red'
+  }
 });
 export default Login;

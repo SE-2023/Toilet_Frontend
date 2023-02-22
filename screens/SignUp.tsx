@@ -24,6 +24,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {signUp} from '../services/auth';
 import AuthContext from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message'
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -37,23 +38,55 @@ function SignUp({navigation}: {navigation: any}) {
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
   const {setLoggedIn} = useContext(AuthContext);
+  const [errorsFirstname, setErrorsFirstname] = useState('');
+  const [errorsLastname, setErrorsLastname] = useState('');
+  const [errorsPhone, setErrorsPhone] = useState('');
+  const [errorsEmail, setErrorsEmail] = useState('');
+  const [errorsPassword, setErrorsPassword] = useState('');
+  const [errorsConpassword, setErrorsConpassword] = useState('');
   const handleSignUp = async () => {
-    const res: any = await signUp({
+    try {
+      const res: any = await signUp({
       firstname: firstname,
       lastname: lastname,
       phone: phoneNum,
       email: email,
       password: password,
       conPassword: conPassword,
-    });
-    console.log('res token', res);
-    if (res.message === 'created') {
-      AsyncStorage.setItem('token', res.token);
-      setLoggedIn(true);
-      console.log('token kkkkkkkkkk');
-      navigation.replace('MainStack', {screen: 'Home'});
+     });
+      console.log('res token', res);
+      if (res.message === 'created') {
+        AsyncStorage.setItem('token', res.token);
+        setLoggedIn(true);
+        console.log('token kkkkkkkkkk');
+        navigation.replace('MainStack', {screen: 'Home'});
+      }
+      console.log(res);
+    } catch (err:any) {
+      setErrorsFirstname('');
+      setErrorsLastname('');
+      setErrorsPhone('');
+      setErrorsEmail('');
+      setErrorsPassword('');
+      setErrorsConpassword('');
+      err.errors.map( (item:any) => {
+        if(item.param === 'firstname'){
+          setErrorsFirstname(item.msg);
+        } else if(item.param === 'lastname'){
+          setErrorsLastname(item.msg);
+        } else if(item.param === 'phone'){
+          setErrorsPhone(item.msg);
+        } else if(item.param === 'email'){
+          setErrorsEmail(item.msg);
+        } else if(item.param === 'password'){
+          setErrorsPassword(item.msg);
+        } else if(item.param === 'conPassword'){
+          setErrorsConpassword(item.msg);
+        }
+      })
+      console.log(err);
     }
-    console.log(res);
+    
   };
   return (
     <KeyboardAwareScrollView
@@ -80,6 +113,7 @@ function SignUp({navigation}: {navigation: any}) {
             mode="outlined"
             onChangeText={text => setFirstname(text)}
           />
+          <Text style={styles.error}>{errorsFirstname}</Text>
         </View>
 
         <View style={styles.textInputRight}>
@@ -91,6 +125,7 @@ function SignUp({navigation}: {navigation: any}) {
             mode="outlined"
             onChangeText={text => setLastname(text)}
           />
+          <Text style={styles.error}>{errorsLastname}</Text>
         </View>
       </View>
 
@@ -104,6 +139,7 @@ function SignUp({navigation}: {navigation: any}) {
             mode="outlined"
             onChangeText={text => setPhoneNum(text)}
           />
+          <Text style={styles.error}>{errorsPhone}</Text>
         </View>
 
         <View style={{paddingBottom: 20}}>
@@ -115,6 +151,7 @@ function SignUp({navigation}: {navigation: any}) {
             mode="outlined"
             onChangeText={text => setEmail(text)}
           />
+          <Text style={styles.error}>{errorsEmail}</Text>
         </View>
 
         <View style={{paddingBottom: 20}}>
@@ -128,6 +165,7 @@ function SignUp({navigation}: {navigation: any}) {
             // right={<TextInput.Icon icon="eye" />}
             onChangeText={text => setPassword(text)}
           />
+          <Text style={styles.error}>{errorsPassword}</Text>
         </View>
 
         <View>
@@ -141,6 +179,7 @@ function SignUp({navigation}: {navigation: any}) {
             // right={<TextInput.Icon icon="eye" />}
             onChangeText={text => setConPassword(text)}
           />
+          <Text style={styles.error}>{errorsConpassword}</Text>
         </View>
       </View>
 
@@ -303,6 +342,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
   },
+  error: {
+    color: 'red'
+  }
 });
 
 export default SignUp;
