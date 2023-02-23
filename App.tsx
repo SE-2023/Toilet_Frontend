@@ -10,15 +10,16 @@ import AddDetailToilet from './screens/AddDetailToilet';
 import AddDetailToilet2 from './screens/AddDetailToilet 2';
 import DetailToilet from './screens/DetailToilet';
 import Ratings from './screens/Ratings';
+import Search from './screens/Search';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
     // <NavigationContainer>
-    //   <Ratings />
+    //   <RootStack />
     // </NavigationContainer>
+    <NavigationContainer>
+      <Search />
+    </NavigationContainer>
   );
 };
 
