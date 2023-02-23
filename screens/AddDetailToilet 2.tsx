@@ -30,7 +30,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
-import {BottomPopup} from '../components/BottomPopup';
+import BottomPopup from '../components/BottomPopup';
 
 export const popuplist = [
   {
@@ -72,7 +72,7 @@ const AddDetailToilet2 = () => {
   const [placeName, setPlaceName] = React.useState('');
   const [contact, setContact] = React.useState('');
   const [cost, setCost] = React.useState('');
-  const [type, setType] = React.useState('');
+  const [type, setType] = React.useState(popuplist[0].name);
   const [handicap, setHandicap] = React.useState(false);
   // const childToParent = (childdata: any) => {
   //   setHandicap(childdata);
@@ -88,16 +88,16 @@ const AddDetailToilet2 = () => {
   const [free, setfree] = useState(true);
   let popupRef = React.createRef();
 
-  const onShowPopup = () => {
-    popupRef.show();
-  };
+  // const onShowPopup = () => {
+  //   popupRef.show();
+  // };
 
-  const onClosePopup = () => {
-    popupRef.close();
-  };
-
+  // const onClosePopup = () => {
+  //   popupRef.close();
+  // };
+  const [showbuttompopup, setShowbuttompopup] = useState(false);
   // OPEN
-  function padTo2Digits(num) {
+  function padTo2Digits(num: any) {
     return String(num).padStart(2, '0');
   }
 
@@ -160,7 +160,7 @@ const AddDetailToilet2 = () => {
       handicap: handicap,
       free: free,
       createBy: params._id,
-      type: 'test',
+      type: type,
       timeOpen: selectedTimeOpen,
       timeClose: selectedTimeClose,
       toiletpicture: [],
@@ -258,18 +258,21 @@ const AddDetailToilet2 = () => {
           <View style={styles.btnTypeLocation}>
             <View style={styles.itemLeft}>
               <Image source={wc} style={styles.iconTypeLocation} />
-              <Text style={styles.textTypeLocation}>Public</Text>
+              <Text style={styles.textTypeLocation}>{type}</Text>
             </View>
 
-            <TouchableOpacity onPress={onShowPopup}>
+            <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
               <Text style={styles.btnEdit}>EDIT</Text>
             </TouchableOpacity>
             <BottomPopup
               title="Type of location"
-              ref={target => (popupRef = target)}
-              onTouchOutside={onClosePopup}
               data={popuplist}
-              animationType={'face'}
+              show={showbuttompopup}
+              close={() => setShowbuttompopup(false)}
+              onSelected={value => {
+                setType(value);
+                setShowbuttompopup(false);
+              }}
             />
           </View>
         </View>

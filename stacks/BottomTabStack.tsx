@@ -45,8 +45,9 @@ import {
 import ProfileStack, {ProfileParamList} from './ProfileStack';
 import AddToiletStack, {AddToiletParamList} from './AddToiletStack';
 import {RootStackList} from './RootStack';
+import HomeStack, {HomeParamList} from './HomeStack';
 export type BottomTabParamList = {
-  Home: undefined;
+  HomeStack: NavigatorScreenParams<HomeParamList>;
   AddList: undefined;
   AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
   Cartoon: undefined;
@@ -65,7 +66,7 @@ const BottomTabStack = () => {
     <>
       <StatusBar barStyle="light-content" />
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="HomeStack"
         screenOptions={{
           headerShown: false,
           tabBarHideOnKeyboard: true,
@@ -75,8 +76,8 @@ const BottomTabStack = () => {
           // },
         }}>
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="HomeStack"
+          component={HomeStack}
           options={{
             // tabBarLabel: 'หน้าแรก',
             // tabBarLabelStyle: {

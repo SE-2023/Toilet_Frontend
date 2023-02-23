@@ -24,7 +24,7 @@ import {BottomTabParamList} from '../stacks/BottomTabStack';
 import toilet from '../assets/toilet.jpg';
 import wc from '../assets/wc.png';
 import Map from '../assets/Map.png';
-
+import {HomeParamList} from '../stacks/HomeStack';
 /*const initialState = {
   latitude,
   longitud:null,
@@ -66,20 +66,12 @@ enum MapType {
 // };
 
 const HomeScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<BottomTabParamList>>();
-  const gotoDetails = () => {
-    navigation.navigate('AddList');
-  };
   const [pos, setPos] = useState<Position>({
     latitude: 0,
     longitude: 0,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
-  const onClick = () => {
-    console.log('call api detail toilet');
-  };
   const [currentType, setCurrentType] = useState(MapType.standard);
   const [aom, setaom] = useState(true);
   function callBoth() {
@@ -125,7 +117,46 @@ const HomeScreen = () => {
     // setToiletMarkers(aom);
   }, []);
   const RenderLocation = () => {
+    const navigation =
+      useNavigation<NativeStackNavigationProp<HomeParamList>>();
+    interface Toilet {
+      _id: string;
+      latitude: number;
+      longitude: number;
+      title: string;
+      contact: string;
+      cost: string;
+      handicap: boolean;
+      free: boolean;
+      type: string;
+      timeOpen: string;
+      timeClose: string;
+    }
+    const [IDtoilet, setIDtoilet] = useState<Toilet | undefined>();
+    // const onData = (value: any) => {
+    //   setIDtoilet(value);
+    //   console.log(IDtoilet);
+    // };
+    const onClick = () => {
+      console.log('call api detail toilet', IDtoilet);
+      if (IDtoilet) {
+        navigation.navigate('DetailToilet', {
+          _id: IDtoilet._id,
+          latitude: IDtoilet.latitude,
+          longitude: IDtoilet.longitude,
+          title: IDtoilet.title,
+          contact: IDtoilet.contact,
+          cost: IDtoilet.cost,
+          handicap: IDtoilet.handicap,
+          free: IDtoilet.free,
+          type: IDtoilet.type,
+          timeOpen: IDtoilet.timeOpen,
+          timeClose: IDtoilet.timeClose,
+        });
+      }
+    };
     // console.log('data 115', toiletMarkers);
+
     return (
       <>
         {toiletMarkers.map((item: any, index) => {
@@ -138,7 +169,8 @@ const HomeScreen = () => {
                 longitude: item.longitude,
               }}
               title={item.title}
-              description={item._id}>
+              description={item._id}
+              onPress={() => setIDtoilet(item)}>
               <Callout tooltip onPress={onClick}>
                 <View>
                   <View style={styles.bubble}>
@@ -163,7 +195,7 @@ const HomeScreen = () => {
 
                       <View style={styles.tagType}>
                         {/* <Image source={wc} style={styles.iconType} /> */}
-                        <Text style={styles.textType}>Public</Text>
+                        <Text style={styles.textType}>{item.type}</Text>
                       </View>
                     </View>
 
@@ -179,7 +211,9 @@ const HomeScreen = () => {
                             marginRight: 5,
                           }}
                         />
-                        <Text style={styles.time}>00:00 - 00:00</Text>
+                        <Text style={styles.time}>
+                          {item.timeOpen} - {item.timeClose}
+                        </Text>
                       </View>
                       <View style={styles.itemRightBottom}>
                         <Star
