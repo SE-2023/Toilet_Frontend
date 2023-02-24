@@ -14,7 +14,7 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import {StackSimple, Star, Wheelchair, Clock} from 'phosphor-react-native';
+import {StackSimple, Star, Wheelchair, Clock, ForkKnife, Tote, GasPump, House} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Buttonmap from '../components/Buttonmap';
@@ -23,8 +23,10 @@ import {ProfileParamList} from '../stacks/ProfileStack';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import toilet from '../assets/toilet.jpg';
 import wc from '../assets/wc.png';
+
 import Map from '../assets/Map.png';
 import {HomeParamList} from '../stacks/HomeStack';
+
 /*const initialState = {
   latitude,
   longitud:null,
@@ -172,7 +174,7 @@ const HomeScreen = () => {
           };
           return (
             <Marker
-              image={require('../assets/Map.png')}
+              image={require('../assets/Map2.png')}
               key={index}
               coordinate={{
                 latitude: item.latitude,
@@ -275,7 +277,7 @@ const HomeScreen = () => {
           title="test"
           description="KMUTT"
           coordinate={pos}
-          image={require('../assets/Map.png')}
+          image={require('../assets/Map2.png')}
         />
       </MapView>
       <View
@@ -287,11 +289,53 @@ const HomeScreen = () => {
         }}>
         <SafeAreaView>
           <TouchableOpacity
-            // colors={['#FAC353', '#FFA897']}
             style={styles.btnStackSimple_44}
             onPress={callBoth}>
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnBaht_44}
+            onPress={callBoth}>
+            <Text style={styles.baht}>฿</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnWheelchair_44}
+            onPress={callBoth}>
+            <Wheelchair size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnWc_44}
+            onPress={callBoth}>
+            <Image source={wc} style={styles.iconPublic} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnForkKnife_44}
+            onPress={callBoth}>
+            <ForkKnife size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnTote_44}
+            onPress={callBoth}>
+            <Tote size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnGasPump_44}
+            onPress={callBoth}>
+            <GasPump size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnHouse_44}
+            onPress={callBoth}>
+            <House size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+
         </SafeAreaView>
       </View>
     </View>
@@ -311,7 +355,102 @@ const styles = StyleSheet.create({
     height: 39,
     borderRadius: 3,
     backgroundColor: '#fff',
-    top: 35,
+    marginTop: 35,
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  btnBaht_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  baht: {
+    fontSize: 18,
+    fontFamily: 'Fredoka-Medium',
+    color: '#2C2F4A',
+  },
+  btnWheelchair_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  btnWc_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  iconPublic: {
+    width: 22,
+    height: 22,
+    opacity: 0.8,
+  },
+  btnForkKnife_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  btnTote_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  btnGasPump_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+  btnHouse_44: {
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginBottom: 10,
     left: 13.5,
     elevation: 3,
     justifyContent: 'center',
