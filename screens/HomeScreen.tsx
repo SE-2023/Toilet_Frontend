@@ -156,10 +156,20 @@ const HomeScreen = () => {
       }
     };
     // console.log('data 115', toiletMarkers);
-
     return (
       <>
         {toiletMarkers.map((item: any, index) => {
+          const Kuy = (): JSX.Element | null => {
+            if (item.free === true) {
+              return (
+                <View style={styles.tagFree}>
+                  <Text style={styles.textFree}>฿ Free</Text>
+                </View>
+              );
+            } else {
+              return null;
+            }
+          };
           return (
             <Marker
               image={require('../assets/Map.png')}
@@ -176,9 +186,7 @@ const HomeScreen = () => {
                   <View style={styles.bubble}>
                     <Image source={toilet} style={styles.imageToilet} />
                     <View style={styles.itemLeftTop}>
-                      <View style={styles.tagFree}>
-                        <Text style={styles.textFree}>฿ Free</Text>
-                      </View>
+                      <Kuy></Kuy>
 
                       <View style={styles.tagHandicap}>
                         <Wheelchair
