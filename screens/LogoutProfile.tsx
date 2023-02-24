@@ -32,8 +32,6 @@ function LogoutProfile() {
         </View>
       </View>
 
-      <Text style={styles.title}>Profile</Text>
-
       <View style={styles.box}>
         <View style={styles.circle}></View>
 
@@ -53,7 +51,7 @@ function LogoutProfile() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.btnSignup}
+          style={styles.btnSignUp}
           onPress={() => navigation.navigate('AuthStack', {screen: 'SignUp'})}>
           <Text
             style={{
@@ -74,16 +72,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E5EAFA',
     paddingHorizontal: 16,
-  },
-
-  // Header
-  title: {
-    position: 'absolute',
-    top: 40,
-    left: 16,
-    fontFamily: 'Fredoka-Medium',
-    fontSize: 32,
-    color: '#F4F6FD',
   },
 
   // Profile
@@ -143,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 6,
   },
-  btnSignup: {
+  btnSignUp: {
     backgroundColor: '#FFA897',
     justifyContent: 'center',
     alignItems: 'center',
