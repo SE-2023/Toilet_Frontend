@@ -16,16 +16,23 @@ import {
   Wheelchair,
   Heart,
   Star,
-  CaretRight
+  CaretRight,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import Review from '../components/Review';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {AddToiletParamList} from '../stacks/AddToiletStack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {HomeParamList} from '../stacks/HomeStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
 const height = width * aspectRatio;
 
 const DetailToilet = () => {
+  const {params} = useRoute<RouteProp<HomeParamList, 'DetailToilet'>>();
+  console.log(params);
+  const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
@@ -34,13 +41,13 @@ const DetailToilet = () => {
       <TouchableOpacity style={styles.btnBack}>
         <CaretLeft size={24} weight="bold" color="#2C2F4A" />
       </TouchableOpacity>
-      
+
       <View>
         <ScrollView>
           <View style={{height: height * 0.5}}></View>
           <View style={styles.mainContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>Place Name</Text>
+              <Text style={styles.title}>{params.title}</Text>
             </View>
 
             <View style={styles.tagContainer}>
@@ -91,7 +98,7 @@ const DetailToilet = () => {
                 <Text style={styles.phone}>000-000-0000</Text>
               </View>
             </View>
-            
+
             <View style={styles.btnContainer}>
               <TouchableOpacity style={styles.btnHeart}>
                 <Heart size={20} color="#777790" />
@@ -99,11 +106,13 @@ const DetailToilet = () => {
 
               <TouchableOpacity style={styles.btnReserve}>
                 <Text style={styles.textReserve}>RESERVE</Text>
-                <Text style={styles.textPrice}>  (฿ 0)</Text>
+                <Text style={styles.textPrice}> (฿ 0)</Text>
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnRate}>
+            <TouchableOpacity
+              style={styles.btnRate}
+              onPress={() => navigation.navigate('Ratings')}>
               <View style={styles.itemLeft}>
                 <Text style={styles.titleRate}>Rate</Text>
                 <Star size={17} weight="fill" color="#FAC353" />
@@ -114,10 +123,11 @@ const DetailToilet = () => {
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              <Review/>
+              <Review />
             </View>
           </View>
-          <View style={{height: height * 0.25, backgroundColor: '#F4F6FD'}}></View>
+          <View
+            style={{height: height * 0.25, backgroundColor: '#F4F6FD'}}></View>
         </ScrollView>
       </View>
     </View>
