@@ -31,7 +31,6 @@ import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
 import BottomPopup from '../components/BottomPopup';
-import {launchImageLibrary} from 'react-native-image-picker';
 
 export const popuplist = [
   {
@@ -75,9 +74,7 @@ const AddDetailToilet2 = () => {
   const [cost, setCost] = React.useState('');
   const [type, setType] = React.useState(popuplist[0].name);
   const [handicap, setHandicap] = React.useState(false);
-  const [toiletPicture, settoiletPicture] = useState(
-    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fnews%2F&psig=AOvVaw2LozT_eZjCaKky5wHekfdr&ust=1675358692831000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPD1ltLr9PwCFQAAAAAdAAAAABAE',
-  );
+  const [toiletPicture, settoiletPicture] = useState("");
   // const childToParent = (childdata: any) => {
   //   setHandicap(childdata);
   // };
@@ -152,6 +149,7 @@ const AddDetailToilet2 = () => {
       }
     });
   };
+
 
   // const onShowPopup = () => {
   //   popupRef.show();
@@ -239,25 +237,28 @@ const AddDetailToilet2 = () => {
       style={styles.bgColor}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.btnBack}
-          onPress={() => navigation.goBack()}>
-          <CaretLeft size={24} color="#F4F6FD" />
-        </TouchableOpacity>
+        <CaretLeft
+          size={24}
+          color="#F4F6FD"
+          style={{
+            position: 'absolute',
+            left: 16,
+            top: 14,
+          }}
+        />
         <Text style={styles.headerTitle}>Adding a toilet</Text>
       </View>
 
       <View style={styles.container}>
-        <TouchableOpacity onPress={chooseImage}>
-          <Image source={{uri: toiletPicture}} style={styles.addPhoto} />
+        <TouchableOpacity style={styles.addPhoto}>
           <PlusCircle
             size={28}
             // weight='fill'
-            color="#F4F6FD"
+            color="#777790"
             style={{
               position: 'absolute',
               alignSelf: 'center',
-              marginTop: '19.5%',
+              marginTop: '16%',
             }}
           />
         </TouchableOpacity>
@@ -314,14 +315,14 @@ const AddDetailToilet2 = () => {
           </View>
         </View>
 
-        <View style={styles.boxTypeLocation}>
-          <Text style={styles.titleTypeLocation}>Type of location</Text>
+          <View style={styles.boxTypeLocation}>
+            <Text style={styles.titleTypeLocation}>Type of location</Text>
 
-          <View style={styles.btnTypeLocation}>
-            <View style={styles.itemLeft}>
-              <Tag></Tag>
-              <Text style={styles.textTypeLocation}>{type}</Text>
-            </View>
+            <View style={styles.btnTypeLocation}>
+              <View style={styles.itemLeft}>
+                <Tag></Tag>
+                <Text style={styles.textTypeLocation}>{type}</Text>
+              </View>
 
             <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
               <Text style={styles.btnEdit}>EDIT</Text>
@@ -466,11 +467,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     elevation: 8,
-  },
-  btnBack: {
-    position: 'absolute',
-    left: 16,
-    top: 14,
   },
   headerTitle: {
     fontFamily: 'Fredoka-Medium',
