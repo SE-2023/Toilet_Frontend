@@ -1,3 +1,4 @@
+
 import {
   StyleSheet,
   Text,
@@ -32,7 +33,6 @@ import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
 import BottomPopup from '../components/BottomPopup';
-import {launchImageLibrary} from 'react-native-image-picker';
 
 export const popuplist = [
   {
@@ -76,9 +76,7 @@ const AddDetailToilet2 = () => {
   const [cost, setCost] = React.useState('');
   const [type, setType] = React.useState(popuplist[0].name);
   const [handicap, setHandicap] = React.useState(false);
-  const [toiletPicture, settoiletPicture] = useState(
-    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fnews%2F&psig=AOvVaw2LozT_eZjCaKky5wHekfdr&ust=1675358692831000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPD1ltLr9PwCFQAAAAAdAAAAABAE',
-  );
+  const [toiletPicture, settoiletPicture] = useState("");
   // const childToParent = (childdata: any) => {
   //   setHandicap(childdata);
   // };
@@ -92,69 +90,7 @@ const AddDetailToilet2 = () => {
   const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
   const [free, setfree] = useState(true);
   let popupRef = React.createRef();
-
-
-  const Tag = (): JSX.Element | null => {
-    if (type === popuplist[0].name) {
-      return <Image source={wc} style={styles.iconTypeLocation} />;
-    }
-    if (type === popuplist[1].name) {
-      return <ForkKnife size={24} color="#2C2F4A" weight="fill" />;
-    }
-    if (type === popuplist[2].name) {
-      return <Tote size={24} color="#2C2F4A" weight="fill" />;
-    }
-    if (type === popuplist[3].name) {
-      return <GasPump size={24} color="#2C2F4A" weight="fill" />;
-    }
-    if (type === popuplist[4].name) {
-      return <House size={24} color="#2C2F4A" weight="fill" />;
-    } else {
-      return null;
-    }
-  };
-  const chooseImage = async () => {
-    let options: any = {
-      includeBase64: true,
-      title: 'Select Image',
-      customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    launchImageLibrary(options, async (response: any) => {
-      // console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        // const pic = await fileToBase64(response.assets);
-        // console.log(pic);
-
-        // const source: any = response.assets[0].uri;
-        // const aom = await fileToBase64(source);
-        // You can also display the image using data:
-        const source: any =
-          'data:image/jpeg;base64,' + response.assets[0].base64;
-        console.log(source);
-        // this.setState({
-        //  filePath: response,
-        //  fileData: response.data,
-        //  fileUri: response.uri
-        // });
-        settoiletPicture(source);
-        // console.log('data95', profilePicture);
-      }
-    });
-  };
-
+  
   // const onShowPopup = () => {
   //   popupRef.show();
   // };
@@ -241,25 +177,28 @@ const AddDetailToilet2 = () => {
       style={styles.bgColor}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.btnBack}
-          onPress={() => navigation.goBack()}>
-          <CaretLeft size={24} color="#F4F6FD" />
-        </TouchableOpacity>
+        <CaretLeft
+          size={24}
+          color="#F4F6FD"
+          style={{
+            position: 'absolute',
+            left: 16,
+            top: 14,
+          }}
+        />
         <Text style={styles.headerTitle}>Adding a toilet</Text>
       </View>
 
       <View style={styles.container}>
-        <TouchableOpacity onPress={chooseImage}>
-          <Image source={{uri: toiletPicture}} style={styles.addPhoto} />
+        <TouchableOpacity style={styles.addPhoto}>
           <PlusCircle
             size={28}
             // weight='fill'
-            color="#F4F6FD"
+            color="#777790"
             style={{
               position: 'absolute',
               alignSelf: 'center',
-              marginTop: '19.5%',
+              marginTop: '16%',
             }}
           />
         </TouchableOpacity>
@@ -318,7 +257,6 @@ const AddDetailToilet2 = () => {
             </View>
           </View>
 
-
           <View style={styles.boxTypeLocation}>
             <Text style={styles.titleTypeLocation}>Type of location</Text>
 
@@ -342,12 +280,6 @@ const AddDetailToilet2 = () => {
                   setShowbuttompopup(false);
                 }}
               />
-
-          <View style={styles.btnTypeLocation}>
-            <View style={styles.itemLeft}>
-              <Tag></Tag>
-              <Text style={styles.textTypeLocation}>{type}</Text>
-
             </View>
           </View>
         </View>
@@ -472,11 +404,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     elevation: 8,
-  },
-  btnBack: {
-    position: 'absolute',
-    left: 16,
-    top: 14,
   },
   headerTitle: {
     fontFamily: 'Fredoka-Medium',
