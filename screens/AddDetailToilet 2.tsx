@@ -6,7 +6,6 @@ import {
   Platform,
   TouchableOpacity,
   Image,
-  PermissionsAndroid
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -32,6 +31,7 @@ import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
 import BottomPopup from '../components/BottomPopup';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 export const popuplist = [
   {
@@ -75,7 +75,9 @@ const AddDetailToilet2 = () => {
   const [cost, setCost] = React.useState('');
   const [type, setType] = React.useState(popuplist[0].name);
   const [handicap, setHandicap] = React.useState(false);
-  const [toiletPicture, settoiletPicture] = useState("");
+  const [toiletPicture, settoiletPicture] = useState(
+    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fnews%2F&psig=AOvVaw2LozT_eZjCaKky5wHekfdr&ust=1675358692831000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPD1ltLr9PwCFQAAAAAdAAAAABAE',
+  );
   // const childToParent = (childdata: any) => {
   //   setHandicap(childdata);
   // };
@@ -150,7 +152,6 @@ const AddDetailToilet2 = () => {
       }
     });
   };
-
 
   // const onShowPopup = () => {
   //   popupRef.show();
@@ -238,28 +239,25 @@ const AddDetailToilet2 = () => {
       style={styles.bgColor}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.header}>
-        <CaretLeft
-          size={24}
-          color="#F4F6FD"
-          style={{
-            position: 'absolute',
-            left: 16,
-            top: 14,
-          }}
-        />
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={() => navigation.goBack()}>
+          <CaretLeft size={24} color="#F4F6FD" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Adding a toilet</Text>
       </View>
 
       <View style={styles.container}>
-        <TouchableOpacity style={styles.addPhoto}>
+        <TouchableOpacity onPress={chooseImage}>
+          <Image source={{uri: toiletPicture}} style={styles.addPhoto} />
           <PlusCircle
             size={28}
             // weight='fill'
-            color="#777790"
+            color="#F4F6FD"
             style={{
               position: 'absolute',
               alignSelf: 'center',
-              marginTop: '16%',
+              marginTop: '19.5%',
             }}
           />
         </TouchableOpacity>
@@ -280,7 +278,7 @@ const AddDetailToilet2 = () => {
 
       <View style={styles.textInputContainer}>
         <View style={styles.textInputLeft}>
-        <TextInput
+          <TextInput
             label="Cost"
             value={cost}
             theme={theme}
@@ -291,7 +289,7 @@ const AddDetailToilet2 = () => {
         </View>
 
         <View style={styles.textInputRight}>
-        <TextInput
+          <TextInput
             label="Contact"
             value={contact}
             theme={theme}
@@ -301,7 +299,7 @@ const AddDetailToilet2 = () => {
           />
         </View>
       </View>
-      
+
       <View style={styles.container}>
         <Text style={styles.titleDetail}>Detail</Text>
 
@@ -330,7 +328,7 @@ const AddDetailToilet2 = () => {
               <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
                 <Text style={styles.btnEdit}>EDIT</Text>
               </TouchableOpacity>
-              
+
               <BottomPopup
                 title="Type of location"
                 data={popuplist}
@@ -341,25 +339,10 @@ const AddDetailToilet2 = () => {
                   setShowbuttompopup(false);
                 }}
               />
->>>>>>>>> Temporary merge branch 2
             </View>
-
-            <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
-              <Text style={styles.btnEdit}>EDIT</Text>
-            </TouchableOpacity>
-            <BottomPopup
-              title="Type of location"
-              data={popuplist}
-              show={showbuttompopup}
-              close={() => setShowbuttompopup(false)}
-              onSelected={value => {
-                setType(value);
-                setShowbuttompopup(false);
-              }}
-            />
           </View>
         </View>
-        
+
         <Text style={styles.titleTime}>Time</Text>
 
         <TouchableOpacity
@@ -436,10 +419,10 @@ const AddDetailToilet2 = () => {
       </View>
 
       <View style={styles.btnConfirmPosition}>
-        <TouchableOpacity onPress={submitCreateToilet} style={styles.btnConfirm}>
-          <Text style={styles.txtBtn}>
-              CONFIRM
-          </Text>
+        <TouchableOpacity
+          onPress={submitCreateToilet}
+          style={styles.btnConfirm}>
+          <Text style={styles.txtBtn}>CONFIRM</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -481,6 +464,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 24,
     elevation: 8,
   },
+  btnBack: {
+    position: 'absolute',
+    left: 16,
+    top: 14,
+  },
   headerTitle: {
     fontFamily: 'Fredoka-Medium',
     fontSize: 24,
@@ -506,7 +494,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
   },
-  textInputContainer:{
+  textInputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
