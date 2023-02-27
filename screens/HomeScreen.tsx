@@ -114,6 +114,15 @@ const HomeScreen = () => {
       },
     );
   }, []);
+  const [list, setList] = useState(toiletMarkers);
+  useEffect(() => {
+    const fetchData = async () => {
+      const aom: any = await getLocation();
+
+      setList(aom.data);
+    };
+    fetchData();
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       const aom: any = await getLocation();
@@ -126,7 +135,8 @@ const HomeScreen = () => {
     // const aom: any = await getLocation();
     // console.log('value97', aom);
     // setToiletMarkers(aom);
-  }, []);
+  }, [list]);
+
   const RenderLocation = () => {
     const navigation =
       useNavigation<NativeStackNavigationProp<HomeParamList>>();
@@ -171,7 +181,7 @@ const HomeScreen = () => {
     // console.log('data 115', toiletMarkers);
     return (
       <>
-        {toiletMarkers.map((item: any, index) => {
+        {list.map((item: any, index) => {
           const TagFree = (): JSX.Element | null => {
             if (item.free === true) {
               return (
@@ -268,6 +278,80 @@ const HomeScreen = () => {
     );
   };
 
+  const [selectedFree, setSelectedFree] = useState(false);
+  const [selectedHandicap, setSelectedHandicap] = useState(false);
+  const [selectedType, setSelectedType] = useState<string>('');
+
+  const filterFree = () => {
+    if (selectedFree === true) {
+      setSelectedFree(false);
+    }
+    if (selectedFree === false) {
+      setSelectedFree(true);
+    }
+  };
+
+  const filterHandicap = () => {
+    if (selectedHandicap === true) {
+      setSelectedHandicap(false);
+    }
+    if (selectedHandicap === false) {
+      setSelectedHandicap(true);
+    }
+  };
+
+  const filterPublic = () => {
+    setSelectedType('public');
+  };
+
+  const filterGas = () => {
+    setSelectedType('gas station');
+  };
+
+  const filterStore = () => {
+    setSelectedType('store');
+  };
+
+  const filterRestaurant = () => {
+    setSelectedType('restaurant');
+  };
+
+  const filterHome = () => {
+    setSelectedType('home');
+  };
+  const filterAll = () => {
+    setSelectedType('');
+  };
+
+  const applyFilters = () => {
+    let updateToiletMarkers = toiletMarkers;
+    //free filter
+    if (selectedFree === true) {
+      updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.free === true,
+      );
+    }
+    //Handicap filter
+    if (selectedHandicap === true) {
+      updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.handicap === true,
+      );
+    }
+    // Public filter
+    if (selectedType !== '') {
+      updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.type === selectedType,
+      );
+    }
+    setList(updateToiletMarkers);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [selectedHandicap, selectedFree, selectedType]);
+  // console.log(list);
+  // console.log(selectedType);
+
   if (toiletMarkers.length === 0) {
     return (
       <View>
@@ -311,31 +395,35 @@ const HomeScreen = () => {
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnBaht_44} onPress={callBoth}>
+          <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>
             <Text style={styles.baht}>฿</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnWheelchair_44} onPress={callBoth}>
+          <TouchableOpacity
+            style={styles.btnWheelchair_44}
+            onPress={filterHandicap}>
             <Wheelchair size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnWc_44} onPress={callBoth}>
+          <TouchableOpacity style={styles.btnWc_44} onPress={filterPublic}>
             <Image source={wc} style={styles.iconPublic} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnForkKnife_44} onPress={callBoth}>
+          <TouchableOpacity
+            style={styles.btnForkKnife_44}
+            onPress={filterRestaurant}>
             <ForkKnife size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnTote_44} onPress={callBoth}>
+          <TouchableOpacity style={styles.btnTote_44} onPress={filterStore}>
             <Tote size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnGasPump_44} onPress={callBoth}>
+          <TouchableOpacity style={styles.btnGasPump_44} onPress={filterGas}>
             <GasPump size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnHouse_44} onPress={callBoth}>
+          <TouchableOpacity style={styles.btnHouse_44} onPress={filterHome}>
             <House size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
         </SafeAreaView>
