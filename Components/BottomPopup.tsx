@@ -37,14 +37,13 @@ const BottomPopup = (props: IPop) => {
   };
   const renderTitle = () => {
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={{marginHorizontal: 16}}>
         <Text
           style={{
-            color: '#182E44',
-            fontSize: 25,
-            fontWeight: '500',
-            marginTop: 15,
-            marginBottom: 30,
+            fontFamily: 'Fredoka-Medium',
+            fontSize: 20,
+            color: '#777790',
+            marginVertical: 28,
           }}>
           {props.title}
         </Text>
@@ -57,45 +56,44 @@ const BottomPopup = (props: IPop) => {
       <TouchableOpacity
         onPress={() => props.onSelected(item.name)}
         style={{
-          height: 50,
+          height: 48,
           flex: 1,
           justifyContent: 'center',
           alignItems: 'flex-start',
-          borderBottomColor: 'grey',
-          borderBottomWidth: 0.5,
         }}>
         <View
           style={{
             height: 50,
             flex: 1,
             alignItems: 'flex-start',
+            flexDirection: 'row',
             justifyContent: 'center',
             marginLeft: 20,
           }}>
+            {item.icon}
           <Text
             style={{
+              fontFamily: 'Fredoka-Regular',
               fontSize: 18,
-              fontWeight: 'normal',
-              color: '#182E44',
+              color: '#2C2F4A'
             }}>
-            {item.icon}
             {item.name}
           </Text>
         </View>
       </TouchableOpacity>
     );
   };
-  const RenderSeparator = () => {
-    return (
-      <View
-        style={{
-          opacity: 0.1,
-          backgroundColor: '#182E44',
-          height: 1,
-        }}
-      />
-    );
-  };
+  // const RenderSeparator = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         opacity: 0.1,
+  //         backgroundColor: '#182E44',
+  //         height: 1,
+  //       }}
+  //     />
+  //   );
+  // };
 
   const renderContent = () => {
     return (
@@ -107,9 +105,9 @@ const BottomPopup = (props: IPop) => {
           renderItem={renderItem}
           extraData={props.data}
           keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={RenderSeparator}
+          // ItemSeparatorComponent={RenderSeparator}
           contentContainerStyle={{
-            paddingBottom: 40,
+            paddingBottom: 20,
           }}
         />
       </View>
@@ -128,18 +126,18 @@ const BottomPopup = (props: IPop) => {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#00000000AA',
+          backgroundColor: '#000A',
           justifyContent: 'flex-end',
         }}>
         {renderOutsideTouchable(props.close)}
         <View
           style={{
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#fff',
             width: '100%',
-            borderTopRightRadius: 10,
-            borderTopLeftRadius: 10,
-            paddingHorizontal: 10,
-            maxHeight: deviceHeight * 0.4,
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 16,
+            maxHeight: deviceHeight * 0.46,
           }}>
           {renderTitle()}
           {renderContent()}

@@ -7,8 +7,8 @@ import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
 
 const Ratings = () => {
-  const [modal, setModal] = useState(false);
-  const [review, setReview] = React.useState('');
+  // const [modal, setModal] = useState(false);
+  // const [review, setReview] = React.useState('');
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -29,16 +29,16 @@ const Ratings = () => {
             <Review />  
           </View>
 
-          <View style={styles.rateContainer}>
+          {/* <View style={styles.rateContainer}>
             <TouchableOpacity style={styles.btnRate} onPress={() => setModal(true)}>
               <Text style={styles.textRate}>RATE & REVIEW</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
-          <View style={{height: 55, backgroundColor: '#F4F6FD'}}></View>
+          <View style={{height: 68, backgroundColor: '#F4F6FD'}}></View>
         </ScrollView>
         
-        <Modal isVisible={modal}>
+        {/* <Modal isVisible={modal}>
           <View style={styles.modalContainer}>
             <Image source={star} style={styles.imageStar}/>
 
@@ -69,7 +69,7 @@ const Ratings = () => {
               </TouchableOpacity>
             </View>
           </View> 
-        </Modal>
+        </Modal> */}
       </View>
     </View>
   )

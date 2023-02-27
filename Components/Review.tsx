@@ -13,7 +13,7 @@ import toilet from '../assets/toilet.jpg';
 const Review = () => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.profileContainer}>
+      <View style={styles.profileContainer}>
         <Image source={profile} style={styles.imageProfile}/>
         <View>
           <Text style={styles.textName}>Name</Text>
@@ -26,14 +26,14 @@ const Review = () => {
             <Text style={styles.textDate}>20/02/2023  14:30</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
 
       <View style={styles.reviewContainer}>
         <Text style={styles.textReview}>Wow, what a beautiful bathroom!
          The tiles on the walls and floor are so elegantly arranged,
           and the color scheme is so soothing to the eyes.</Text>
 
-        <View style={styles.allImageReview}>
+        {/* <View style={styles.allImageReview}>
           <TouchableOpacity>
             <Image source={toilet} style={styles.imageToilet}/>
           </TouchableOpacity>
@@ -46,7 +46,7 @@ const Review = () => {
           <TouchableOpacity>
             <Image source={toilet} style={styles.imageToilet}/>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   )
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Fredoka-Regular',
     color: '#2C2F4A',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   allImageReview: {
     flexDirection: 'row',

@@ -96,7 +96,6 @@ const BottomTabStack = () => {
           name="MyList"
           component={AddList}
           options={{
-            tabBarStyle: {display: 'none'},
             tabBarIcon: ({focused, color, size}) => (
               <Heart
                 color={focused ? '#FFA897' : '#BABCCA'}
@@ -113,6 +112,7 @@ const BottomTabStack = () => {
           //   navigation.navigate('AddToiletStack', {screen: 'AddToilet'})
           // }
           options={{
+            tabBarStyle: {display: 'none'},
             tabBarHideOnKeyboard: true,
             tabBarIcon: ({focused, color, size}) => (
               <Plus

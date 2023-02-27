@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
   btnConfirm: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 48,
+    height: 44,
     borderRadius: 8,
     elevation: 4,
   },

@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableOpacity,
   Image,
+  PermissionsAndroid
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -40,8 +41,8 @@ export const popuplist = [
       <Image
         source={wc}
         style={{
-          height: 24,
-          width: 24,
+          height: 20,
+          width: 20,
         }}
       />
     ),
@@ -49,22 +50,22 @@ export const popuplist = [
   },
   {
     id: 2,
-    icon: <ForkKnife size={24} color="#2C2F4A" weight="fill" />,
+    icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" />,
     name: '  Restaurant',
   },
   {
     id: 3,
-    icon: <Tote size={24} color="#2C2F4A" weight="fill" />,
+    icon: <Tote size={22} color="#2C2F4A" weight="fill" />,
     name: '  Store',
   },
   {
     id: 4,
-    icon: <GasPump size={24} color="#2C2F4A" weight="fill" />,
+    icon: <GasPump size={22} color="#2C2F4A" weight="fill" />,
     name: '  Gas Station',
   },
   {
     id: 5,
-    icon: <House size={24} color="#2C2F4A" weight="fill" />,
+    icon: <House size={22} color="#2C2F4A" weight="fill" />,
     name: '  House',
   },
 ];
@@ -91,6 +92,7 @@ const AddDetailToilet2 = () => {
   const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
   const [free, setfree] = useState(true);
   let popupRef = React.createRef();
+
 
   const Tag = (): JSX.Element | null => {
     if (type === popuplist[0].name) {
@@ -272,25 +274,13 @@ const AddDetailToilet2 = () => {
             style={styles.bgTextInput}
             mode="outlined"
             onChangeText={text => setPlaceName(text)}
-            multiline
           />
         </View>
       </View>
 
-      <View style={styles.textInputSmall}>
-        <View>
-          <TextInput
-            label="Contact"
-            value={contact}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setContact(text)}
-          />
-        </View>
-
-        <View style={styles.textInputRight}>
-          <TextInput
+      <View style={styles.textInputContainer}>
+        <View style={styles.textInputLeft}>
+        <TextInput
             label="Cost"
             value={cost}
             theme={theme}
@@ -299,45 +289,70 @@ const AddDetailToilet2 = () => {
             onChangeText={text => setCost(text)}
           />
         </View>
-      </View>
 
-      <View style={styles.container}>
-        <View style={styles.boxHandicap}>
-          <Text style={styles.titleHandicap}>Handicap access</Text>
-          <View style={styles.positionSwitch}>
-            <Switch
-              inActiveColor={'#BABCCA'}
-              activeColor={'#31C596'}
-              active={handicap}
-              onPress={() => setHandicap(prev => !prev)}
-            />
-          </View>
+        <View style={styles.textInputRight}>
+        <TextInput
+            label="Contact"
+            value={contact}
+            theme={theme}
+            style={styles.bgTextInput}
+            mode="outlined"
+            onChangeText={text => setContact(text)}
+          />
         </View>
+      </View>
+      
+      <View style={styles.container}>
+        <Text style={styles.titleDetail}>Detail</Text>
 
-        <View style={styles.boxTypeLocation}>
-          <Text style={styles.titleTypeLocation}>Type of location</Text>
+        <View style={styles.boxContainer}>
+          <View style={styles.boxHandicap}>
+            <Text style={styles.titleHandicap}>Handicap access</Text>
+            <View style={styles.positionSwitch}>
+              <Switch
+                inActiveColor={'#BABCCA'}
+                activeColor={'#31C596'}
+                active={handicap}
+                onPress={() => setHandicap(prev => !prev)}
+              />
+            </View>
+          </View>
+
+
+          <View style={styles.boxTypeLocation}>
+            <Text style={styles.titleTypeLocation}>Type of location</Text>
+
+            <View style={styles.btnTypeLocation}>
+              <View style={styles.itemLeft}>
+                <Image source={wc} style={styles.iconTypeLocation} />
+                <Text style={styles.textTypeLocation}>{type}</Text>
+              </View>
+
+              <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
+                <Text style={styles.btnEdit}>EDIT</Text>
+              </TouchableOpacity>
+              
+              <BottomPopup
+                title="Type of location"
+                data={popuplist}
+                show={showbuttompopup}
+                close={() => setShowbuttompopup(false)}
+                onSelected={value => {
+                  setType(value);
+                  setShowbuttompopup(false);
+                }}
+              />
 
           <View style={styles.btnTypeLocation}>
             <View style={styles.itemLeft}>
               <Tag></Tag>
               <Text style={styles.textTypeLocation}>{type}</Text>
-            </View>
 
-            <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
-              <Text style={styles.btnEdit}>EDIT</Text>
-            </TouchableOpacity>
-            <BottomPopup
-              title="Type of location"
-              data={popuplist}
-              show={showbuttompopup}
-              close={() => setShowbuttompopup(false)}
-              onSelected={value => {
-                setType(value);
-                setShowbuttompopup(false);
-              }}
-            />
+            </View>
           </View>
         </View>
+        
+        <Text style={styles.titleTime}>Time</Text>
 
         <TouchableOpacity
           style={styles.boxTimeOpen}
@@ -362,7 +377,7 @@ const AddDetailToilet2 = () => {
             style={{
               position: 'absolute',
               marginLeft: '81%',
-              marginTop: 13.5,
+              marginTop: 13,
             }}
           />
         </TouchableOpacity>
@@ -398,7 +413,7 @@ const AddDetailToilet2 = () => {
             style={{
               position: 'absolute',
               marginLeft: '81%',
-              marginTop: 13.5,
+              marginTop: 13,
             }}
           />
         </TouchableOpacity>
@@ -413,19 +428,10 @@ const AddDetailToilet2 = () => {
       </View>
 
       <View style={styles.btnConfirmPosition}>
-        <TouchableOpacity onPress={submitCreateToilet}>
-          <LinearGradient
-            colors={['#FAC353', '#FFA897']}
-            style={styles.btnConfirm}>
-            <Text
-              style={{
-                color: '#2C2F4A',
-                fontFamily: 'Fredoka-SemiBold',
-                fontSize: 16,
-              }}>
+        <TouchableOpacity onPress={submitCreateToilet} style={styles.btnConfirm}>
+          <Text style={styles.txtBtn}>
               CONFIRM
-            </Text>
-          </LinearGradient>
+          </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -452,7 +458,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 25,
   },
   header: {
     backgroundColor: '#2C2F4A',
@@ -482,7 +488,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignSelf: 'center',
     width: '100%',
-    height: 210,
+    height: 200,
     backgroundColor: '#CACCDA',
     borderRadius: 3,
   },
@@ -490,26 +496,39 @@ const styles = StyleSheet.create({
   // Text input
   textInput: {
     color: '#F4F6FD',
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingHorizontal: 25,
     marginTop: 10,
   },
   bgTextInput: {
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
   },
-  textInputSmall: {
+  textInputContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textInputLeft: {
     color: '#F4F6FD',
-    width: 198,
-    paddingLeft: 16,
+    width: 151,
+    paddingLeft: 25,
   },
   textInputRight: {
-    position: 'relative',
-    top: -56,
-    left: 197,
+    color: '#F4F6FD',
+    width: 245,
+    paddingRight: 25,
   },
 
   // Handicap access
+  titleDetail: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
+    color: '#2C2F4A',
+    marginTop: 20,
+  },
+  boxContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   boxHandicap: {
     width: '35%',
     height: 77,
@@ -517,7 +536,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#777790',
-    marginTop: -40,
+    marginTop: 15,
   },
   titleHandicap: {
     textAlign: 'center',
@@ -528,7 +547,7 @@ const styles = StyleSheet.create({
   },
   positionSwitch: {
     marginTop: '10%',
-    marginHorizontal: '33%',
+    marginHorizontal: '34%',
   },
 
   // Type of location
@@ -539,8 +558,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#777790',
-    marginTop: -77,
-    marginStart: '39%',
+    marginTop: 15,
   },
   titleTypeLocation: {
     marginStart: 12,
@@ -568,8 +586,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
     color: '#2C2F4A',
-    marginLeft: 9,
-    marginRight: 80,
   },
   btnEdit: {
     fontFamily: 'Fredoka-SemiBold',
@@ -582,6 +598,12 @@ const styles = StyleSheet.create({
   },
 
   // Time Open
+  titleTime: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
+    color: '#2C2F4A',
+    marginTop: 20,
+  },
   boxTimeOpen: {
     width: '48%',
     height: 52,
@@ -602,8 +624,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginStart: 74,
-    marginTop: -30,
+    marginStart: 66,
+    marginTop: -29,
   },
 
   // Time Close
@@ -628,21 +650,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginStart: 74,
-    marginTop: -30,
+    marginStart: 66,
+    marginTop: -29,
   },
 
   // Button confirm
   btnConfirm: {
+    backgroundColor: '#6D7DD3',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 48,
+    height: 44,
     borderRadius: 8,
-    elevation: 4,
+    elevation: 3,
   },
   btnConfirmPosition: {
-    paddingVertical: 25,
+    paddingVertical: 20,
     paddingBottom: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 25,
+  },
+  txtBtn: {
+    color: '#F4F6FD',
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
   },
 });

@@ -183,6 +183,8 @@ function Profile() {
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </TouchableOpacity>
       </SafeAreaView>
+      <View
+        style={{height: height * 0.1, backgroundColor: '#E5EAFA'}}></View>
     </ScrollView>
   );
 }
