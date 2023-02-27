@@ -141,15 +141,11 @@ const AddToilet = () => {
   return (
     <View style={{flex: 1}}>
       <View style={styles.header}>
-        <CaretLeft
-          size={24}
-          color="#F4F6FD"
-          style={{
-            position: 'absolute',
-            left: 16,
-            top: 14,
-          }}
-        />
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={() => navigation.goBack()}>
+          <CaretLeft size={24} color="#F4F6FD" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Adding a toilet</Text>
       </View>
       <MapView
@@ -164,8 +160,7 @@ const AddToilet = () => {
         followsUserLocation={true}
         showsMyLocationButton={true}
         // zoomControlEnabled={true}
-        showsBuildings={true}
-        >
+        showsBuildings={true}>
         {/* <RenderLocation></RenderLocation> */}
         <Marker
           image={require('../assets/Map2.png')}
@@ -182,9 +177,7 @@ const AddToilet = () => {
           alignSelf: 'flex-end', //for align to right
         }}>
         <SafeAreaView>
-          <TouchableOpacity
-            style={styles.btnStackSimple_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnStackSimple_44} onPress={callBoth}>
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
         </SafeAreaView>
@@ -217,6 +210,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     elevation: 8,
+  },
+  btnBack: {
+    position: 'absolute',
+    left: 16,
+    top: 14,
   },
   headerTitle: {
     fontFamily: 'Fredoka-Medium',
