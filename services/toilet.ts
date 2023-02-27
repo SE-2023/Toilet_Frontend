@@ -13,7 +13,7 @@ interface ItoiletbyUser {
   type: string;
   timeOpen: string;
   timeClose: string;
-  toiletpicture: string[];
+  toiletpicture: string;
 }
 export const createToilet = async (body: ItoiletbyUser) => {
   const res = await axios.post('/toilet', body);

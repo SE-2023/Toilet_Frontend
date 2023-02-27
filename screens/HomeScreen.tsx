@@ -14,7 +14,16 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import {StackSimple, Star, Wheelchair, Clock, ForkKnife, Tote, GasPump, House} from 'phosphor-react-native';
+import {
+  StackSimple,
+  Star,
+  Wheelchair,
+  Clock,
+  ForkKnife,
+  Tote,
+  GasPump,
+  House,
+} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Buttonmap from '../components/Buttonmap';
@@ -133,6 +142,7 @@ const HomeScreen = () => {
       type: string;
       timeOpen: string;
       timeClose: string;
+      toiletpicture: string;
     }
     const [IDtoilet, setIDtoilet] = useState<Toilet | undefined>();
     // const onData = (value: any) => {
@@ -154,6 +164,7 @@ const HomeScreen = () => {
           type: IDtoilet.type,
           timeOpen: IDtoilet.timeOpen,
           timeClose: IDtoilet.timeClose,
+          toiletpicture: IDtoilet.toiletpicture,
         });
       }
     };
@@ -161,11 +172,31 @@ const HomeScreen = () => {
     return (
       <>
         {toiletMarkers.map((item: any, index) => {
-          const Kuy = (): JSX.Element | null => {
+          const TagFree = (): JSX.Element | null => {
             if (item.free === true) {
               return (
                 <View style={styles.tagFree}>
                   <Text style={styles.textFree}>฿ Free</Text>
+                </View>
+              );
+            } else {
+              return null;
+            }
+          };
+          const TagHandicap = (): JSX.Element | null => {
+            if (item.handicap === true) {
+              return (
+                <View style={styles.tagHandicap}>
+                  <Wheelchair
+                    size={10}
+                    weight="fill"
+                    color="#00845A"
+                    style={{
+                      marginRight: 2,
+                      marginLeft: 6,
+                    }}
+                  />
+                  <Text style={styles.textHandicap}>Handicap access</Text>
                 </View>
               );
             } else {
@@ -188,20 +219,8 @@ const HomeScreen = () => {
                   <View style={styles.bubble}>
                     <Image source={toilet} style={styles.imageToilet} />
                     <View style={styles.itemLeftTop}>
-                      <Kuy></Kuy>
-
-                      <View style={styles.tagHandicap}>
-                        <Wheelchair
-                          size={10}
-                          weight="fill"
-                          color="#00845A"
-                          style={{
-                            marginRight: 2,
-                            marginLeft: 6,
-                          }}
-                        />
-                        <Text style={styles.textHandicap}>Handicap access</Text>
-                      </View>
+                      <TagFree></TagFree>
+                      <TagHandicap></TagHandicap>
 
                       <View style={styles.tagType}>
                         {/* <Image source={wc} style={styles.iconType} /> */}
@@ -288,54 +307,37 @@ const HomeScreen = () => {
           alignSelf: 'flex-end', //for align to right
         }}>
         <SafeAreaView>
-          <TouchableOpacity
-            style={styles.btnStackSimple_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnStackSimple_44} onPress={callBoth}>
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnBaht_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnBaht_44} onPress={callBoth}>
             <Text style={styles.baht}>฿</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnWheelchair_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnWheelchair_44} onPress={callBoth}>
             <Wheelchair size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnWc_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnWc_44} onPress={callBoth}>
             <Image source={wc} style={styles.iconPublic} />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnForkKnife_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnForkKnife_44} onPress={callBoth}>
             <ForkKnife size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnTote_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnTote_44} onPress={callBoth}>
             <Tote size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnGasPump_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnGasPump_44} onPress={callBoth}>
             <GasPump size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnHouse_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnHouse_44} onPress={callBoth}>
             <House size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
-
         </SafeAreaView>
       </View>
     </View>

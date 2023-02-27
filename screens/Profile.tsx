@@ -62,7 +62,7 @@ function Profile() {
   const handleLogout = async () => {
     setLoggedIn(false);
     await AsyncStorage.removeItem('token');
-    navigation.replace('MainStack', {screen: 'Home'});
+    navigation.replace('MainStack', {screen: 'HomeStack'});
   };
   const onRefresh = async () => {
     setRefreshing(true);

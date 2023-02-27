@@ -49,7 +49,7 @@ import {RootStackList} from './RootStack';
 import HomeStack, {HomeParamList} from './HomeStack';
 export type BottomTabParamList = {
   HomeStack: NavigatorScreenParams<HomeParamList>;
-  AddList: undefined;
+  MyList: undefined;
 
   AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
   Cartoon: undefined;
@@ -65,7 +65,6 @@ const BottomTabStack = () => {
   const Stack2 = createBottomTabNavigator<RootStackList>();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   return (
-
     <>
       <StatusBar barStyle="light-content" />
       <Stack.Navigator
@@ -84,9 +83,12 @@ const BottomTabStack = () => {
           name="HomeStack"
           component={HomeStack}
           options={{
-
             tabBarIcon: ({focused, color, size}) => (
-              <MapTrifold color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
+              <MapTrifold
+                color={focused ? '#FFA897' : '#BABCCA'}
+                size={24}
+                weight="fill"
+              />
             ),
           }}
         />
@@ -96,7 +98,11 @@ const BottomTabStack = () => {
           options={{
             tabBarStyle: {display: 'none'},
             tabBarIcon: ({focused, color, size}) => (
-              <Heart color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
+              <Heart
+                color={focused ? '#FFA897' : '#BABCCA'}
+                size={24}
+                weight="fill"
+              />
             ),
           }}
         />
@@ -109,7 +115,11 @@ const BottomTabStack = () => {
           options={{
             tabBarHideOnKeyboard: true,
             tabBarIcon: ({focused, color, size}) => (
-              <Plus color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
+              <Plus
+                color={focused ? '#FFA897' : '#BABCCA'}
+                size={24}
+                weight="fill"
+              />
             ),
           }}
         />
@@ -118,7 +128,11 @@ const BottomTabStack = () => {
           component={Cartoon}
           options={{
             tabBarIcon: ({focused, color, size}) => (
-              <SquaresFour color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
+              <SquaresFour
+                color={focused ? '#FFA897' : '#BABCCA'}
+                size={24}
+                weight="fill"
+              />
             ),
           }}
         />
@@ -127,7 +141,11 @@ const BottomTabStack = () => {
           component={ProfileStack}
           options={{
             tabBarIcon: ({focused, color, size}) => (
-              <User color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
+              <User
+                color={focused ? '#FFA897' : '#BABCCA'}
+                size={24}
+                weight="fill"
+              />
             ),
           }}
         />

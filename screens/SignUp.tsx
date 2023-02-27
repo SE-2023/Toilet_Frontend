@@ -24,7 +24,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {signUp} from '../services/auth';
 import AuthContext from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message'
+import Toast from 'react-native-toast-message';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -47,13 +47,13 @@ function SignUp({navigation}: {navigation: any}) {
   const handleSignUp = async () => {
     try {
       const res: any = await signUp({
-      firstname: firstname,
-      lastname: lastname,
-      phone: phoneNum,
-      email: email,
-      password: password,
-      conPassword: conPassword,
-     });
+        firstname: firstname,
+        lastname: lastname,
+        phone: phoneNum,
+        email: email,
+        password: password,
+        conPassword: conPassword,
+      });
       console.log('res token', res);
       if (res.message === 'created') {
         AsyncStorage.setItem('token', res.token);
@@ -62,31 +62,30 @@ function SignUp({navigation}: {navigation: any}) {
         navigation.replace('MainStack', {screen: 'Home'});
       }
       console.log(res);
-    } catch (err:any) {
+    } catch (err: any) {
       setErrorsFirstname('');
       setErrorsLastname('');
       setErrorsPhone('');
       setErrorsEmail('');
       setErrorsPassword('');
       setErrorsConpassword('');
-      err.errors.map( (item:any) => {
-        if(item.param === 'firstname'){
+      err.errors.map((item: any) => {
+        if (item.param === 'firstname') {
           setErrorsFirstname(item.msg);
-        } else if(item.param === 'lastname'){
+        } else if (item.param === 'lastname') {
           setErrorsLastname(item.msg);
-        } else if(item.param === 'phone'){
+        } else if (item.param === 'phone') {
           setErrorsPhone(item.msg);
-        } else if(item.param === 'email'){
+        } else if (item.param === 'email') {
           setErrorsEmail(item.msg);
-        } else if(item.param === 'password'){
+        } else if (item.param === 'password') {
           setErrorsPassword(item.msg);
-        } else if(item.param === 'conPassword'){
+        } else if (item.param === 'conPassword') {
           setErrorsConpassword(item.msg);
         }
-      })
+      });
       console.log(err);
     }
-    
   };
   return (
     <KeyboardAwareScrollView
@@ -236,6 +235,7 @@ function SignUp({navigation}: {navigation: any}) {
             }}
           />
           <Text
+            onPress={() => navigation.goBack()}
             style={{
               color: '#FFA897',
               fontFamily: 'Fredoka-SemiBold',
@@ -343,8 +343,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Regular',
   },
   error: {
-    color: 'red'
-  }
+    color: 'red',
+  },
 });
 
 export default SignUp;
