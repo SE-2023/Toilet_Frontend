@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -90,7 +89,69 @@ const AddDetailToilet2 = () => {
   const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
   const [free, setfree] = useState(true);
   let popupRef = React.createRef();
-  
+
+  const Tag = (): JSX.Element | null => {
+    if (type === popuplist[0].name) {
+      return <Image source={wc} style={styles.iconTypeLocation} />;
+    }
+    if (type === popuplist[1].name) {
+      return <ForkKnife size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[2].name) {
+      return <Tote size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[3].name) {
+      return <GasPump size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[4].name) {
+      return <House size={24} color="#2C2F4A" weight="fill" />;
+    } else {
+      return null;
+    }
+  };
+  const chooseImage = async () => {
+    let options: any = {
+      includeBase64: true,
+      title: 'Select Image',
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, async (response: any) => {
+      // console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        // const pic = await fileToBase64(response.assets);
+        // console.log(pic);
+
+        // const source: any = response.assets[0].uri;
+        // const aom = await fileToBase64(source);
+        // You can also display the image using data:
+        const source: any =
+          'data:image/jpeg;base64,' + response.assets[0].base64;
+        console.log(source);
+        // this.setState({
+        //  filePath: response,
+        //  fileData: response.data,
+        //  fileUri: response.uri
+        // });
+        settoiletPicture(source);
+        // console.log('data95', profilePicture);
+      }
+    });
+  };
+
+
   // const onShowPopup = () => {
   //   popupRef.show();
   // };
@@ -262,7 +323,7 @@ const AddDetailToilet2 = () => {
 
             <View style={styles.btnTypeLocation}>
               <View style={styles.itemLeft}>
-                <Image source={wc} style={styles.iconTypeLocation} />
+                <Tag></Tag>
                 <Text style={styles.textTypeLocation}>{type}</Text>
               </View>
 
@@ -280,7 +341,22 @@ const AddDetailToilet2 = () => {
                   setShowbuttompopup(false);
                 }}
               />
+>>>>>>>>> Temporary merge branch 2
             </View>
+
+            <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
+              <Text style={styles.btnEdit}>EDIT</Text>
+            </TouchableOpacity>
+            <BottomPopup
+              title="Type of location"
+              data={popuplist}
+              show={showbuttompopup}
+              close={() => setShowbuttompopup(false)}
+              onSelected={value => {
+                setType(value);
+                setShowbuttompopup(false);
+              }}
+            />
           </View>
         </View>
         
