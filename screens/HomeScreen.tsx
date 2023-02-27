@@ -14,7 +14,16 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import {StackSimple, Star, Wheelchair, Clock, ForkKnife, Tote, GasPump, House} from 'phosphor-react-native';
+import {
+  StackSimple,
+  Star,
+  Wheelchair,
+  Clock,
+  ForkKnife,
+  Tote,
+  GasPump,
+  House,
+} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Buttonmap from '../components/Buttonmap';
@@ -105,6 +114,15 @@ const HomeScreen = () => {
       },
     );
   }, []);
+  const [list, setList] = useState(toiletMarkers);
+  useEffect(() => {
+    const fetchData = async () => {
+      const aom: any = await getLocation();
+
+      setList(aom.data);
+    };
+    fetchData();
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       const aom: any = await getLocation();
@@ -117,7 +135,8 @@ const HomeScreen = () => {
     // const aom: any = await getLocation();
     // console.log('value97', aom);
     // setToiletMarkers(aom);
-  }, []);
+  }, [list]);
+
   const RenderLocation = () => {
     const navigation =
       useNavigation<NativeStackNavigationProp<HomeParamList>>();
@@ -133,6 +152,7 @@ const HomeScreen = () => {
       type: string;
       timeOpen: string;
       timeClose: string;
+      toiletpicture: string;
     }
     const [IDtoilet, setIDtoilet] = useState<Toilet | undefined>();
     // const onData = (value: any) => {
@@ -154,18 +174,39 @@ const HomeScreen = () => {
           type: IDtoilet.type,
           timeOpen: IDtoilet.timeOpen,
           timeClose: IDtoilet.timeClose,
+          toiletpicture: IDtoilet.toiletpicture,
         });
       }
     };
     // console.log('data 115', toiletMarkers);
     return (
       <>
-        {toiletMarkers.map((item: any, index) => {
-          const Kuy = (): JSX.Element | null => {
+        {list.map((item: any, index) => {
+          const TagFree = (): JSX.Element | null => {
             if (item.free === true) {
               return (
                 <View style={styles.tagFree}>
                   <Text style={styles.textFree}>฿ Free</Text>
+                </View>
+              );
+            } else {
+              return null;
+            }
+          };
+          const TagHandicap = (): JSX.Element | null => {
+            if (item.handicap === true) {
+              return (
+                <View style={styles.tagHandicap}>
+                  <Wheelchair
+                    size={10}
+                    weight="fill"
+                    color="#00845A"
+                    style={{
+                      marginRight: 2,
+                      marginLeft: 6,
+                    }}
+                  />
+                  <Text style={styles.textHandicap}>Handicap access</Text>
                 </View>
               );
             } else {
@@ -189,20 +230,8 @@ const HomeScreen = () => {
                   <View style={styles.bubble}>
                     {/* <Image source={toilet} style={styles.imageToilet} /> */}
                     <View style={styles.itemLeftTop}>
-                      <Kuy></Kuy>
-
-                      <View style={styles.tagHandicap}>
-                        <Wheelchair
-                          size={10}
-                          weight="fill"
-                          color="#00845A"
-                          style={{
-                            marginRight: 2,
-                            marginLeft: 6,
-                          }}
-                        />
-                        <Text style={styles.textHandicap}>Handicap access</Text>
-                      </View>
+                      <TagFree></TagFree>
+                      <TagHandicap></TagHandicap>
 
                       <View style={styles.tagType}>
                         {/* <Image source={wc} style={styles.iconType} /> */}
@@ -250,6 +279,80 @@ const HomeScreen = () => {
     );
   };
 
+  const [selectedFree, setSelectedFree] = useState(false);
+  const [selectedHandicap, setSelectedHandicap] = useState(false);
+  const [selectedType, setSelectedType] = useState<string>('');
+
+  const filterFree = () => {
+    if (selectedFree === true) {
+      setSelectedFree(false);
+    }
+    if (selectedFree === false) {
+      setSelectedFree(true);
+    }
+  };
+
+  const filterHandicap = () => {
+    if (selectedHandicap === true) {
+      setSelectedHandicap(false);
+    }
+    if (selectedHandicap === false) {
+      setSelectedHandicap(true);
+    }
+  };
+
+  const filterPublic = () => {
+    setSelectedType('public');
+  };
+
+  const filterGas = () => {
+    setSelectedType('gas station');
+  };
+
+  const filterStore = () => {
+    setSelectedType('store');
+  };
+
+  const filterRestaurant = () => {
+    setSelectedType('restaurant');
+  };
+
+  const filterHome = () => {
+    setSelectedType('home');
+  };
+  const filterAll = () => {
+    setSelectedType('');
+  };
+
+  const applyFilters = () => {
+    let updateToiletMarkers = toiletMarkers;
+    //free filter
+    if (selectedFree === true) {
+      updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.free === true,
+      );
+    }
+    //Handicap filter
+    if (selectedHandicap === true) {
+      updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.handicap === true,
+      );
+    }
+    // Public filter
+    if (selectedType !== '') {
+      updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.type === selectedType,
+      );
+    }
+    setList(updateToiletMarkers);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [selectedHandicap, selectedFree, selectedType]);
+  // console.log(list);
+  // console.log(selectedType);
+
   if (toiletMarkers.length === 0) {
     return (
       <View>
@@ -289,54 +392,41 @@ const HomeScreen = () => {
           alignSelf: 'flex-end', //for align to right
         }}>
         <SafeAreaView>
-          <TouchableOpacity
-            style={styles.btnStackSimple_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnStackSimple_44} onPress={callBoth}>
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnBaht_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>
             <Text style={styles.baht}>฿</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.btnWheelchair_44}
-            onPress={callBoth}>
+            onPress={filterHandicap}>
             <Wheelchair size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnWc_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnWc_44} onPress={filterPublic}>
             <Image source={wc} style={styles.iconPublic} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.btnForkKnife_44}
-            onPress={callBoth}>
+            onPress={filterRestaurant}>
             <ForkKnife size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnTote_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnTote_44} onPress={filterStore}>
             <Tote size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnGasPump_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnGasPump_44} onPress={filterGas}>
             <GasPump size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.btnHouse_44}
-            onPress={callBoth}>
+          <TouchableOpacity style={styles.btnHouse_44} onPress={filterHome}>
             <House size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
-
         </SafeAreaView>
       </View>
     </View>

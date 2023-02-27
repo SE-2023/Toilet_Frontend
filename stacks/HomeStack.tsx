@@ -22,6 +22,7 @@ export type HomeParamList = {
     type: string;
     timeOpen: string;
     timeClose: string;
+    toiletpicture: string;
   };
   Ratings: undefined;
 };

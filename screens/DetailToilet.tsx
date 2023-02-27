@@ -39,15 +39,51 @@ const DetailToilet = () => {
   console.log(params);
   const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
 
+
   const [modal, setModal] = useState(false);
   const [review, setReview] = React.useState('');
+
+
+  const TagFree = (): JSX.Element | null => {
+    if (params.free === true) {
+      return (
+        <View style={styles.tagFree}>
+          <Text style={styles.textFree}>฿ Free</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const TagHandicap = (): JSX.Element | null => {
+    if (params.handicap === true) {
+      return (
+        <View style={styles.tagHandicap}>
+          <Wheelchair
+            size={14}
+            weight="fill"
+            color="#00845A"
+            style={{
+              marginRight: 2,
+              marginLeft: 6,
+            }}
+          />
+          <Text style={styles.textHandicap}>Handicap access</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
-        <Image source={toilet} style={{width, height}} />
+        <Image source={{uri: params.toiletpicture}} style={{width, height}} />
       </View>
-      <TouchableOpacity style={styles.btnBack}>
+      <TouchableOpacity
+        style={styles.btnBack}
+        onPress={() => navigation.goBack()}>
         <CaretLeft size={24} weight="bold" color="#2C2F4A" />
       </TouchableOpacity>
 
@@ -60,26 +96,12 @@ const DetailToilet = () => {
             </View>
 
             <View style={styles.tagContainer}>
-              <View style={styles.tagFree}>
-                <Text style={styles.textFree}>฿ Free</Text>
-              </View>
-
-              <View style={styles.tagHandicap}>
-                <Wheelchair
-                  size={14}
-                  weight="fill"
-                  color="#00845A"
-                  style={{
-                    marginRight: 2,
-                    marginLeft: 6,
-                  }}
-                />
-                <Text style={styles.textHandicap}>Handicap access</Text>
-              </View>
+              <TagFree></TagFree>
+              <TagHandicap></TagHandicap>
 
               <View style={styles.tagType}>
                 <Image source={wc} style={styles.iconType} />
-                <Text style={styles.textType}>Public</Text>
+                <Text style={styles.textType}>{params.type}</Text>
               </View>
             </View>
 
@@ -97,7 +119,9 @@ const DetailToilet = () => {
                     marginRight: 6,
                   }}
                 />
-                <Text style={styles.time}>00:00 - 00:00</Text>
+                <Text style={styles.time}>
+                  {params.timeOpen} - {params.timeClose}
+                </Text>
               </View>
               <View style={styles.phoneContainer}>
                 <Phone
@@ -108,7 +132,7 @@ const DetailToilet = () => {
                     marginRight: 6,
                   }}
                 />
-                <Text style={styles.phone}>000-000-0000</Text>
+                <Text style={styles.phone}>{params.contact}</Text>
               </View>
             </View>
 
