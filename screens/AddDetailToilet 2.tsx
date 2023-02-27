@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -7,7 +6,6 @@ import {
   Platform,
   TouchableOpacity,
   Image,
-  PermissionsAndroid
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -41,8 +39,8 @@ export const popuplist = [
       <Image
         source={wc}
         style={{
-          height: 20,
-          width: 20,
+          height: 24,
+          width: 24,
         }}
       />
     ),
@@ -50,22 +48,22 @@ export const popuplist = [
   },
   {
     id: 2,
-    icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" />,
+    icon: <ForkKnife size={24} color="#2C2F4A" weight="fill" />,
     name: '  Restaurant',
   },
   {
     id: 3,
-    icon: <Tote size={22} color="#2C2F4A" weight="fill" />,
+    icon: <Tote size={24} color="#2C2F4A" weight="fill" />,
     name: '  Store',
   },
   {
     id: 4,
-    icon: <GasPump size={22} color="#2C2F4A" weight="fill" />,
+    icon: <GasPump size={24} color="#2C2F4A" weight="fill" />,
     name: '  Gas Station',
   },
   {
     id: 5,
-    icon: <House size={22} color="#2C2F4A" weight="fill" />,
+    icon: <House size={24} color="#2C2F4A" weight="fill" />,
     name: '  House',
   },
 ];
@@ -90,7 +88,69 @@ const AddDetailToilet2 = () => {
   const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
   const [free, setfree] = useState(true);
   let popupRef = React.createRef();
-  
+
+  const Tag = (): JSX.Element | null => {
+    if (type === popuplist[0].name) {
+      return <Image source={wc} style={styles.iconTypeLocation} />;
+    }
+    if (type === popuplist[1].name) {
+      return <ForkKnife size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[2].name) {
+      return <Tote size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[3].name) {
+      return <GasPump size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[4].name) {
+      return <House size={24} color="#2C2F4A" weight="fill" />;
+    } else {
+      return null;
+    }
+  };
+  const chooseImage = async () => {
+    let options: any = {
+      includeBase64: true,
+      title: 'Select Image',
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, async (response: any) => {
+      // console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        // const pic = await fileToBase64(response.assets);
+        // console.log(pic);
+
+        // const source: any = response.assets[0].uri;
+        // const aom = await fileToBase64(source);
+        // You can also display the image using data:
+        const source: any =
+          'data:image/jpeg;base64,' + response.assets[0].base64;
+        console.log(source);
+        // this.setState({
+        //  filePath: response,
+        //  fileData: response.data,
+        //  fileUri: response.uri
+        // });
+        settoiletPicture(source);
+        // console.log('data95', profilePicture);
+      }
+    });
+  };
+
+
   // const onShowPopup = () => {
   //   popupRef.show();
   // };
@@ -213,24 +273,14 @@ const AddDetailToilet2 = () => {
             style={styles.bgTextInput}
             mode="outlined"
             onChangeText={text => setPlaceName(text)}
+            multiline
           />
         </View>
       </View>
 
-      <View style={styles.textInputContainer}>
-        <View style={styles.textInputLeft}>
-        <TextInput
-            label="Cost"
-            value={cost}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setCost(text)}
-          />
-        </View>
-
-        <View style={styles.textInputRight}>
-        <TextInput
+      <View style={styles.textInputSmall}>
+        <View>
+          <TextInput
             label="Contact"
             value={contact}
             theme={theme}
@@ -239,52 +289,56 @@ const AddDetailToilet2 = () => {
             onChangeText={text => setContact(text)}
           />
         </View>
-      </View>
-      
-      <View style={styles.container}>
-        <Text style={styles.titleDetail}>Detail</Text>
 
-        <View style={styles.boxContainer}>
-          <View style={styles.boxHandicap}>
-            <Text style={styles.titleHandicap}>Handicap access</Text>
-            <View style={styles.positionSwitch}>
-              <Switch
-                inActiveColor={'#BABCCA'}
-                activeColor={'#31C596'}
-                active={handicap}
-                onPress={() => setHandicap(prev => !prev)}
-              />
-            </View>
+        <View style={styles.textInputRight}>
+          <TextInput
+            label="Cost"
+            value={cost}
+            theme={theme}
+            style={styles.bgTextInput}
+            mode="outlined"
+            onChangeText={text => setCost(text)}
+          />
+        </View>
+      </View>
+
+      <View style={styles.container}>
+        <View style={styles.boxHandicap}>
+          <Text style={styles.titleHandicap}>Handicap access</Text>
+          <View style={styles.positionSwitch}>
+            <Switch
+              inActiveColor={'#BABCCA'}
+              activeColor={'#31C596'}
+              active={handicap}
+              onPress={() => setHandicap(prev => !prev)}
+            />
           </View>
+        </View>
 
           <View style={styles.boxTypeLocation}>
             <Text style={styles.titleTypeLocation}>Type of location</Text>
 
             <View style={styles.btnTypeLocation}>
               <View style={styles.itemLeft}>
-                <Image source={wc} style={styles.iconTypeLocation} />
+                <Tag></Tag>
                 <Text style={styles.textTypeLocation}>{type}</Text>
               </View>
 
-              <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
-                <Text style={styles.btnEdit}>EDIT</Text>
-              </TouchableOpacity>
-              
-              <BottomPopup
-                title="Type of location"
-                data={popuplist}
-                show={showbuttompopup}
-                close={() => setShowbuttompopup(false)}
-                onSelected={value => {
-                  setType(value);
-                  setShowbuttompopup(false);
-                }}
-              />
-            </View>
+            <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
+              <Text style={styles.btnEdit}>EDIT</Text>
+            </TouchableOpacity>
+            <BottomPopup
+              title="Type of location"
+              data={popuplist}
+              show={showbuttompopup}
+              close={() => setShowbuttompopup(false)}
+              onSelected={value => {
+                setType(value);
+                setShowbuttompopup(false);
+              }}
+            />
           </View>
         </View>
-        
-        <Text style={styles.titleTime}>Time</Text>
 
         <TouchableOpacity
           style={styles.boxTimeOpen}
@@ -309,7 +363,7 @@ const AddDetailToilet2 = () => {
             style={{
               position: 'absolute',
               marginLeft: '81%',
-              marginTop: 13,
+              marginTop: 13.5,
             }}
           />
         </TouchableOpacity>
@@ -345,7 +399,7 @@ const AddDetailToilet2 = () => {
             style={{
               position: 'absolute',
               marginLeft: '81%',
-              marginTop: 13,
+              marginTop: 13.5,
             }}
           />
         </TouchableOpacity>
@@ -360,10 +414,19 @@ const AddDetailToilet2 = () => {
       </View>
 
       <View style={styles.btnConfirmPosition}>
-        <TouchableOpacity onPress={submitCreateToilet} style={styles.btnConfirm}>
-          <Text style={styles.txtBtn}>
+        <TouchableOpacity onPress={submitCreateToilet}>
+          <LinearGradient
+            colors={['#FAC353', '#FFA897']}
+            style={styles.btnConfirm}>
+            <Text
+              style={{
+                color: '#2C2F4A',
+                fontFamily: 'Fredoka-SemiBold',
+                fontSize: 16,
+              }}>
               CONFIRM
-          </Text>
+            </Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -390,7 +453,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 25,
+    paddingHorizontal: 16,
   },
   header: {
     backgroundColor: '#2C2F4A',
@@ -415,7 +478,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignSelf: 'center',
     width: '100%',
-    height: 200,
+    height: 210,
     backgroundColor: '#CACCDA',
     borderRadius: 3,
   },
@@ -423,39 +486,26 @@ const styles = StyleSheet.create({
   // Text input
   textInput: {
     color: '#F4F6FD',
-    paddingHorizontal: 25,
+    paddingLeft: 16,
+    paddingRight: 16,
     marginTop: 10,
   },
   bgTextInput: {
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
   },
-  textInputContainer:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  textInputLeft: {
+  textInputSmall: {
     color: '#F4F6FD',
-    width: 151,
-    paddingLeft: 25,
+    width: 198,
+    paddingLeft: 16,
   },
   textInputRight: {
-    color: '#F4F6FD',
-    width: 245,
-    paddingRight: 25,
+    position: 'relative',
+    top: -56,
+    left: 197,
   },
 
   // Handicap access
-  titleDetail: {
-    fontFamily: 'Fredoka-SemiBold',
-    fontSize: 16,
-    color: '#2C2F4A',
-    marginTop: 20,
-  },
-  boxContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   boxHandicap: {
     width: '35%',
     height: 77,
@@ -463,7 +513,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#777790',
-    marginTop: 15,
+    marginTop: -40,
   },
   titleHandicap: {
     textAlign: 'center',
@@ -474,7 +524,7 @@ const styles = StyleSheet.create({
   },
   positionSwitch: {
     marginTop: '10%',
-    marginHorizontal: '34%',
+    marginHorizontal: '33%',
   },
 
   // Type of location
@@ -485,7 +535,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#777790',
-    marginTop: 15,
+    marginTop: -77,
+    marginStart: '39%',
   },
   titleTypeLocation: {
     marginStart: 12,
@@ -513,6 +564,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
     color: '#2C2F4A',
+    marginLeft: 9,
+    marginRight: 80,
   },
   btnEdit: {
     fontFamily: 'Fredoka-SemiBold',
@@ -525,12 +578,6 @@ const styles = StyleSheet.create({
   },
 
   // Time Open
-  titleTime: {
-    fontFamily: 'Fredoka-SemiBold',
-    fontSize: 16,
-    color: '#2C2F4A',
-    marginTop: 20,
-  },
   boxTimeOpen: {
     width: '48%',
     height: 52,
@@ -551,8 +598,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginStart: 66,
-    marginTop: -29,
+    marginStart: 74,
+    marginTop: -30,
   },
 
   // Time Close
@@ -577,27 +624,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginStart: 66,
-    marginTop: -29,
+    marginStart: 74,
+    marginTop: -30,
   },
 
   // Button confirm
   btnConfirm: {
-    backgroundColor: '#6D7DD3',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 44,
+    height: 48,
     borderRadius: 8,
-    elevation: 3,
+    elevation: 4,
   },
   btnConfirmPosition: {
-    paddingVertical: 20,
+    paddingVertical: 25,
     paddingBottom: 10,
-    paddingHorizontal: 25,
-  },
-  txtBtn: {
-    color: '#F4F6FD',
-    fontFamily: 'Fredoka-SemiBold',
-    fontSize: 16,
+    paddingHorizontal: 16,
   },
 });
