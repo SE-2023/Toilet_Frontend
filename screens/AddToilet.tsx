@@ -5,20 +5,23 @@ import {
   Button,
   Alert,
   TouchableOpacity,
+  Platform,
+  PermissionsAndroid,
+  ActivityIndicator,
 } from 'react-native';
-import {ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {Platform, PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import {StackSimple} from 'phosphor-react-native';
+import {StackSimple, CaretLeft} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Buttonmap from '../components/Buttonmap';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getProfile} from '../services/auth';
+import LinearGradient from 'react-native-linear-gradient';
+
 export interface IProfile {
   _id: string;
 }
@@ -49,7 +52,7 @@ const AddToilet = () => {
   useEffect(() => {
     getUserProfile();
   }, []);
-  const gotoAddtoilet = () => {
+  const gotoAddToilet = () => {
     navigation.navigate('AddDetailToilet2', {
       _id: profile._id,
       latitude: pos.latitude,
@@ -137,6 +140,18 @@ const AddToilet = () => {
   // }
   return (
     <View style={{flex: 1}}>
+      <View style={styles.header}>
+        <CaretLeft
+          size={24}
+          color="#F4F6FD"
+          style={{
+            position: 'absolute',
+            left: 16,
+            top: 14,
+          }}
+        />
+        <Text style={styles.headerTitle}>Adding a toilet</Text>
+      </View>
       <MapView
         // onUserLocationChange={e => {
         //   console.log('locationChange', e.nativeEvent);
@@ -148,11 +163,16 @@ const AddToilet = () => {
         mapType={currentType}
         followsUserLocation={true}
         showsMyLocationButton={true}
-        zoomControlEnabled={true}
+        // zoomControlEnabled={true}
         showsBuildings={true}
-        toolbarEnabled={true}>
+        >
         {/* <RenderLocation></RenderLocation> */}
-        <Marker title="test" description={profile._id} coordinate={pos} />
+        <Marker
+          image={require('../assets/Map2.png')}
+          title="test"
+          description={profile._id}
+          coordinate={pos}
+        />
       </MapView>
       <View
         style={{
@@ -163,14 +183,17 @@ const AddToilet = () => {
         }}>
         <SafeAreaView>
           <TouchableOpacity
-            // colors={['#FAC353', '#FFA897']}
             style={styles.btnStackSimple_44}
             onPress={callBoth}>
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
         </SafeAreaView>
       </View>
-      <Button title="Submit" onPress={gotoAddtoilet} />
+      <View style={styles.container}>
+        <TouchableOpacity onPress={gotoAddToilet} style={styles.btnSubmit}>
+          <Text style={styles.txtSubmit}>SUBMIT</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -181,16 +204,57 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+
+  header: {
+    backgroundColor: '#2C2F4A',
+    height: 52,
+    width: '100%',
+    zIndex: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    elevation: 8,
+  },
+  headerTitle: {
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 24,
+    color: '#F4F6FD',
+    left: 26,
+  },
+
   btnStackSimple_44: {
+    position: 'relative',
     width: 39,
     height: 39,
     borderRadius: 3,
     backgroundColor: '#fff',
-    top: 35,
+    top: 88,
     left: 13.5,
     elevation: 3,
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.8,
+  },
+  container: {
+    marginHorizontal: 12,
+  },
+  btnSubmit: {
+    backgroundColor: '#6D7DD3',
+    width: '100%',
+    height: 44,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    elevation: 4,
+  },
+  txtSubmit: {
+    fontFamily: 'Fredoka-SemiBold',
+    color: '#F4F6FD',
+    fontSize: 16,
   },
 });

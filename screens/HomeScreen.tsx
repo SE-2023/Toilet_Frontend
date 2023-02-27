@@ -183,10 +183,11 @@ const HomeScreen = () => {
               title={item.title}
               description={item._id}
               onPress={() => setIDtoilet(item)}>
+                
               <Callout tooltip onPress={onClick}>
                 <View>
                   <View style={styles.bubble}>
-                    <Image source={toilet} style={styles.imageToilet} />
+                    {/* <Image source={toilet} style={styles.imageToilet} /> */}
                     <View style={styles.itemLeftTop}>
                       <Kuy></Kuy>
 

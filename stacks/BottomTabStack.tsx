@@ -49,8 +49,7 @@ import {RootStackList} from './RootStack';
 import HomeStack, {HomeParamList} from './HomeStack';
 export type BottomTabParamList = {
   HomeStack: NavigatorScreenParams<HomeParamList>;
-  AddList: undefined;
-
+  MyList: undefined;
   AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
   Cartoon: undefined;
   ProfileStack: NavigatorScreenParams<ProfileParamList>;
@@ -94,7 +93,6 @@ const BottomTabStack = () => {
           name="MyList"
           component={AddList}
           options={{
-            tabBarStyle: {display: 'none'},
             tabBarIcon: ({focused, color, size}) => (
               <Heart color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
             ),
@@ -107,6 +105,7 @@ const BottomTabStack = () => {
           //   navigation.navigate('AddToiletStack', {screen: 'AddToilet'})
           // }
           options={{
+            tabBarStyle: {display: 'none'},
             tabBarHideOnKeyboard: true,
             tabBarIcon: ({focused, color, size}) => (
               <Plus color={focused ? '#FFA897' : '#BABCCA'} size={24} weight="fill" />
