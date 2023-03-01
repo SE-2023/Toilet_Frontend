@@ -52,16 +52,16 @@ function Login({navigation}: {navigation: any}) {
         console.log('token kkkkkkkkkk');
         navigation.replace('MainStack', {screen: 'Home'});
       }
-    } catch (err:any) {
+    } catch (err: any) {
       setErrorsEmail('');
       setErrorsPassword('');
-      err.errors.map( (item:any) => {
-        if(item.param === 'email'){
+      err.errors.map((item: any) => {
+        if (item.param === 'email') {
           setErrorsEmail(item.msg);
-        } else if(item.param === 'password'){
+        } else if (item.param === 'password') {
           setErrorsPassword(item.msg);
         }
-      })
+      });
     }
   };
 
@@ -165,6 +165,7 @@ function Login({navigation}: {navigation: any}) {
             }}
           />
           <Text
+            onPress={() => navigation.goBack()}
             style={{
               color: '#FFA897',
               fontFamily: 'Fredoka-SemiBold',
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Regular',
   },
   error: {
-    color: 'red'
-  }
+    color: 'red',
+  },
 });
 export default Login;

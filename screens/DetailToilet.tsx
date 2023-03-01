@@ -16,58 +16,100 @@ import {
   Wheelchair,
   Heart,
   Star,
-  CaretRight
+  CaretRight,
+  PersonSimpleWalk,
+  X,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import Review from '../components/Review';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {AddToiletParamList} from '../stacks/AddToiletStack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {HomeParamList} from '../stacks/HomeStack';
+import Modal from 'react-native-modal';
+import star from '../assets/star.png';
+import {TextInput} from 'react-native-paper';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
 const height = width * aspectRatio;
 
 const DetailToilet = () => {
+  const {params} = useRoute<RouteProp<HomeParamList, 'DetailToilet'>>();
+  console.log(params);
+  const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
+
+
+  const [modal, setModal] = useState(false);
+  const [review, setReview] = React.useState('');
+
+
+  const TagFree = (): JSX.Element | null => {
+    if (params.free === true) {
+      return (
+        <View style={styles.tagFree}>
+          <Text style={styles.textFree}>฿ Free</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const TagHandicap = (): JSX.Element | null => {
+    if (params.handicap === true) {
+      return (
+        <View style={styles.tagHandicap}>
+          <Wheelchair
+            size={14}
+            weight="fill"
+            color="#00845A"
+            style={{
+              marginRight: 2,
+              marginLeft: 6,
+            }}
+          />
+          <Text style={styles.textHandicap}>Handicap access</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
-        <Image source={toilet} style={{width, height}} />
+        <Image source={{uri: params.toiletpicture}} style={{width, height}} />
       </View>
-      <TouchableOpacity style={styles.btnBack}>
+      <TouchableOpacity
+        style={styles.btnBack}
+        onPress={() => navigation.goBack()}>
         <CaretLeft size={24} weight="bold" color="#2C2F4A" />
       </TouchableOpacity>
-      
+
       <View>
         <ScrollView>
           <View style={{height: height * 0.5}}></View>
           <View style={styles.mainContainer}>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>Place Name</Text>
+              <Text style={styles.title}>{params.title}</Text>
             </View>
 
             <View style={styles.tagContainer}>
-              <View style={styles.tagFree}>
-                <Text style={styles.textFree}>฿ Free</Text>
-              </View>
-
-              <View style={styles.tagHandicap}>
-                <Wheelchair
-                  size={14}
-                  weight="fill"
-                  color="#00845A"
-                  style={{
-                    marginRight: 2,
-                    marginLeft: 6,
-                  }}
-                />
-                <Text style={styles.textHandicap}>Handicap access</Text>
-              </View>
+              <TagFree></TagFree>
+              <TagHandicap></TagHandicap>
 
               <View style={styles.tagType}>
                 <Image source={wc} style={styles.iconType} />
-                <Text style={styles.textType}>Public</Text>
+                <Text style={styles.textType}>{params.type}</Text>
               </View>
             </View>
 
             <View style={styles.detailContainer}>
+              <View style={styles.priceContainer}>
+                <Text style={styles.baht}>฿ </Text>
+                <Text style={styles.price}>0</Text>
+              </View>
               <View style={styles.timeContainer}>
                 <Clock
                   size={16}
@@ -77,7 +119,9 @@ const DetailToilet = () => {
                     marginRight: 6,
                   }}
                 />
-                <Text style={styles.time}>00:00 - 00:00</Text>
+                <Text style={styles.time}>
+                  {params.timeOpen} - {params.timeClose}
+                </Text>
               </View>
               <View style={styles.phoneContainer}>
                 <Phone
@@ -88,22 +132,29 @@ const DetailToilet = () => {
                     marginRight: 6,
                   }}
                 />
-                <Text style={styles.phone}>000-000-0000</Text>
+                <Text style={styles.phone}>{params.contact}</Text>
               </View>
             </View>
-            
+
             <View style={styles.btnContainer}>
-              <TouchableOpacity style={styles.btnHeart}>
-                <Heart size={20} color="#777790" />
+              <TouchableOpacity
+                style={styles.btnReview}
+                onPress={() => setModal(true)}>
+                <Text style={styles.review}>REVIEW</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.btnReserve}>
-                <Text style={styles.textReserve}>RESERVE</Text>
-                <Text style={styles.textPrice}>  (฿ 0)</Text>
+              <TouchableOpacity style={styles.btnHeart}>
+                <Heart size={20} weight="fill" color="#E5EAFA" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.btnPerson}>
+                <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnRate}>
+            <TouchableOpacity
+              style={styles.btnRate}
+              onPress={() => navigation.navigate('Ratings')}>
               <View style={styles.itemLeft}>
                 <Text style={styles.titleRate}>Rate</Text>
                 <Star size={17} weight="fill" color="#FAC353" />
@@ -114,17 +165,67 @@ const DetailToilet = () => {
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              <Review/>
+              <Review />
+              <Review />
             </View>
+            
           </View>
-          <View style={{height: height * 0.25, backgroundColor: '#F4F6FD'}}></View>
+          <View
+            style={{height: height * 0.25, backgroundColor: '#F4F6FD'}}></View>
         </ScrollView>
       </View>
+
+      {/* Modal */}
+      <Modal isVisible={modal}>
+        <View style={styles.modalContainer}>
+          <Image source={star} style={styles.imageStar} />
+
+          <TouchableOpacity
+            style={styles.btnClose}
+            onPress={() => setModal(false)}>
+            <X size={19} weight="bold" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          <View style={styles.detailPopupContainer}>
+            <Text style={styles.titlePopup}>Rate & Review</Text>
+            <TouchableOpacity style={styles.btnStar}>
+              <Star size={34} weight="fill" color="#FAC353" />
+              <Star size={34} weight="fill" color="#FAC353" />
+              <Star size={34} weight="fill" color="#FAC353" />
+              <Star size={34} weight="fill" color="#FAC353" />
+              <Star size={34} weight="bold" color="#FAC353" />
+            </TouchableOpacity>
+            <TextInput
+              label="Review"
+              value={review}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              onChangeText={text => setReview(text)}
+              multiline
+            />
+            <TouchableOpacity style={styles.btnSubmit}>
+              <Text style={styles.textSubmit}>SUBMIT</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 export default DetailToilet;
+
+const theme = {
+  colors: {
+    primary: '#6D7DD3',
+  },
+  fonts: {
+    regular: {
+      fontFamily: 'Fredoka-Regular',
+    },
+  },
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -135,6 +236,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 25,
     left: 25,
+    backgroundColor: '#F4F6FD',
+    borderRadius: 30,
+    padding: 10,
+    elevation: 2,
   },
   mainContainer: {
     backgroundColor: '#F4F6FD',
@@ -224,6 +329,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  priceContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  baht: {
+    fontSize: 16,
+    fontFamily: 'Fredoka-SemiBold',
+    color: '#D75D5D',
+  },
+  price: {
+    fontSize: 16,
+    fontFamily: 'Fredoka-Regular',
+    color: '#2C2F4A',
+  },
   timeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -243,7 +362,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Fredoka-Regular',
     color: '#2C2F4A',
-    marginRight: 42,
   },
 
   // Button
@@ -253,36 +371,42 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     marginTop: 15,
   },
-  btnHeart: {
-    width: 44,
-    height: 44,
-    backgroundColor: '#F4F6FD',
-    borderRadius: 8,
-    borderWidth: 0.5,
-    borderColor: '#777790',
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  btnReserve: {
+  btnReview: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#6D7DD3',
-    width: '84%',
+    width: '70%',
     height: 44,
     borderRadius: 8,
-    elevation: 3,
+    elevation: 2,
   },
-  textReserve: {
+  btnHeart: {
+    width: 44,
+    height: 44,
+    backgroundColor: '#2C2F4A',
+    borderRadius: 8,
+    // borderWidth: 0.5,
+    // borderColor: '#777790',
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnPerson: {
+    width: 44,
+    height: 44,
+    backgroundColor: '#2C2F4A',
+    borderRadius: 8,
+    // borderWidth: 0.5,
+    // borderColor: '#2C2F4A',
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  review: {
     fontSize: 16,
     fontFamily: 'Fredoka-Medium',
     color: '#fff',
-  },
-  textPrice: {
-    fontSize: 16,
-    fontFamily: 'Fredoka-Medium',
-    color: '#F4F6FD',
   },
 
   btnRate: {
@@ -290,7 +414,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: 25,
-    marginTop: 30,
+    marginTop: 25,
   },
   itemLeft: {
     flexDirection: 'row',
@@ -316,5 +440,67 @@ const styles = StyleSheet.create({
   },
   reviewContainer: {
     marginHorizontal: 25,
+  },
+
+  // Modal
+  modalContainer: {
+    backgroundColor: '#F4F6FD',
+    borderRadius: 8,
+    marginHorizontal: 20,
+  },
+  imageStar: {
+    width: 330,
+    height: 150,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  btnClose: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 32,
+    height: 32,
+    borderRadius: 20,
+    backgroundColor: '#F4F6FD',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    opacity: 0.8,
+  },
+  detailPopupContainer: {
+    paddingHorizontal: 20,
+  },
+  titlePopup: {
+    fontSize: 22,
+    fontFamily: 'Fredoka-Medium',
+    color: '#2C2F4A',
+    marginTop: 15,
+    alignSelf: 'center',
+  },
+  btnStar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 15,
+  },
+  bgTextInput: {
+    backgroundColor: '#F4F6FD',
+    marginTop: 15,
+    fontFamily: 'Fredoka-Regular',
+  },
+  btnSubmit: {
+    backgroundColor: '#6D7DD3',
+    height: 44,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    marginTop: 15,
+    marginBottom: 20,
+    elevation: 3,
+  },
+  textSubmit: {
+    fontSize: 16,
+    fontFamily: 'Fredoka-SemiBold',
+    color: '#F4F6FD',
   },
 });

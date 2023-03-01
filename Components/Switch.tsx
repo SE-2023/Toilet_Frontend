@@ -96,15 +96,15 @@ export default Switch;
 
 const styles = StyleSheet.create({
   container: {
-    width: 44,
-    height: 24,
+    width: 42,
+    height: 22,
     backgroundColor: '#BABCCA',
     borderRadius: 30,
     justifyContent: 'center',
   },
   circle: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     backgroundColor: '#fff',
     borderRadius: 30,
     shadowColor: 'black',

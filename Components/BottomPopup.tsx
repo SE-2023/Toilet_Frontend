@@ -1,149 +1,149 @@
-import React from "react";
-import { 
-    Modal, 
-    Dimensions, 
-    TouchableWithoutFeedback,
-    StyleSheet,
-    View,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    Alert
-} from "react-native";
-
-const deviceHeight = Dimensions.get("window").height
-export class BottomPopup extends React.Component {
-    constructor(props : any) {
-        super(props)
-        this.state = {
-            show: false
-        }
-    }
-
-    show = () => {
-        this.setState({show: true})
-    }
-
-    close = () => {
-        this.setState({show: false})
-    }
-
-    renderOutsideTouchable(onTouch) {
-        const view = <View style={{flex:1, width:'100%'}}/>
-        if (!onTouch) return view
-
-        return (
-            <TouchableWithoutFeedback onPress={onTouch} style={{flex:1, width:'100%'}}>
-                {view}
-            </TouchableWithoutFeedback>
-        )
-    }
-
-    renderTitle = () => {
-        const {title} = this.props
-        return (
-            <View style={{alignItems: 'center'}}>
-                <Text style={{
-                    color: '#182E44',
-                    fontSize: 25,
-                    fontWeight: '500',
-                    marginTop: 15,
-                    marginBottom: 30
-                }}>
-                    {title}
-                </Text>
-            </View>
-        )
-    }
-
-    renderContent = () => {
-        const {data} = this.props
-        return (
-            <View>
-                <FlatList 
-                    style={{marginBottom: 20}}
-                    showsVerticalScrollIndicator={false}
-                    data={data}
-                    renderItem={this.renderItem}
-                    extraData={data}
-                    keyExtractor={(item, index) => index.toString()}
-                    ItemSeparatorComponent={this.renderSeparator}
-                    contentContainerStyle={{
-                        paddingBottom: 40
-                    }}
-                />
-            </View>
-        )
-    }
-
-    renderItem = ({item}) => {
-        return (
-            <TouchableOpacity
-                onPress={() => Alert.alert(item.name)}
-                style={{
-                    height: 50, flex: 1,
-                    justifyContent: 'center', alignItems: 'flex-start',
-                    borderBottomColor: 'grey', borderBottomWidth: 0.5
-                }}
-            >
-                <View style={{
-                    height:50, flex:1, 
-                    alignItems:'flex-start', justifyContent: 'center',
-                    marginLeft: 20
-                }}>
-                    <Text style={{
-                        fontSize:18, fontWeight:'normal', color:'#182E44'
-                        }}>
-                            {item.icon}
-                            {item.name}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-    renderSeparator = () => {
-        <View 
-            style={{
-                opacity: 0.1,
-                backgroundColor: '#182E44',
-                height: 1
-            }}/>
-    }
-
-    render() {
-
-        let {show} = this.state
-        const {onTouchOutside, title} = this.props
-
-        return (
-            <Modal
-                animationType={'fade'}
-                transparent={true}
-                visible={show}
-                onRequestClose={this.close}
-            >
-                <View style={{
-                    flex: 1,
-                    backgroundColor: '#00000000AA',
-                    justifyContent: 'flex-end'
-                }}>
-                    {this.renderOutsideTouchable(onTouchOutside)}
-                    <View style={{
-                        backgroundColor: '#FFFFFF',
-                        width: '100%',
-                        borderTopRightRadius: 10,
-                        borderTopLeftRadius: 10,
-                        paddingHorizontal: 10,
-                        maxHeight: deviceHeight * 0.4
-                    }}>
-                        
-                    {this.renderTitle()}
-                    {this.renderContent()}
-                    </View>
-                </View>
-
-            </Modal>
-        )
-    }
+import React, {useState} from 'react';
+import {
+  Modal,
+  Dimensions,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+interface IPop {
+  show: boolean;
+  close: () => void;
+  title: string;
+  data: any;
+  onSelected: (value: string) => void;
 }
+const deviceHeight = Dimensions.get('window').height;
+const BottomPopup = (props: IPop) => {
+  //   const close = () => {
+  //     setShow(false);
+  //   };
+
+  const renderOutsideTouchable = (onTouch: any) => {
+    const view = <View style={{flex: 1, width: '100%'}} />;
+    if (!onTouch) return view;
+
+    return (
+      <TouchableWithoutFeedback
+        onPress={onTouch}
+        style={{flex: 1, width: '100%'}}>
+        {view}
+      </TouchableWithoutFeedback>
+    );
+  };
+  const renderTitle = () => {
+    return (
+      <View style={{marginHorizontal: 16}}>
+        <Text
+          style={{
+            fontFamily: 'Fredoka-Medium',
+            fontSize: 20,
+            color: '#777790',
+            marginVertical: 28,
+          }}>
+          {props.title}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderItem = ({item}: any) => {
+    return (
+      <TouchableOpacity
+        onPress={() => props.onSelected(item.name)}
+        style={{
+          height: 48,
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        }}>
+        <View
+          style={{
+            height: 50,
+            flex: 1,
+            alignItems: 'flex-start',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginLeft: 20,
+          }}>
+            {item.icon}
+          <Text
+            style={{
+              fontFamily: 'Fredoka-Regular',
+              fontSize: 18,
+              color: '#2C2F4A'
+            }}>
+            {item.name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  // const RenderSeparator = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         opacity: 0.1,
+  //         backgroundColor: '#182E44',
+  //         height: 1,
+  //       }}
+  //     />
+  //   );
+  // };
+
+  const renderContent = () => {
+    return (
+      <View>
+        <FlatList
+          style={{marginBottom: 20}}
+          showsVerticalScrollIndicator={false}
+          data={props.data}
+          renderItem={renderItem}
+          extraData={props.data}
+          keyExtractor={(item, index) => index.toString()}
+          // ItemSeparatorComponent={RenderSeparator}
+          contentContainerStyle={{
+            paddingBottom: 20,
+          }}
+        />
+      </View>
+    );
+  };
+
+  // let {show} = this.state
+  // const {onTouchOutside, title} = this.props
+
+  return (
+    <Modal
+      animationType={'fade'}
+      transparent={true}
+      visible={props.show}
+      onRequestClose={props.close}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: '#000A',
+          justifyContent: 'flex-end',
+        }}>
+        {renderOutsideTouchable(props.close)}
+        <View
+          style={{
+            backgroundColor: '#fff',
+            width: '100%',
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            paddingHorizontal: 16,
+            maxHeight: deviceHeight * 0.46,
+          }}>
+          {renderTitle()}
+          {renderContent()}
+        </View>
+      </View>
+    </Modal>
+  );
+};
+export default BottomPopup;

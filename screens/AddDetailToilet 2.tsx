@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableOpacity,
   Image,
+  PermissionsAndroid,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -30,7 +31,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
-import {BottomPopup} from '../components/BottomPopup';
+import BottomPopup from '../components/BottomPopup';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import {RootStackList} from '../stacks/RootStack';
 
 export const popuplist = [
   {
@@ -39,32 +42,32 @@ export const popuplist = [
       <Image
         source={wc}
         style={{
-          height: 24,
-          width: 24,
+          height: 20,
+          width: 20,
         }}
       />
     ),
-    name: '  Public',
+    name: 'public',
   },
   {
     id: 2,
-    icon: <ForkKnife size={24} color="#2C2F4A" weight="fill" />,
-    name: '  Restaurant',
+    icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" />,
+    name: 'restaurant',
   },
   {
     id: 3,
-    icon: <Tote size={24} color="#2C2F4A" weight="fill" />,
-    name: '  Store',
+    icon: <Tote size={22} color="#2C2F4A" weight="fill" />,
+    name: 'store',
   },
   {
     id: 4,
-    icon: <GasPump size={24} color="#2C2F4A" weight="fill" />,
-    name: '  Gas Station',
+    icon: <GasPump size={22} color="#2C2F4A" weight="fill" />,
+    name: 'gas Station',
   },
   {
     id: 5,
-    icon: <House size={24} color="#2C2F4A" weight="fill" />,
-    name: '  House',
+    icon: <House size={22} color="#2C2F4A" weight="fill" />,
+    name: 'house',
   },
 ];
 
@@ -72,8 +75,11 @@ const AddDetailToilet2 = () => {
   const [placeName, setPlaceName] = React.useState('');
   const [contact, setContact] = React.useState('');
   const [cost, setCost] = React.useState('');
-  const [type, setType] = React.useState('');
+  const [type, setType] = React.useState(popuplist[0].name);
   const [handicap, setHandicap] = React.useState(false);
+  const [toiletPicture, settoiletPicture] = useState(
+    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanook.com%2Fnews%2F&psig=AOvVaw2LozT_eZjCaKky5wHekfdr&ust=1675358692831000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPD1ltLr9PwCFQAAAAAdAAAAABAE',
+  );
   // const childToParent = (childdata: any) => {
   //   setHandicap(childdata);
   // };
@@ -83,21 +89,91 @@ const AddDetailToilet2 = () => {
   const [isTimeClosePickerVisible, setTimeClosePickerVisibility] =
     useState(false);
   // const [selectedDate, setSelectedDate] = useState('Select Date');
-  const [selectedTimeOpen, setSelectedTimeOpen] = useState('00 : 00');
-  const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
+  const [selectedTimeOpen, setSelectedTimeOpen] = useState('00:00');
+  const [selectedTimeClose, setSelectedTimeClose] = useState('00:00');
   const [free, setfree] = useState(true);
+  const [cameraPhoto, setCamera] = useState();
   let popupRef = React.createRef();
 
-  const onShowPopup = () => {
-    popupRef.show();
+  const Tag = (): JSX.Element | null => {
+    if (type === popuplist[0].name) {
+      return <Image source={wc} style={styles.iconTypeLocation} />;
+    }
+    if (type === popuplist[1].name) {
+      return <ForkKnife size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[2].name) {
+      return <Tote size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[3].name) {
+      return <GasPump size={24} color="#2C2F4A" weight="fill" />;
+    }
+    if (type === popuplist[4].name) {
+      return <House size={24} color="#2C2F4A" weight="fill" />;
+    } else {
+      return null;
+    }
+  };
+  const chooseImage = async () => {
+    let options: any = {
+      includeBase64: true,
+      title: 'Select Image',
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, async (response: any) => {
+      // console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        // const pic = await fileToBase64(response.assets);
+        // console.log(pic);
+
+        // const source: any = response.assets[0].uri;
+        // const aom = await fileToBase64(source);
+        // You can also display the image using data:
+        const source: any =
+          'data:image/jpeg;base64,' + response.assets[0].base64;
+        console.log(source);
+        // this.setState({
+        //  filePath: response,
+        //  fileData: response.data,
+        //  fileUri: response.uri
+        // });
+        settoiletPicture(source);
+        // console.log('data95', profilePicture);
+      }
+    });
   };
 
-  const onClosePopup = () => {
-    popupRef.close();
+  let options: any = {
+    saveToPhotos: true,
+    mediaType: 'photo',
   };
 
+  const openCamera = async () => {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      const result = await launchCamera(options);
+      setCamera(result.assets[0].uri);
+    }
+  };
+
+  const [showbuttompopup, setShowbuttompopup] = useState(false);
   // OPEN
-  function padTo2Digits(num) {
+  function padTo2Digits(num: any) {
     return String(num).padStart(2, '0');
   }
 
@@ -112,7 +188,7 @@ const AddDetailToilet2 = () => {
   const handleTimeOpenConfirm = (dateO: Date) => {
     const dtO = new Date(dateO);
     const timeO =
-      padTo2Digits(dateO.getHours()) + ' : ' + padTo2Digits(dateO.getMinutes());
+      padTo2Digits(dateO.getHours()) + ':' + padTo2Digits(dateO.getMinutes());
     console.log(timeO);
     setSelectedTimeOpen(timeO);
     hideTimeOpenPicker();
@@ -130,7 +206,7 @@ const AddDetailToilet2 = () => {
   const handleTimeCloseConfirm = (dateC: Date) => {
     const dtC = new Date(dateC);
     const timeC =
-      padTo2Digits(dateC.getHours()) + ' : ' + padTo2Digits(dateC.getMinutes());
+      padTo2Digits(dateC.getHours()) + ':' + padTo2Digits(dateC.getMinutes());
     console.log(timeC);
     setSelectedTimeClose(timeC);
     hideTimeClosePicker();
@@ -141,7 +217,7 @@ const AddDetailToilet2 = () => {
   console.log(params);
   const navigation =
     useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
-
+  const navigation2 = useNavigation<NativeStackNavigationProp<RootStackList>>();
   const submitCreateToilet = async () => {
     if (cost.length > 1) {
       setfree(false);
@@ -151,7 +227,7 @@ const AddDetailToilet2 = () => {
       console.log(' free');
     }
     const createtoilet: any = await createToilet({
-      name: placeName,
+      title: placeName,
       latitude: params.latitude,
       longitude: params.longitude,
       desc: 'test',
@@ -160,13 +236,13 @@ const AddDetailToilet2 = () => {
       handicap: handicap,
       free: free,
       createBy: params._id,
-      type: 'test',
+      type: type,
       timeOpen: selectedTimeOpen,
       timeClose: selectedTimeClose,
-      toiletpicture: [],
+      toiletpicture: toiletPicture,
     });
     console.log('createtoilet', createtoilet);
-    navigation.replace('AddToilet');
+    navigation2.replace('MainStack', {screen: 'HomeStack'});
   };
 
   return (
@@ -174,20 +250,29 @@ const AddDetailToilet2 = () => {
       style={styles.bgColor}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.header}>
-        <CaretLeft
-          size={24}
-          color="#F4F6FD"
-          style={{
-            position: 'absolute',
-            left: 16,
-            top: 14,
-          }}
-        />
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={() => navigation.goBack()}>
+          <CaretLeft size={24} color="#F4F6FD" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Adding a toilet</Text>
       </View>
 
       <View style={styles.container}>
-        <TouchableOpacity style={styles.addPhoto}>
+        <TouchableOpacity onPress={chooseImage}>
+          <Image source={{uri: toiletPicture}} style={styles.addPhoto} />
+          <PlusCircle
+            size={28}
+            // weight='fill'
+            color="#F4F6FD"
+            style={{
+              position: 'absolute',
+              alignSelf: 'center',
+              marginTop: '19.5%',
+            }}
+          />
+        </TouchableOpacity>
+        {/* <TouchableOpacity onPress={openCamera} style={styles.addPhoto}>
           <PlusCircle
             size={28}
             // weight='fill'
@@ -198,7 +283,8 @@ const AddDetailToilet2 = () => {
               marginTop: '16%',
             }}
           />
-        </TouchableOpacity>
+          <Image style={styles.imageStyle} source={{uri: cameraPhoto}} />
+        </TouchableOpacity> */}
       </View>
 
       <View style={styles.textInput}>
@@ -210,24 +296,12 @@ const AddDetailToilet2 = () => {
             style={styles.bgTextInput}
             mode="outlined"
             onChangeText={text => setPlaceName(text)}
-            multiline
           />
         </View>
       </View>
 
-      <View style={styles.textInputSmall}>
-        <View>
-          <TextInput
-            label="Contact"
-            value={contact}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setContact(text)}
-          />
-        </View>
-
-        <View style={styles.textInputRight}>
+      <View style={styles.textInputContainer}>
+        <View style={styles.textInputLeft}>
           <TextInput
             label="Cost"
             value={cost}
@@ -237,42 +311,63 @@ const AddDetailToilet2 = () => {
             onChangeText={text => setCost(text)}
           />
         </View>
+
+        <View style={styles.textInputRight}>
+          <TextInput
+            label="Contact"
+            value={contact}
+            theme={theme}
+            style={styles.bgTextInput}
+            mode="outlined"
+            onChangeText={text => setContact(text)}
+          />
+        </View>
       </View>
 
       <View style={styles.container}>
-        <View style={styles.boxHandicap}>
-          <Text style={styles.titleHandicap}>Handicap access</Text>
-          <View style={styles.positionSwitch}>
-            <Switch
-              inActiveColor={'#BABCCA'}
-              activeColor={'#31C596'}
-              active={handicap}
-              onPress={() => setHandicap(prev => !prev)}
-            />
-          </View>
-        </View>
+        <Text style={styles.titleDetail}>Detail</Text>
 
-        <View style={styles.boxTypeLocation}>
-          <Text style={styles.titleTypeLocation}>Type of location</Text>
-
-          <View style={styles.btnTypeLocation}>
-            <View style={styles.itemLeft}>
-              <Image source={wc} style={styles.iconTypeLocation} />
-              <Text style={styles.textTypeLocation}>Public</Text>
+        <View style={styles.boxContainer}>
+          <View style={styles.boxHandicap}>
+            <Text style={styles.titleHandicap}>Handicap access</Text>
+            <View style={styles.positionSwitch}>
+              <Switch
+                inActiveColor={'#BABCCA'}
+                activeColor={'#31C596'}
+                active={handicap}
+                onPress={() => setHandicap(prev => !prev)}
+              />
             </View>
+          </View>
 
-            <TouchableOpacity onPress={onShowPopup}>
-              <Text style={styles.btnEdit}>EDIT</Text>
-            </TouchableOpacity>
-            <BottomPopup
-              title="Type of location"
-              ref={target => (popupRef = target)}
-              onTouchOutside={onClosePopup}
-              data={popuplist}
-              animationType={'face'}
-            />
+          <View style={styles.boxTypeLocation}>
+            <Text style={styles.titleTypeLocation}>Type of location</Text>
+
+            <View style={styles.btnTypeLocation}>
+              <View style={styles.itemLeft}>
+                <Tag></Tag>
+                <Text style={styles.textTypeLocation}>{type}</Text>
+              </View>
+
+              <TouchableOpacity onPress={() => setShowbuttompopup(true)}>
+                <Text style={styles.btnEdit}>EDIT</Text>
+              </TouchableOpacity>
+
+              <BottomPopup
+                title="Type of location"
+                data={popuplist}
+                show={showbuttompopup}
+                close={() => setShowbuttompopup(false)}
+                onSelected={value => {
+                  setType(value);
+                  setShowbuttompopup(false);
+                }}
+              />
+            </View>
           </View>
         </View>
+
+        <Text style={styles.titleTime}>Time</Text>
 
         <TouchableOpacity
           style={styles.boxTimeOpen}
@@ -297,7 +392,7 @@ const AddDetailToilet2 = () => {
             style={{
               position: 'absolute',
               marginLeft: '81%',
-              marginTop: 13.5,
+              marginTop: 13,
             }}
           />
         </TouchableOpacity>
@@ -333,7 +428,7 @@ const AddDetailToilet2 = () => {
             style={{
               position: 'absolute',
               marginLeft: '81%',
-              marginTop: 13.5,
+              marginTop: 13,
             }}
           />
         </TouchableOpacity>
@@ -348,19 +443,10 @@ const AddDetailToilet2 = () => {
       </View>
 
       <View style={styles.btnConfirmPosition}>
-        <TouchableOpacity onPress={submitCreateToilet}>
-          <LinearGradient
-            colors={['#FAC353', '#FFA897']}
-            style={styles.btnConfirm}>
-            <Text
-              style={{
-                color: '#2C2F4A',
-                fontFamily: 'Fredoka-SemiBold',
-                fontSize: 16,
-              }}>
-              CONFIRM
-            </Text>
-          </LinearGradient>
+        <TouchableOpacity
+          onPress={submitCreateToilet}
+          style={styles.btnConfirm}>
+          <Text style={styles.txtBtn}>CONFIRM</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -387,7 +473,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 25,
   },
   header: {
     backgroundColor: '#2C2F4A',
@@ -402,6 +488,16 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 24,
     elevation: 8,
   },
+  btnBack: {
+    position: 'absolute',
+    left: 16,
+    top: 14,
+  },
+  imageStyle: {
+    height: 210,
+    width: '100%',
+    borderRadius: 3,
+  },
   headerTitle: {
     fontFamily: 'Fredoka-Medium',
     fontSize: 24,
@@ -412,7 +508,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignSelf: 'center',
     width: '100%',
-    height: 210,
+    height: 200,
     backgroundColor: '#CACCDA',
     borderRadius: 3,
   },
@@ -420,26 +516,39 @@ const styles = StyleSheet.create({
   // Text input
   textInput: {
     color: '#F4F6FD',
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingHorizontal: 25,
     marginTop: 10,
   },
   bgTextInput: {
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
   },
-  textInputSmall: {
+  textInputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textInputLeft: {
     color: '#F4F6FD',
-    width: 198,
-    paddingLeft: 16,
+    width: 151,
+    paddingLeft: 25,
   },
   textInputRight: {
-    position: 'relative',
-    top: -56,
-    left: 197,
+    color: '#F4F6FD',
+    width: 245,
+    paddingRight: 25,
   },
 
   // Handicap access
+  titleDetail: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
+    color: '#2C2F4A',
+    marginTop: 20,
+  },
+  boxContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   boxHandicap: {
     width: '35%',
     height: 77,
@@ -447,7 +556,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#777790',
-    marginTop: -40,
+    marginTop: 15,
   },
   titleHandicap: {
     textAlign: 'center',
@@ -458,7 +567,7 @@ const styles = StyleSheet.create({
   },
   positionSwitch: {
     marginTop: '10%',
-    marginHorizontal: '33%',
+    marginHorizontal: '34%',
   },
 
   // Type of location
@@ -469,8 +578,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#777790',
-    marginTop: -77,
-    marginStart: '39%',
+    marginTop: 15,
   },
   titleTypeLocation: {
     marginStart: 12,
@@ -498,8 +606,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
     color: '#2C2F4A',
-    marginLeft: 9,
-    marginRight: 80,
   },
   btnEdit: {
     fontFamily: 'Fredoka-SemiBold',
@@ -512,6 +618,12 @@ const styles = StyleSheet.create({
   },
 
   // Time Open
+  titleTime: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
+    color: '#2C2F4A',
+    marginTop: 20,
+  },
   boxTimeOpen: {
     width: '48%',
     height: 52,
@@ -532,8 +644,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginStart: 74,
-    marginTop: -30,
+    marginStart: 66,
+    marginTop: -29,
   },
 
   // Time Close
@@ -558,21 +670,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginStart: 74,
-    marginTop: -30,
+    marginStart: 66,
+    marginTop: -29,
   },
 
   // Button confirm
   btnConfirm: {
+    backgroundColor: '#6D7DD3',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 48,
+    height: 44,
     borderRadius: 8,
-    elevation: 4,
+    elevation: 3,
   },
   btnConfirmPosition: {
-    paddingVertical: 25,
+    paddingVertical: 20,
     paddingBottom: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 25,
+  },
+  txtBtn: {
+    color: '#F4F6FD',
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
   },
 });
