@@ -47,27 +47,27 @@ export const popuplist = [
         }}
       />
     ),
-    name: 'public',
+    name: 'Public',
   },
   {
     id: 2,
     icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" />,
-    name: 'restaurant',
+    name: 'Restaurant',
   },
   {
     id: 3,
     icon: <Tote size={22} color="#2C2F4A" weight="fill" />,
-    name: 'store',
+    name: 'Store',
   },
   {
     id: 4,
     icon: <GasPump size={22} color="#2C2F4A" weight="fill" />,
-    name: 'gas Station',
+    name: 'Gas Station',
   },
   {
     id: 5,
     icon: <House size={22} color="#2C2F4A" weight="fill" />,
-    name: 'house',
+    name: 'House',
   },
 ];
 
@@ -606,6 +606,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
     color: '#2C2F4A',
+    marginLeft: 12,
   },
   btnEdit: {
     fontFamily: 'Fredoka-SemiBold',

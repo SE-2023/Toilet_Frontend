@@ -15,6 +15,7 @@ const App = () => {
   return (
     // <NavigationContainer>
     //   <RootStack />
+
     // </NavigationContainer>
     <NavigationContainer>
       <Search />

@@ -19,6 +19,8 @@ import {
   Star,
   Wheelchair,
   Clock,
+  MagnifyingGlass,
+  Funnel,
   ForkKnife,
   Tote,
   GasPump,
@@ -550,7 +552,15 @@ const HomeScreen = () => {
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>
+          <TouchableOpacity style={styles.btnSearch_44}>
+            <MagnifyingGlass size={22} weight="bold" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.btnFilter_44}>
+            <Funnel size={22} weight="fill" color="#2C2F4A" />
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>
             <Text style={styles.baht}>฿</Text>
           </TouchableOpacity>
 
@@ -580,7 +590,7 @@ const HomeScreen = () => {
 
           <TouchableOpacity style={styles.btnHouse_44} onPress={filterHome}>
             <House size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </SafeAreaView>
       </View>
     </View>
@@ -596,6 +606,35 @@ const styles = StyleSheet.create({
 
   // Button StackSimple
   btnStackSimple_44: {
+    position: 'absolute',
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    top: 85,
+    left: 13.5,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+
+  // Button Search
+  btnSearch_44: {
+    position: 'absolute',
+    width: 39,
+    height: 39,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginTop: 32,
+    right: 335,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8,
+  },
+
+  btnFilter_44: {
     width: 39,
     height: 39,
     borderRadius: 3,
@@ -608,100 +647,101 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     opacity: 0.8,
   },
-  btnBaht_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
-  baht: {
-    fontSize: 18,
-    fontFamily: 'Fredoka-Medium',
-    color: '#2C2F4A',
-  },
-  btnWheelchair_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
-  btnWc_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
-  iconPublic: {
-    width: 22,
-    height: 22,
-    opacity: 0.8,
-  },
-  btnForkKnife_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
-  btnTote_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
-  btnGasPump_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
-  btnHouse_44: {
-    width: 39,
-    height: 39,
-    borderRadius: 3,
-    backgroundColor: '#fff',
-    marginBottom: 10,
-    left: 13.5,
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.8,
-  },
+
+  // btnBaht_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
+  // baht: {
+  //   fontSize: 18,
+  //   fontFamily: 'Fredoka-Medium',
+  //   color: '#2C2F4A',
+  // },
+  // btnWheelchair_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
+  // btnWc_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
+  // iconPublic: {
+  //   width: 22,
+  //   height: 22,
+  //   opacity: 0.8,
+  // },
+  // btnForkKnife_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
+  // btnTote_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
+  // btnGasPump_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
+  // btnHouse_44: {
+  //   width: 39,
+  //   height: 39,
+  //   borderRadius: 3,
+  //   backgroundColor: '#fff',
+  //   marginBottom: 10,
+  //   left: 13.5,
+  //   elevation: 3,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   opacity: 0.8,
+  // },
 
   // Callout
   bubble: {

@@ -1,16 +1,14 @@
 import React, {useContext, useState} from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   Image,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Button,
   Platform,
 } from 'react-native';
-import bgSUKA from '../assets/bgSUKA.png';
+import bgSUKA_6 from '../assets/bgSUKA_6.png';
 import {
   CaretLeft,
   CaretRight,
@@ -96,158 +94,106 @@ function SignUp({navigation}: {navigation: any}) {
           // borderBottomLeftRadius={60}
           // overflow='hidden'
           style={{height: height * 0.4}}>
-          <Image source={bgSUKA} style={{width, height}} />
+          <Image source={bgSUKA_6} style={{width, height}} />
         </View>
       </View>
 
       <Text style={styles.title}>Sign Up</Text>
 
-      <View style={styles.textInputSmall}>
-        <View>
-          <TextInput
-            label="Fristname"
-            value={firstname}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setFirstname(text)}
-          />
-          <Text style={styles.error}>{errorsFirstname}</Text>
-        </View>
-
-        <View style={styles.textInputRight}>
-          <TextInput
-            label="Lastname"
-            value={lastname}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setLastname(text)}
-          />
-          <Text style={styles.error}>{errorsLastname}</Text>
-        </View>
-      </View>
-
-      <View style={styles.textInput}>
-        <View style={{paddingBottom: 20}}>
-          <TextInput
-            label="Phone number"
-            value={phoneNum}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setPhoneNum(text)}
-          />
-          <Text style={styles.error}>{errorsPhone}</Text>
-        </View>
-
-        <View style={{paddingBottom: 20}}>
-          <TextInput
-            label="Email"
-            value={email}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setEmail(text)}
-          />
-          <Text style={styles.error}>{errorsEmail}</Text>
-        </View>
-
-        <View style={{paddingBottom: 20}}>
-          <TextInput
-            label="Password"
-            value={password}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            secureTextEntry
-            // right={<TextInput.Icon icon="eye" />}
-            onChangeText={text => setPassword(text)}
-          />
-          <Text style={styles.error}>{errorsPassword}</Text>
-        </View>
-
-        <View>
-          <TextInput
-            label="Confirm Password"
-            value={conPassword}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            secureTextEntry
-            // right={<TextInput.Icon icon="eye" />}
-            onChangeText={text => setConPassword(text)}
-          />
-          <Text style={styles.error}>{errorsConpassword}</Text>
-        </View>
-      </View>
-
-      <Text style={styles.textBody}>
-        Already have account?
-        <Text
-          style={styles.textButton}
-          onPress={() => navigation.navigate('Login')}>
-          {' '}
-          SIGN IN
-        </Text>
-      </Text>
-
-      <View style={styles.btnContinuePosition}>
-        <TouchableOpacity onPress={handleSignUp}>
-          <LinearGradient
-            colors={['#FAC353', '#FFA897']}
-            style={styles.btnContinue}>
-            <Text
-              style={{
-                color: '#2C2F4A',
-                fontFamily: 'Fredoka-SemiBold',
-                fontSize: 16,
-                position: 'absolute',
-                left: 22,
-                top: 14,
-              }}>
-              SIGN UP
-            </Text>
-            <CaretRight
-              size={24}
-              weight="bold"
-              color="#2C2F4A"
-              style={{
-                position: 'absolute',
-                right: 15,
-                top: 12,
-              }}
+      <View style={styles.mainContainer}>
+        <View style={styles.textInputContainer}>
+          <View style={styles.textInputLeft}>
+            <TextInput
+              label="Fristname"
+              value={firstname}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              onChangeText={text => setFirstname(text)}
             />
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+            <Text style={styles.error}>{errorsFirstname}</Text>
+          </View>
 
-      <View style={styles.btnBackPosition}>
-        <TouchableOpacity style={styles.btnBack}>
-          <CaretLeft
-            size={24}
-            weight="bold"
-            color="#FFA897"
-            style={{
-              position: 'absolute',
-              left: 15,
-              top: 12,
-            }}
-          />
-          <Text
-            onPress={() => navigation.goBack()}
-            style={{
-              color: '#FFA897',
-              fontFamily: 'Fredoka-SemiBold',
-              fontSize: 16,
-              position: 'absolute',
-              right: 22,
-              top: 14,
-            }}>
-            BACK
-          </Text>
-          {/* <GradientText text= 'MAP' style={{fontFamily: 'Fredoka-SemiBold', fontSize: 16}}/> */}
+          <View style={styles.textInputRight}>
+            <TextInput
+              label="Lastname"
+              value={lastname}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              onChangeText={text => setLastname(text)}
+            />
+            <Text style={styles.error}>{errorsLastname}</Text>
+          </View>
+        </View>
+
+        <View style={styles.textInput}>
+          <View style={{paddingBottom: 12}}>
+            <TextInput
+              label="Phone number"
+              value={phoneNum}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              onChangeText={text => setPhoneNum(text)}
+            />
+            <Text style={styles.error}>{errorsPhone}</Text>
+          </View>
+
+          <View style={{paddingBottom: 12}}>
+            <TextInput
+              label="Email"
+              value={email}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              onChangeText={text => setEmail(text)}
+            />
+            <Text style={styles.error}>{errorsEmail}</Text>
+          </View>
+
+          <View style={{paddingBottom: 12}}>
+            <TextInput
+              label="Password"
+              value={password}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              secureTextEntry
+              // right={<TextInput.Icon icon="eye" />}
+              onChangeText={text => setPassword(text)}
+            />
+            <Text style={styles.error}>{errorsPassword}</Text>
+          </View>
+
+          <View>
+            <TextInput
+              label="Confirm Password"
+              value={conPassword}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              secureTextEntry
+              // right={<TextInput.Icon icon="eye" />}
+              onChangeText={text => setConPassword(text)}
+            />
+            <Text style={styles.error}>{errorsConpassword}</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.btnSignUp} onPress={handleSignUp}>
+          <Text style={styles.textSignUp}>SIGN UP</Text>
         </TouchableOpacity>
+
+        <Text style={styles.textBody}>
+          Already have account?
+          <Text
+            style={styles.textButton}
+            onPress={() => navigation.navigate('Login')}>
+            {' '}
+            SIGN IN
+          </Text>
+        </Text>
       </View>
     </KeyboardAwareScrollView>
   );
@@ -277,8 +223,52 @@ const styles = StyleSheet.create({
     fontSize: 64,
     color: '#2C2F4A',
   },
+
+  mainContainer: {
+    backgroundColor: '#F4F6FD',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    paddingHorizontal: 25,
+    paddingVertical: 35,
+    elevation: 10,
+  },
+  textInputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: 12,
+  },
+  textInputLeft: {
+    width: '48%',
+  },
+  textInputRight: {
+    width: '48%',
+  },
+  textInput: {
+    color: '#F4F6FD',
+  },
+  bgTextInput: {
+    backgroundColor: '#F4F6FD',
+    fontFamily: 'Fredoka-Regular',
+  },
+
+  btnSignUp: {
+    backgroundColor: '#6D7DD3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 48,
+    width: '100%',
+    paddingHorizontal: 25,
+    marginVertical: 25,
+    borderRadius: 8,
+    elevation: 2,
+  },
+  textSignUp: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
+    color: '#F4F6FD',
+  },
+
   textBody: {
-    paddingBottom: 32,
     textAlign: 'center',
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
@@ -290,60 +280,12 @@ const styles = StyleSheet.create({
     color: '#6D7DD3',
   },
 
-  btnContinue: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 48,
-    width: 124,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    elevation: 2,
-  },
-  btnContinuePosition: {
-    paddingRight: 16,
-    alignItems: 'flex-end',
-  },
-
-  btnBack: {
-    backgroundColor: '#2C2F4A',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 48,
-    width: 108,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    elevation: 2,
-  },
-  btnBackPosition: {
-    position: 'relative',
-    bottom: 48,
-    paddingLeft: 16,
-    alignItems: 'flex-start',
-  },
-  textInput: {
-    color: '#F4F6FD',
-    paddingLeft: 16,
-    paddingRight: 16,
-    top: -36,
-  },
-  textInputSmall: {
-    color: '#F4F6FD',
-    width: 198,
-    paddingLeft: 16,
-  },
-  textInputRight: {
-    position: 'relative',
-    top: -56,
-    left: 197,
-  },
-  bgTextInput: {
-    backgroundColor: '#F4F6FD',
-    fontFamily: 'Fredoka-Regular',
-  },
   error: {
-    color: 'red',
+    color: '#D75D5D',
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 12,
+    paddingTop: 2,
+    paddingLeft: 16,
   },
 });
 

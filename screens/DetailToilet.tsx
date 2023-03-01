@@ -110,6 +110,17 @@ const DetailToilet = () => {
                 <Text style={styles.baht}>฿ </Text>
                 <Text style={styles.price}>0</Text>
               </View>
+              <View style={styles.phoneContainer}>
+                <Phone
+                  size={16}
+                  weight="fill"
+                  color="#6D7DD3"
+                  style={{
+                    marginRight: 6,
+                  }}
+                />
+                <Text style={styles.phone}>{params.contact}</Text>
+              </View>
               <View style={styles.timeContainer}>
                 <Clock
                   size={16}
@@ -122,17 +133,6 @@ const DetailToilet = () => {
                 <Text style={styles.time}>
                   {params.timeOpen} - {params.timeClose}
                 </Text>
-              </View>
-              <View style={styles.phoneContainer}>
-                <Phone
-                  size={16}
-                  weight="fill"
-                  color="#6D7DD3"
-                  style={{
-                    marginRight: 6,
-                  }}
-                />
-                <Text style={styles.phone}>{params.contact}</Text>
               </View>
             </View>
 
