@@ -35,6 +35,7 @@ import wc from '../assets/wc.png';
 
 import Map from '../assets/Map.png';
 import {HomeParamList} from '../stacks/HomeStack';
+import {getAlltoiletPrivate} from '../services/toilet';
 
 /*const initialState = {
   latitude,
@@ -96,7 +97,9 @@ const HomeScreen = () => {
   }
 
   const [toiletMarkers, setToiletMarkers] = useState<Position[]>([]);
+  const [toiletPrivate, settoiletPrivate] = useState<Position[]>([]);
   useEffect(() => {
+    requestPermissions();
     Geolocation.getCurrentPosition(
       position => {
         setPos({
@@ -115,19 +118,23 @@ const HomeScreen = () => {
     );
   }, []);
   const [list, setList] = useState(toiletMarkers);
+  const [listToiletPrivate, setListToiletPrivate] = useState(toiletMarkers);
   useEffect(() => {
     const fetchData = async () => {
       const aom: any = await getLocation();
-
+      const dataToiletPrivate: any = await getAlltoiletPrivate();
       setList(aom.data);
+      setListToiletPrivate(dataToiletPrivate.data);
     };
     fetchData();
   }, []);
   useEffect(() => {
     const fetchData = async () => {
       const aom: any = await getLocation();
+      const dataToiletPrivate: any = await getAlltoiletPrivate();
       // console.log('value97', aom);
       setToiletMarkers(aom.data);
+      settoiletPrivate(dataToiletPrivate.data);
       // setIsShowLocation((prev) => !prev);
       // setForceRefresh(Math.floor(Math.random() * 100));
     };
@@ -135,7 +142,7 @@ const HomeScreen = () => {
     // const aom: any = await getLocation();
     // console.log('value97', aom);
     // setToiletMarkers(aom);
-  }, [list]);
+  }, [list, listToiletPrivate]);
 
   const RenderLocation = () => {
     const navigation =
@@ -224,7 +231,142 @@ const HomeScreen = () => {
               title={item.title}
               description={item._id}
               onPress={() => setIDtoilet(item)}>
-                
+              <Callout tooltip onPress={onClick}>
+                <View>
+                  <View style={styles.bubble}>
+                    {/* <Image source={toilet} style={styles.imageToilet} /> */}
+                    <View style={styles.itemLeftTop}>
+                      <TagFree></TagFree>
+                      <TagHandicap></TagHandicap>
+
+                      <View style={styles.tagType}>
+                        {/* <Image source={wc} style={styles.iconType} /> */}
+                        <Text style={styles.textType}>{item.type}</Text>
+                      </View>
+                    </View>
+
+                    <Text style={styles.placeName}>{item.title}</Text>
+
+                    <View style={styles.itemBottom}>
+                      <View style={styles.itemLeftBottom}>
+                        <Clock
+                          size={14}
+                          weight="fill"
+                          color="#31C596"
+                          style={{
+                            marginRight: 5,
+                          }}
+                        />
+                        <Text style={styles.time}>
+                          {item.timeOpen} - {item.timeClose}
+                        </Text>
+                      </View>
+                      <View style={styles.itemRightBottom}>
+                        <Star
+                          size={14}
+                          weight="fill"
+                          color="#FBD17B"
+                          style={{
+                            marginRight: 2,
+                          }}
+                        />
+                        <Text style={styles.rate}>5.0</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.arrowBorder} />
+                  <View style={styles.arrow} />
+                </View>
+              </Callout>
+            </Marker>
+          );
+        })}
+      </>
+    );
+  };
+
+  const RenderToiletPrivate = () => {
+    const navigation =
+      useNavigation<NativeStackNavigationProp<HomeParamList>>();
+    interface ToiletPrivate {
+      _id: string;
+      latitude: number;
+      longitude: number;
+      title: string;
+      contact: string;
+      cost: string;
+      handicap: boolean;
+      free: boolean;
+      type: string;
+      timeOpen: string;
+      timeClose: string;
+      toiletpicture: string;
+    }
+    const [IDtoilet, setIDtoilet] = useState<ToiletPrivate | undefined>();
+    const onClick = () => {
+      console.log('call api detail toilet', IDtoilet);
+      if (IDtoilet) {
+        navigation.navigate('DetailToilet', {
+          _id: IDtoilet._id,
+          latitude: IDtoilet.latitude,
+          longitude: IDtoilet.longitude,
+          title: IDtoilet.title,
+          contact: IDtoilet.contact,
+          cost: IDtoilet.cost,
+          handicap: IDtoilet.handicap,
+          free: IDtoilet.free,
+          type: IDtoilet.type,
+          timeOpen: IDtoilet.timeOpen,
+          timeClose: IDtoilet.timeClose,
+          toiletpicture: IDtoilet.toiletpicture,
+        });
+      }
+    };
+    return (
+      <>
+        {listToiletPrivate.map((item: any, index) => {
+          const TagFree = (): JSX.Element | null => {
+            if (item.free === true) {
+              return (
+                <View style={styles.tagFree}>
+                  <Text style={styles.textFree}>฿ Free</Text>
+                </View>
+              );
+            } else {
+              return null;
+            }
+          };
+          const TagHandicap = (): JSX.Element | null => {
+            if (item.handicap === true) {
+              return (
+                <View style={styles.tagHandicap}>
+                  <Wheelchair
+                    size={10}
+                    weight="fill"
+                    color="#00845A"
+                    style={{
+                      marginRight: 2,
+                      marginLeft: 6,
+                    }}
+                  />
+                  <Text style={styles.textHandicap}>Handicap access</Text>
+                </View>
+              );
+            } else {
+              return null;
+            }
+          };
+          return (
+            <Marker
+              image={require('../assets/Map.png')}
+              key={index}
+              coordinate={{
+                latitude: item.latitude,
+                longitude: item.longitude,
+              }}
+              title={item.title}
+              description={item._id}
+              onPress={() => setIDtoilet(item)}>
               <Callout tooltip onPress={onClick}>
                 <View>
                   <View style={styles.bubble}>
@@ -326,9 +468,13 @@ const HomeScreen = () => {
 
   const applyFilters = () => {
     let updateToiletMarkers = toiletMarkers;
+    let updateToiletPrivate = toiletPrivate;
     //free filter
     if (selectedFree === true) {
       updateToiletMarkers = updateToiletMarkers.filter(
+        (item: any) => item.free === true,
+      );
+      updateToiletPrivate = updateToiletPrivate.filter(
         (item: any) => item.free === true,
       );
     }
@@ -337,14 +483,21 @@ const HomeScreen = () => {
       updateToiletMarkers = updateToiletMarkers.filter(
         (item: any) => item.handicap === true,
       );
+      updateToiletPrivate = updateToiletPrivate.filter(
+        (item: any) => item.handicap === true,
+      );
     }
     // Public filter
     if (selectedType !== '') {
       updateToiletMarkers = updateToiletMarkers.filter(
         (item: any) => item.type === selectedType,
       );
+      updateToiletPrivate = updateToiletPrivate.filter(
+        (item: any) => item.type === selectedType,
+      );
     }
     setList(updateToiletMarkers);
+    setListToiletPrivate(updateToiletPrivate);
   };
 
   useEffect(() => {
@@ -377,12 +530,13 @@ const HomeScreen = () => {
         showsBuildings={true}
         toolbarEnabled={true}>
         <RenderLocation></RenderLocation>
-        <Marker
+        <RenderToiletPrivate></RenderToiletPrivate>
+        {/* <Marker
           title="test"
           description="KMUTT"
           coordinate={pos}
           image={require('../assets/Map2.png')}
-        />
+        /> */}
       </MapView>
       <View
         style={{

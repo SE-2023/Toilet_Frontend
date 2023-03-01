@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableOpacity,
   Image,
+  PermissionsAndroid,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -31,7 +32,8 @@ import {createToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
 import BottomPopup from '../components/BottomPopup';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import {RootStackList} from '../stacks/RootStack';
 
 export const popuplist = [
   {
@@ -45,27 +47,27 @@ export const popuplist = [
         }}
       />
     ),
-    name: '  Public',
+    name: 'public',
   },
   {
     id: 2,
     icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" />,
-    name: '  Restaurant',
+    name: 'restaurant',
   },
   {
     id: 3,
     icon: <Tote size={22} color="#2C2F4A" weight="fill" />,
-    name: '  Store',
+    name: 'store',
   },
   {
     id: 4,
     icon: <GasPump size={22} color="#2C2F4A" weight="fill" />,
-    name: '  Gas Station',
+    name: 'gas Station',
   },
   {
     id: 5,
     icon: <House size={22} color="#2C2F4A" weight="fill" />,
-    name: '  House',
+    name: 'house',
   },
 ];
 
@@ -87,9 +89,10 @@ const AddDetailToilet2 = () => {
   const [isTimeClosePickerVisible, setTimeClosePickerVisibility] =
     useState(false);
   // const [selectedDate, setSelectedDate] = useState('Select Date');
-  const [selectedTimeOpen, setSelectedTimeOpen] = useState('00 : 00');
-  const [selectedTimeClose, setSelectedTimeClose] = useState('00 : 00');
+  const [selectedTimeOpen, setSelectedTimeOpen] = useState('00:00');
+  const [selectedTimeClose, setSelectedTimeClose] = useState('00:00');
   const [free, setfree] = useState(true);
+  const [cameraPhoto, setCamera] = useState();
   let popupRef = React.createRef();
 
   const Tag = (): JSX.Element | null => {
@@ -153,13 +156,21 @@ const AddDetailToilet2 = () => {
     });
   };
 
-  // const onShowPopup = () => {
-  //   popupRef.show();
-  // };
+  let options: any = {
+    saveToPhotos: true,
+    mediaType: 'photo',
+  };
 
-  // const onClosePopup = () => {
-  //   popupRef.close();
-  // };
+  const openCamera = async () => {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      const result = await launchCamera(options);
+      setCamera(result.assets[0].uri);
+    }
+  };
+
   const [showbuttompopup, setShowbuttompopup] = useState(false);
   // OPEN
   function padTo2Digits(num: any) {
@@ -177,7 +188,7 @@ const AddDetailToilet2 = () => {
   const handleTimeOpenConfirm = (dateO: Date) => {
     const dtO = new Date(dateO);
     const timeO =
-      padTo2Digits(dateO.getHours()) + ' : ' + padTo2Digits(dateO.getMinutes());
+      padTo2Digits(dateO.getHours()) + ':' + padTo2Digits(dateO.getMinutes());
     console.log(timeO);
     setSelectedTimeOpen(timeO);
     hideTimeOpenPicker();
@@ -195,7 +206,7 @@ const AddDetailToilet2 = () => {
   const handleTimeCloseConfirm = (dateC: Date) => {
     const dtC = new Date(dateC);
     const timeC =
-      padTo2Digits(dateC.getHours()) + ' : ' + padTo2Digits(dateC.getMinutes());
+      padTo2Digits(dateC.getHours()) + ':' + padTo2Digits(dateC.getMinutes());
     console.log(timeC);
     setSelectedTimeClose(timeC);
     hideTimeClosePicker();
@@ -206,7 +217,7 @@ const AddDetailToilet2 = () => {
   console.log(params);
   const navigation =
     useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
-
+  const navigation2 = useNavigation<NativeStackNavigationProp<RootStackList>>();
   const submitCreateToilet = async () => {
     if (cost.length > 1) {
       setfree(false);
@@ -216,7 +227,7 @@ const AddDetailToilet2 = () => {
       console.log(' free');
     }
     const createtoilet: any = await createToilet({
-      name: placeName,
+      title: placeName,
       latitude: params.latitude,
       longitude: params.longitude,
       desc: 'test',
@@ -231,7 +242,7 @@ const AddDetailToilet2 = () => {
       toiletpicture: toiletPicture,
     });
     console.log('createtoilet', createtoilet);
-    navigation.replace('AddToilet');
+    navigation2.replace('MainStack', {screen: 'HomeStack'});
   };
 
   return (
@@ -261,6 +272,19 @@ const AddDetailToilet2 = () => {
             }}
           />
         </TouchableOpacity>
+        {/* <TouchableOpacity onPress={openCamera} style={styles.addPhoto}>
+          <PlusCircle
+            size={28}
+            // weight='fill'
+            color="#777790"
+            style={{
+              position: 'absolute',
+              alignSelf: 'center',
+              marginTop: '16%',
+            }}
+          />
+          <Image style={styles.imageStyle} source={{uri: cameraPhoto}} />
+        </TouchableOpacity> */}
       </View>
 
       <View style={styles.textInput}>
@@ -468,6 +492,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 16,
     top: 14,
+  },
+  imageStyle: {
+    height: 210,
+    width: '100%',
+    borderRadius: 3,
   },
   headerTitle: {
     fontFamily: 'Fredoka-Medium',
