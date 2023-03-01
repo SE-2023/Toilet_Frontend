@@ -1,17 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   Image,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Button,
   Platform,
 } from 'react-native';
 import LogoSUKA from '../assets/LogoSUKA.png';
-import bgSUKA from '../assets/bgSUKA.png';
+import bgSUKA_5 from '../assets/bgSUKA_5.png';
 import {
   CaretLeft,
   CaretRight,
@@ -25,9 +23,7 @@ import {signIn} from '../services/auth';
 import AuthContext from '../context/AuthContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import OutlineInput from 'react-native-outline-input'
-// import * as Icon from 'phosphor-react-native'
-// import { TextInput } from 'react-native-paper'
+// import OutlineInput from 'react-native-outline-input';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -75,109 +71,58 @@ function Login({navigation}: {navigation: any}) {
           // borderBottomLeftRadius={60}
           // overflow='hidden'
           style={{height: height * 0.4}}>
-          <Image source={bgSUKA} style={{width, height}} />
+          <Image source={bgSUKA_5} style={{width, height}} />
         </View>
       </View>
 
       <Text style={styles.title}>Sign In</Text>
-      <View style={{alignItems: 'center'}}>
+      {/* <View style={{alignItems: 'center'}}>
         <Image source={LogoSUKA} style={styles.logo} />
-      </View>
-
-      <View style={styles.textInput}>
-        <View style={{paddingBottom: 20}}>
-          <TextInput
-            label="Email"
-            value={email}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            onChangeText={text => setEmail(text)}
-          />
-          <Text style={styles.error}>{errorsEmail}</Text>
-        </View>
-
-        <View>
-          <TextInput
-            label="Password"
-            value={password}
-            theme={theme}
-            style={styles.bgTextInput}
-            mode="outlined"
-            secureTextEntry
-            // right={<TextInput.Icon icon="eye" />}
-            onChangeText={text => setPassword(text)}
-          />
-          <Text style={styles.error}>{errorsPassword}</Text>
-        </View>
-      </View>
-
-      <Text style={styles.textBody}>
-        New User?
-        <Text
-          style={styles.textButton}
-          onPress={() => navigation.navigate('SignUp')}>
-          {' '}
-          SIGN UP
-        </Text>
-      </Text>
-
-      <View style={styles.btnContinuePosition}>
-        <TouchableOpacity onPress={hardleLogin}>
-          <LinearGradient
-            colors={['#FAC353', '#FFA897']}
-            style={styles.btnContinue}>
-            <Text
-              style={{
-                color: '#2C2F4A',
-                fontFamily: 'Fredoka-SemiBold',
-                fontSize: 16,
-                position: 'absolute',
-                left: 22,
-                top: 14,
-              }}>
-              SIGN IN
-            </Text>
-            <CaretRight
-              size={24}
-              weight="bold"
-              color="#2C2F4A"
-              style={{
-                position: 'absolute',
-                right: 15,
-                top: 12,
-              }}
+      </View> */}
+      <View style={{height: height * 0.4}}></View>
+      <View style={styles.mainContainer}>
+        <View style={styles.textInput}>
+          <View style={{paddingBottom: 12}}>
+            <TextInput
+              label="Email"
+              value={email}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              onChangeText={text => setEmail(text)}
             />
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+            <Text style={styles.error}>{errorsEmail}</Text>
+          </View>
 
-      <View style={styles.btnBackPosition}>
-        <TouchableOpacity style={styles.btnBack}>
-          <CaretLeft
-            size={24}
-            weight="bold"
-            color="#FFA897"
-            style={{
-              position: 'absolute',
-              left: 15,
-              top: 12,
-            }}
-          />
-          <Text
-            onPress={() => navigation.goBack()}
-            style={{
-              color: '#FFA897',
-              fontFamily: 'Fredoka-SemiBold',
-              fontSize: 16,
-              position: 'absolute',
-              right: 22,
-              top: 14,
-            }}>
-            BACK
-          </Text>
-          {/* <GradientText text= 'MAP' style={{fontFamily: 'Fredoka-SemiBold', fontSize: 16}}/> */}
+          <View>
+            <TextInput
+              label="Password"
+              value={password}
+              theme={theme}
+              style={styles.bgTextInput}
+              mode="outlined"
+              secureTextEntry
+              // right={<TextInput.Icon icon="eye" />}
+              onChangeText={text => setPassword(text)}
+            />
+            <Text style={styles.error}>{errorsPassword}</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.btnSignIn} onPress={hardleLogin}>
+          <Text style={styles.textSignIn}>SIGN IN</Text>
         </TouchableOpacity>
+
+        <Text style={styles.textBody}>
+          New User?
+          <Text
+            style={styles.textButton}
+            onPress={() => navigation.navigate('SignUp')}>
+            {' '}
+            SIGN UP
+          </Text>
+        </Text>
+
       </View>
     </KeyboardAwareScrollView>
   );
@@ -199,12 +144,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F4F6FD',
   },
-  logo: {
-    marginBottom: 30,
-    marginTop: -2,
-    width: 150,
-    height: 180,
-  },
+  // logo: {
+  //   marginBottom: 30,
+  //   marginTop: -2,
+  //   width: 150,
+  //   height: 180,
+  // },
   title: {
     position: 'absolute',
     top: 40,
@@ -213,9 +158,42 @@ const styles = StyleSheet.create({
     fontSize: 64,
     color: '#2C2F4A',
   },
+
+  mainContainer: {
+    backgroundColor: '#F4F6FD',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    paddingHorizontal: 25,
+    paddingVertical: 35,
+    elevation: 10,
+  },
+
+  textInput: {
+    color: '#F4F6FD',
+  },
+  bgTextInput: {
+    backgroundColor: '#F4F6FD',
+    fontFamily: 'Fredoka-Regular',
+  },
+
+  btnSignIn: {
+    backgroundColor: '#6D7DD3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 48,
+    width: '100%',
+    paddingHorizontal: 25,
+    marginVertical: 25,
+    borderRadius: 8,
+    elevation: 2,
+  },
+  textSignIn: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 16,
+    color: '#F4F6FD',
+  },
+
   textBody: {
-    paddingTop: 30,
-    paddingBottom: 40,
     textAlign: 'center',
     fontFamily: 'Fredoka-Regular',
     fontSize: 16,
@@ -227,49 +205,12 @@ const styles = StyleSheet.create({
     color: '#6D7DD3',
   },
 
-  btnContinue: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 48,
-    width: 120,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    elevation: 2,
-  },
-  btnContinuePosition: {
-    paddingRight: 16,
-    alignItems: 'flex-end',
-  },
-
-  btnBack: {
-    backgroundColor: '#2C2F4A',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 48,
-    width: 108,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    elevation: 2,
-  },
-  btnBackPosition: {
-    position: 'relative',
-    bottom: 48,
-    paddingLeft: 16,
-    alignItems: 'flex-start',
-  },
-  textInput: {
-    color: '#F4F6FD',
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  bgTextInput: {
-    backgroundColor: '#F4F6FD',
-    fontFamily: 'Fredoka-Regular',
-  },
   error: {
-    color: 'red',
+    color: '#D75D5D',
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 12,
+    paddingTop: 2,
+    paddingLeft: 16,
   },
 });
 export default Login;

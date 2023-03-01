@@ -10,6 +10,7 @@ import AddDetailToilet from './screens/AddDetailToilet';
 import AddDetailToilet2 from './screens/AddDetailToilet 2';
 import DetailToilet from './screens/DetailToilet';
 import Ratings from './screens/Ratings';
+import Search2 from './screens/Search2';
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
       <RootStack />
     </NavigationContainer>
     // <NavigationContainer>
-    //   <Ratings />
+    //   <Search2 />
     // </NavigationContainer>
   );
 };

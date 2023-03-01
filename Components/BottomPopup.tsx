@@ -75,7 +75,8 @@ const BottomPopup = (props: IPop) => {
             style={{
               fontFamily: 'Fredoka-Regular',
               fontSize: 18,
-              color: '#2C2F4A'
+              color: '#2C2F4A',
+              marginLeft: 12,
             }}>
             {item.name}
           </Text>
