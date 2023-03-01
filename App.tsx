@@ -6,12 +6,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './stacks/AuthStack';
 import RootStack from './stacks/RootStack';
 import Buttonmap from './components/Buttonmap';
-import AddDetailToilet from './screens/AddDetailToilet';
 import AddDetailToilet2 from './screens/AddDetailToilet 2';
 import DetailToilet from './screens/DetailToilet';
 import Ratings from './screens/Ratings';
 import Search from './screens/Search';
-import PhotoScreen from './screens/PhotoScreen';
 
 const App = () => {
   return (
@@ -21,7 +19,6 @@ const App = () => {
     <NavigationContainer>
       <Search />
     </NavigationContainer>
-    
   );
 };
 
