@@ -6,20 +6,20 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './stacks/AuthStack';
 import RootStack from './stacks/RootStack';
 import Buttonmap from './components/Buttonmap';
-import AddDetailToilet from './screens/AddDetailToilet';
 import AddDetailToilet2 from './screens/AddDetailToilet 2';
 import DetailToilet from './screens/DetailToilet';
 import Ratings from './screens/Ratings';
-import Search2 from './screens/Search2';
+import Search from './screens/Search';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
     // <NavigationContainer>
-    //   <Search2 />
+    //   <RootStack />
+
     // </NavigationContainer>
+    <NavigationContainer>
+      <Search />
+    </NavigationContainer>
   );
 };
 

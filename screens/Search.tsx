@@ -1,19 +1,54 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
-import React from 'react'
+import React, { useState } from 'react'
+import { searchToilet } from '../services/search'
 
 const Search = () => {
-  const [text, setText] = React.useState("");
+  const [isLoading, setIsloading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [ResultPublic, setResultPublic] = useState([]);
+  const [ResultPrivate, setResultPrivate] = useState([]);
+
+  const hardleSearch = async () => {
+    setIsloading(true);
+    try {
+      const toilets: any = await searchToilet(searchInput);
+      console.log(toilets.publicToilet);
+      console.log(toilets.privateToilet);
+      setResultPublic(toilets.publicToilet);
+      setResultPrivate(toilets.privateToilet);
+    } catch (err:any) {
+      console.log(err);
+    }
+    setIsloading(false);
+  };
   return (
     <View>
-      <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
-        Press me
+      <Button mode="contained" onPress={() => console.log('Back')}>
+        back
       </Button>
       <TextInput
-        label="Email"
-        value={text}
-        onChangeText={text => setText(text)}
+        label="Search"
+        value={searchInput}
+        onChangeText={text => setSearchInput(text)}
       />
+      <Button mode="contained" onPress={hardleSearch}>
+        Search
+      </Button>
+      { isLoading ? (
+        <ActivityIndicator />
+        ) : ResultPublic?.length > 0 ? (
+          <FlatList
+            data={ResultPublic}
+            keyExtractor={(item:any) => String(item._id)}
+            renderItem={({item}) => 
+              { return <Text> {item.title} </Text>}
+            }
+          />
+        ) : (
+          <Text>No results found</Text>
+        )
+      }
     </View>
   )
 }
