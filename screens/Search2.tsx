@@ -66,65 +66,67 @@ const Search2 = () => {
       </View>
       {isLoading ? (
         <ActivityIndicator />
-      ) : ResultPublic && ResultPublic.length > 0 ? (
+      ) : ResultPublic.length > 0 ? (
         <View style={styles.contentContainer}>
-          {ResultPublic.map((item) => (
-            <View key={item._id} style={styles.content}>
-              <View style={styles.itemLeftTop}>
-                <View style={styles.tagFree}>
-                  <Text style={styles.textFree}>฿ Free</Text>
-                </View>
-                <View style={styles.tagHandicap}>
-                  <Wheelchair
-                    size={10}
-                    weight="fill"
-                    color="#00845A"
-                    style={{
-                      marginRight: 2,
-                      marginLeft: 6,
-                    }}
-                  />
-                  <Text style={styles.textHandicap}>Handicap access</Text>
+          {
+            ResultPublic.map((item:any) => 
+              <View key={item._id} style={styles.content}>
+                <View style={styles.itemLeftTop}>
+                  <View style={styles.tagFree}>
+                    <Text style={styles.textFree}>฿ Free</Text>
+                  </View>
+                  <View style={styles.tagHandicap}>
+                    <Wheelchair
+                      size={10}
+                      weight="fill"
+                      color="#00845A"
+                      style={{
+                        marginRight: 2,
+                        marginLeft: 6,
+                      }}
+                    />
+                    <Text style={styles.textHandicap}>Handicap access</Text>
+                  </View>
+
+                  <View style={styles.tagType}>
+                    <Text style={styles.textType}>{item.type}</Text>
+                  </View>
                 </View>
 
-                <View style={styles.tagType}>
-                  <Text style={styles.textType}>Public</Text>
+                <Text style={styles.placeName}>{item.title}</Text>
+
+                <View style={styles.itemBottom}>
+                  <View style={styles.itemLeftBottom}>
+                    <Clock
+                      size={14}
+                      weight="fill"
+                      color="#31C596"
+                      style={{
+                        marginRight: 5,
+                      }}
+                    />
+                    <Text style={styles.time}>
+                      {item.timeOpen} - {item.timeClose}
+                    </Text>
+                  </View>
+                  <View style={styles.itemRightBottom}>
+                    <Star
+                      size={14}
+                      weight="fill"
+                      color="#FBD17B"
+                      style={{
+                        marginRight: 2,
+                      }}
+                    />
+                    <Text style={styles.rate}>5.0</Text>
+                  </View>
                 </View>
               </View>
-
-              <Text style={styles.placeName}>Place Name</Text>
-
-              <View style={styles.itemBottom}>
-                <View style={styles.itemLeftBottom}>
-                  <Clock
-                    size={14}
-                    weight="fill"
-                    color="#31C596"
-                    style={{
-                      marginRight: 5,
-                    }}
-                  />
-                  <Text style={styles.time}>
-                    00:00 - 00:00
-                  </Text>
-                </View>
-                <View style={styles.itemRightBottom}>
-                  <Star
-                    size={14}
-                    weight="fill"
-                    color="#FBD17B"
-                    style={{
-                      marginRight: 2,
-                    }}
-                  />
-                  <Text style={styles.rate}>5.0</Text>
-                </View>
-              </View>
-            </View>
-            </View>
-      )}
+            )
+          }
+        </View>
       ) : (
-      <Text>{errorResult}</Text>
+        <Text>{errorResult}</Text>
       )
       }
     </View>
