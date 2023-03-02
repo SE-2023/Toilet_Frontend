@@ -4,10 +4,12 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
+  FlatList,
   ScrollView,
   Image,
 } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   MagnifyingGlass,
   XCircle,
@@ -18,20 +20,61 @@ import {
   House,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
+import { searchToilet } from '../services/search'
 
 const Search2 = () => {
+  const [isLoading, setIsloading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [ResultPublic, setResultPublic] = useState([]);
+  const [ResultPrivate, setResultPrivate] = useState([]);
+  const [Result
+
+  const hardleSearch = async () => {
+    setIsloading(true);
+    try {
+      const toilets: any = await searchToilet(searchInput);
+      // console.log(toilets.publicToilet);
+      // console.log(toilets.privateToilet);
+      setResultPublic(toilets.publicToilet);
+      setResultPrivate(toilets.privateToilet);
+    } catch (err:any) {
+      console.log(err);
+    }
+    setIsloading(false);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <View style={styles.inner}>
-          <View style={styles.search} pointerEvents='none'>
+          <TouchableOpacity style={styles.search} onPress={hardleSearch}>
             <MagnifyingGlass size={22} weight="bold" color="#777790" />
-          </View>
-          <TextInput style={styles.field} placeholder='Search'/>
+          </TouchableOpacity>
+          <TextInput
+            style={styles.field}
+            placeholder='Search'
+            onChangeText={text => setSearchInput(text)}
+          />
           <TouchableOpacity style={styles.cancel}>
             <XCircle size={22} weight="fill" color="#BABCCA" />
           </TouchableOpacity>
         </View>
+        { isLoading ? (
+        <ActivityIndicator />
+        ) : ResultPublic?.length > 0 ? (
+          <FlatList
+            data={ResultPublic}
+            keyExtractor={(item:any) => String(item._id)}
+            renderItem={({item}) => 
+              { return <Text> {item.title} </Text>}
+            }
+          />
+        ) : (
+          <Text>No results found</Text>
+        )
+      }
+
+
       </View>
     </View>
   )
