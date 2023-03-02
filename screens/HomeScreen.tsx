@@ -98,22 +98,45 @@ export const popuplist = [
   },
   {
     id: 3,
-    icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    icon: (
+      <ForkKnife
+        size={22}
+        color="#2C2F4A"
+        weight="fill"
+        style={{marginRight: 10}}
+      />
+    ),
     name: 'Restaurant',
   },
   {
     id: 4,
-    icon: <Tote size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    icon: (
+      <Tote size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}} />
+    ),
     name: 'Store',
   },
   {
     id: 5,
-    icon: <GasPump size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    icon: (
+      <GasPump
+        size={22}
+        color="#2C2F4A"
+        weight="fill"
+        style={{marginRight: 10}}
+      />
+    ),
     name: 'Gas station',
   },
   {
     id: 6,
-    icon: <House size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    icon: (
+      <House
+        size={22}
+        color="#2C2F4A"
+        weight="fill"
+        style={{marginRight: 10}}
+      />
+    ),
     name: 'House',
   },
 ];
@@ -136,7 +159,7 @@ const HomeScreen = () => {
       setaom(true);
     }
   }
-
+  const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
   const [toiletMarkers, setToiletMarkers] = useState<Position[]>([]);
   const [toiletPrivate, settoiletPrivate] = useState<Position[]>([]);
   useEffect(() => {
@@ -592,11 +615,15 @@ const HomeScreen = () => {
             <StackSimple size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnSearch_44}>
+          <TouchableOpacity
+            style={styles.btnSearch_44}
+            onPress={() => navigation.navigate('Search')}>
             <MagnifyingGlass size={22} weight="bold" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnFilter_44} onPress={() => setShowbuttompopup(true)}>
+          <TouchableOpacity
+            style={styles.btnFilter_44}
+            onPress={() => setShowbuttompopup(true)}>
             <Funnel size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
 
@@ -617,7 +644,6 @@ const HomeScreen = () => {
               setSelectedHandicap(value);
               setShowbuttompopup(false);
             }}
-            
           />
 
           {/* <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>

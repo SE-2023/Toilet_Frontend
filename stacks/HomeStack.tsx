@@ -7,6 +7,7 @@ import RequireLogin from '../components/RequireLogin';
 import HomeScreen from '../screens/HomeScreen';
 import DetailToilet from '../screens/DetailToilet';
 import Ratings from '../screens/Ratings';
+import Search from '../screens/Search';
 
 export type HomeParamList = {
   HomeScreen: undefined;
@@ -25,6 +26,7 @@ export type HomeParamList = {
     toiletpicture: string;
   };
   Ratings: undefined;
+  Search: undefined;
 };
 const HomeStack = () => {
   const Stack = createNativeStackNavigator<HomeParamList>();
@@ -38,6 +40,7 @@ const HomeStack = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="DetailToilet" component={DetailToilet} />
       <Stack.Screen name="Ratings" component={Ratings} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 };
