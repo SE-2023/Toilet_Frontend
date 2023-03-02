@@ -14,13 +14,12 @@ import Search2 from './screens/Search2';
 
 const App = () => {
   return (
-    // <NavigationContainer>
-    //   <RootStack />
-
-    // </NavigationContainer>
     <NavigationContainer>
-      <Search2 />
+      <RootStack />
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <Search />
+    // </NavigationContainer>
   );
 };
 
