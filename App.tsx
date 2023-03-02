@@ -13,13 +13,12 @@ import Search from './screens/Search';
 
 const App = () => {
   return (
-    // <NavigationContainer>
-    //   <RootStack />
-
-    // </NavigationContainer>
     <NavigationContainer>
-      <Search />
+      <RootStack />
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <Search />
+    // </NavigationContainer>
   );
 };
 
