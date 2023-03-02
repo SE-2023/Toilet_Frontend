@@ -27,18 +27,21 @@ const Search2 = () => {
   const [searchInput, setSearchInput] = useState("");
   const [ResultPublic, setResultPublic] = useState([]);
   const [ResultPrivate, setResultPrivate] = useState([]);
-  const [Result
+  const [errorResult, setErrorResult] = useState("");
 
   const hardleSearch = async () => {
     setIsloading(true);
+    
     try {
+      setResultPublic([]);
+      setResultPrivate([]);
       const toilets: any = await searchToilet(searchInput);
       // console.log(toilets.publicToilet);
       // console.log(toilets.privateToilet);
       setResultPublic(toilets.publicToilet);
       setResultPrivate(toilets.privateToilet);
     } catch (err:any) {
-      console.log(err);
+      setErrorResult(err.msg);
     }
     setIsloading(false);
   };
@@ -70,11 +73,9 @@ const Search2 = () => {
             }
           />
         ) : (
-          <Text>No results found</Text>
+          <Text>{errorResult}</Text>
         )
       }
-
-
       </View>
     </View>
   )
