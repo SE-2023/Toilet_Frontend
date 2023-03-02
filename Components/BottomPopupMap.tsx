@@ -118,7 +118,7 @@ const BottomPopupMap = (props: IPop) => {
       <TouchableOpacity
         onPress={() => setType(item.name)}
         style={{
-          height: 42,
+          height: 46,
           flex: 1,
           justifyContent: 'center',
           alignItems: 'flex-start',
@@ -160,8 +160,8 @@ const BottomPopupMap = (props: IPop) => {
   const renderBtn = () => {
     return (
       <View style={{marginHorizontal: 20}}>
-        <TouchableOpacity style={styles.btnContainer} onPress={()=>props.onSelectedFree(free)}>
-        <TouchableOpacity style={styles.btnContainer} onPress={()=>props.onSelected(type)}>
+        <TouchableOpacity onPress={()=>props.onSelectedFree(free)}>
+        <TouchableOpacity onPress={()=>props.onSelected(type)}>
         <TouchableOpacity style={styles.btnContainer} onPress={()=>props.onSelectedHandicap(handicap)}>
           <Text style={styles.txtBtnSubmit}>SUBMIT</Text>
         </TouchableOpacity>
@@ -175,16 +175,16 @@ const BottomPopupMap = (props: IPop) => {
     return (
       <View>
         <FlatList
-          style={{marginBottom: 20}}
+          style={{marginBottom: 5}}
           showsVerticalScrollIndicator={false}
           data={props.data}
           renderItem={renderItem}
           extraData={props.data}
           keyExtractor={(item, index) => index.toString()}
           // ItemSeparatorComponent={RenderSeparator}
-          contentContainerStyle={{
-            paddingBottom: 20,
-          }}
+          // contentContainerStyle={{
+          //   paddingBottom: 0,
+          // }}
         />
       </View>
     );
@@ -213,7 +213,7 @@ const BottomPopupMap = (props: IPop) => {
             borderTopRightRadius: 20,
             borderTopLeftRadius: 20,
             paddingHorizontal: 16,
-            maxHeight: deviceHeight * 0.8,
+            maxHeight: deviceHeight * 0.9,
           }}>
           {renderTitle()}
           {renderSwitchFreeHandicap()}
@@ -344,12 +344,13 @@ const styles = StyleSheet.create({
   },
   
   btnContainer: {
+    height: 44,
     backgroundColor: '#6D7DD3',
     borderRadius: 10,
-    paddingVertical: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 20,
+    elevation: 2,
+    marginBottom: 15,
   },
   txtBtnSubmit: {
     fontFamily: 'Fredoka-Medium',

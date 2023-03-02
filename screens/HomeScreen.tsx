@@ -25,6 +25,7 @@ import {
   Tote,
   GasPump,
   House,
+  Toilet,
 } from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
@@ -80,6 +81,7 @@ enum MapType {
 export const popuplist = [
   {
     id: 1,
+    icon: <Toilet size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
     name: 'All',
   },
   {
