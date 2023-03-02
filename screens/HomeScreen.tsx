@@ -32,12 +32,10 @@ import Buttonmap from '../components/Buttonmap';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ProfileParamList} from '../stacks/ProfileStack';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
-import toilet from '../assets/toilet.jpg';
-import wc from '../assets/wc.png';
-
-import Map from '../assets/Map.png';
 import {HomeParamList} from '../stacks/HomeStack';
 import {getAlltoiletPrivate} from '../services/toilet';
+import BottomPopupMap from '../components/BottomPopupMap';
+import wc from '../assets/wc.png';
 
 /*const initialState = {
   latitude,
@@ -74,10 +72,51 @@ enum MapType {
   hybrid = 'hybrid',
   terrain = 'terrain',
 }
+
 // export type RootStackParamList = {
 //   Home: undefined;
 //   Profile: undefined;
 // };
+export const popuplist = [
+  {
+    id: 1,
+    name: 'All',
+  },
+  {
+    id: 2,
+    icon: (
+      <Image
+        source={wc}
+        style={{
+          height: 20,
+          width: 20,
+          marginRight: 10,
+        }}
+      />
+    ),
+    name: 'Public',
+  },
+  {
+    id: 3,
+    icon: <ForkKnife size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    name: 'Restaurant',
+  },
+  {
+    id: 4,
+    icon: <Tote size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    name: 'Store',
+  },
+  {
+    id: 5,
+    icon: <GasPump size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    name: 'Gas station',
+  },
+  {
+    id: 6,
+    icon: <House size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    name: 'House',
+  },
+];
 
 const HomeScreen = () => {
   const [pos, setPos] = useState<Position>({
@@ -425,7 +464,8 @@ const HomeScreen = () => {
 
   const [selectedFree, setSelectedFree] = useState(false);
   const [selectedHandicap, setSelectedHandicap] = useState(false);
-  const [selectedType, setSelectedType] = useState<string>('');
+  const [selectedType, setSelectedType] = useState<string>('All');
+  const [showbuttompopup, setShowbuttompopup] = useState(false);
 
   const filterFree = () => {
     if (selectedFree === true) {
@@ -490,7 +530,7 @@ const HomeScreen = () => {
       );
     }
     // Public filter
-    if (selectedType !== '') {
+    if (selectedType !== 'All') {
       updateToiletMarkers = updateToiletMarkers.filter(
         (item: any) => item.type === selectedType,
       );
@@ -556,9 +596,29 @@ const HomeScreen = () => {
             <MagnifyingGlass size={22} weight="bold" color="#2C2F4A" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnFilter_44}>
+          <TouchableOpacity style={styles.btnFilter_44} onPress={() => setShowbuttompopup(true)}>
             <Funnel size={22} weight="fill" color="#2C2F4A" />
           </TouchableOpacity>
+
+          <BottomPopupMap
+            title="Filter"
+            show={showbuttompopup}
+            data={popuplist}
+            close={() => setShowbuttompopup(false)}
+            onSelected={value => {
+              setSelectedType(value);
+              setShowbuttompopup(false);
+            }}
+            onSelectedFree={value => {
+              setSelectedFree(value);
+              setShowbuttompopup(false);
+            }}
+            onSelectedHandicap={value => {
+              setSelectedHandicap(value);
+              setShowbuttompopup(false);
+            }}
+            
+          />
 
           {/* <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>
             <Text style={styles.baht}>฿</Text>
