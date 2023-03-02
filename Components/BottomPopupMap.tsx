@@ -160,13 +160,13 @@ const BottomPopupMap = (props: IPop) => {
   const renderBtn = () => {
     return (
       <View style={{marginHorizontal: 20}}>
-        <TouchableOpacity onPress={()=>props.onSelectedFree(free)}>
-        <TouchableOpacity onPress={()=>props.onSelected(type)}>
-        <TouchableOpacity style={styles.btnContainer} onPress={()=>props.onSelectedHandicap(handicap)}>
+        {/* <TouchableOpacity style={styles.btnContainer} onPress={()=>props.onSelectedFree(free)}> */}
+        {/* <TouchableOpacity style={styles.btnContainer} onPress={()=>props.onSelected(type)}> */}
+        <TouchableOpacity style={styles.btnContainer} onPress={()=>{props.onSelectedHandicap(handicap),props.onSelectedFree(free),props.onSelected(type)}}>
           <Text style={styles.txtBtnSubmit}>SUBMIT</Text>
         </TouchableOpacity>
-        </TouchableOpacity>
-        </TouchableOpacity>
+        {/* </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };
