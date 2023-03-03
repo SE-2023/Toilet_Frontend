@@ -168,7 +168,7 @@ const AddDetailToilet2 = () => {
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       const result = await launchCamera(options);
-      setCamera(result.assets[0].uri);
+      settoiletPicture(result.assets[0].uri);
     }
   };
 
@@ -274,7 +274,7 @@ const AddDetailToilet2 = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnCamera_34} onPress={chooseImage}>
+        <TouchableOpacity style={styles.btnCamera_34} onPress={openCamera}>
             <Camera size={18} weight="fill" color="#FFA897" />
           </TouchableOpacity>
         {/* <TouchableOpacity onPress={openCamera} style={styles.addPhoto}>
