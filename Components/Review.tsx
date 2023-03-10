@@ -1,37 +1,36 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
-import React from 'react'
-import profile from '../assets/profile.jpg'
-import {Star} from 'phosphor-react-native'
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import React from 'react';
+import profile from '../assets/profile.jpg';
+import {Star} from 'phosphor-react-native';
 import toilet from '../assets/toilet.jpg';
 
-const Review = () => {
+interface IReview {
+  image: string;
+  username: string;
+  rating: number;
+  date: string;
+  comment: string;
+}
+const Review = (props: IReview) => {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <Image source={profile} style={styles.imageProfile}/>
+        <Image source={{uri: props.image}} style={styles.imageProfile} />
         <View>
-          <Text style={styles.textName}>Name</Text>
+          <Text style={styles.textName}>{props.username}</Text>
           <View style={styles.starContainer}>
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#BABCCA" />
-            <Text style={styles.textDate}>20/02/2023  14:30</Text>
+            <Text style={styles.textDate}>{props.date}</Text>
           </View>
         </View>
       </View>
 
       <View style={styles.reviewContainer}>
-        <Text style={styles.textReview}>Wow, what a beautiful bathroom!
-         The tiles on the walls and floor are so elegantly arranged,
-          and the color scheme is so soothing to the eyes.</Text>
+        <Text style={styles.textReview}>{props.comment}</Text>
 
         {/* <View style={styles.allImageReview}>
           <TouchableOpacity>
@@ -49,10 +48,10 @@ const Review = () => {
         </View> */}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Review
+export default Review;
 
 const styles = StyleSheet.create({
   container: {
@@ -104,4 +103,4 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
-})
+});

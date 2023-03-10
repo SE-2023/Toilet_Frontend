@@ -29,6 +29,7 @@ import {HomeParamList} from '../stacks/HomeStack';
 import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
+import {getProfile} from '../services/auth';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
@@ -39,10 +40,9 @@ const DetailToilet = () => {
   console.log(params);
   const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
 
-
   const [modal, setModal] = useState(false);
+  const [profile, setProfile] = useState('');
   const [review, setReview] = React.useState('');
-
 
   const TagFree = (): JSX.Element | null => {
     if (params.free === true) {
@@ -75,7 +75,14 @@ const DetailToilet = () => {
       return null;
     }
   };
-
+  const getUserProfile = async () => {
+    const {data} = await getProfile();
+    console.log('user profile ', data);
+    setProfile(data);
+  };
+  useEffect(() => {
+    getUserProfile();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
@@ -165,10 +172,21 @@ const DetailToilet = () => {
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              <Review />
-              <Review />
+              <Review
+                image={''}
+                username={''}
+                rating={0}
+                date={''}
+                comment={''}
+              />
+              <Review
+                image={''}
+                username={''}
+                rating={0}
+                date={''}
+                comment={''}
+              />
             </View>
-            
           </View>
           <View
             style={{height: height * 0.25, backgroundColor: '#F4F6FD'}}></View>
