@@ -1,38 +1,48 @@
 import {
   StyleSheet,
-  Text,
   View,
   TextInput,
   TouchableOpacity,
-  ScrollView,
+  Dimensions,
   Image,
+  ScrollView,
 } from 'react-native'
 import React from 'react'
-import {
-  MagnifyingGlass,
-  XCircle,
-  Wheelchair,
-  ForkKnife,
-  Tote,
-  GasPump,
-  House,
-} from 'phosphor-react-native';
-import wc from '../assets/wc.png';
+import {MagnifyingGlass} from 'phosphor-react-native';
+import bgSUKA from '../assets/bgSUKA_4.png';
+import Search from '../components/Search'
+
+const {width} = Dimensions.get('window');
+const aspectRatio = 300 / 500;
+const height = width * aspectRatio;
 
 const Search2 = () => {
   return (
     <View style={styles.container}>
+      <View style={{alignItems: 'center'}}>
+        <View
+          style={{height: height * 0.4}}>
+          <Image source={bgSUKA} style={{width, height}} />
+        </View>
+      </View>
       <View style={styles.searchContainer}>
         <View style={styles.inner}>
-          <View style={styles.search} pointerEvents='none'>
-            <MagnifyingGlass size={22} weight="bold" color="#777790" />
-          </View>
           <TextInput style={styles.field} placeholder='Search'/>
-          <TouchableOpacity style={styles.cancel}>
-            <XCircle size={22} weight="fill" color="#BABCCA" />
+          <TouchableOpacity style={styles.search}>
+            <MagnifyingGlass size={22} weight="bold" color="#777790" />
           </TouchableOpacity>
         </View>
       </View>
+
+      <ScrollView>
+        <Search />
+        <Search />
+        <Search />
+        <Search />
+        <Search />
+        <Search />
+        <View style={{height: height * 0.1}} />
+      </ScrollView>
     </View>
   )
 }
@@ -45,32 +55,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5EAFA',
   },
   searchContainer: {
+    position: 'absolute',
     marginHorizontal: 25,
-    marginTop: 58,
+    marginTop: 60,
     elevation: 3,
   },
   inner: {
     flexDirection: 'row',
-  },
-  search: {
-    position: 'absolute',
-    top: 8.5,
-    left: 14,
-    zIndex: 1,
   },
   field: {
     backgroundColor: '#fff',
     height: 39,
     width: '100%',
     borderRadius: 3,
-    paddingHorizontal: 50,
+    paddingLeft: 16,
+    paddingRight: 50,
     paddingVertical: 10,
     fontFamily: 'Fredoka-Regular',
   },
-  cancel: {
+  search: {
     position: 'absolute',
     top: 8.5,
-    right: 14,
+    right: 12,
     zIndex: 1,
   },
 })

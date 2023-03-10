@@ -9,7 +9,8 @@ import Buttonmap from './components/Buttonmap';
 import AddDetailToilet2 from './screens/AddDetailToilet 2';
 import DetailToilet from './screens/DetailToilet';
 import Ratings from './screens/Ratings';
-import Search from './screens/Search';
+import Search2 from './screens/Search2';
+import Search from './components/Search';
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
       <RootStack />
     </NavigationContainer>
     // <NavigationContainer>
-    //   <Search />
+    //   <Search2 />
     // </NavigationContainer>
   );
 };
