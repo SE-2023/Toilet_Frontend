@@ -8,6 +8,7 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState("");
   const [ResultPublic, setResultPublic] = useState([]);
   const [ResultPrivate, setResultPrivate] = useState([]);
+  const [errorResult, setErrorResult] = useState("");
 
   const hardleSearch = async () => {
     setIsloading(true);
@@ -18,7 +19,7 @@ const Search = () => {
       setResultPublic(toilets.publicToilet);
       setResultPrivate(toilets.privateToilet);
     } catch (err:any) {
-      console.log(err);
+      setErrorResult(err.msg);
     }
     setIsloading(false);
   };
