@@ -13,6 +13,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   CaretLeft,
   PlusCircle,
+  Camera,
   ForkKnife,
   Tote,
   GasPump,
@@ -272,6 +273,10 @@ const AddDetailToilet2 = () => {
             }}
           />
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnCamera_34} onPress={chooseImage}>
+            <Camera size={18} weight="fill" color="#FFA897" />
+          </TouchableOpacity>
         {/* <TouchableOpacity onPress={openCamera} style={styles.addPhoto}>
           <PlusCircle
             size={28}
@@ -511,6 +516,19 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: '#CACCDA',
     borderRadius: 3,
+  },
+  btnCamera_34: {
+    position: 'absolute',
+    width: 34,
+    height: 34,
+    borderRadius: 20,
+    top: '90%',
+    right: 10,
+    backgroundColor: '#2C2F4A',
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
   },
 
   // Text input

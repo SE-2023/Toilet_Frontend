@@ -1,28 +1,25 @@
 import {
   StyleSheet,
-  Text,
   View,
   TextInput,
   TouchableOpacity,
+  Dimensions,
   ActivityIndicator,
   FlatList,
   ScrollView,
   Image,
+  ScrollView,
 } from 'react-native'
+
 import React, { useState } from 'react'
-import {
-  MagnifyingGlass,
-  XCircle,
-  Wheelchair,
-  ForkKnife,
-  Tote,
-  GasPump,
-  House,
-  Star,
-  Clock,
-} from 'phosphor-react-native';
-import wc from '../assets/wc.png';
+import {MagnifyingGlass} from 'phosphor-react-native';
+import bgSUKA from '../assets/bgSUKA_4.png';
+import Search from '../components/Search'
 import { searchToilet } from '../services/search'
+
+const {width} = Dimensions.get('window');
+const aspectRatio = 300 / 500;
+const height = width * aspectRatio;
 
 const Search2 = () => {
   const [isLoading, setIsloading] = useState(false);
@@ -49,86 +46,30 @@ const Search2 = () => {
 
   return (
     <View style={styles.container}>
+      <View style={{alignItems: 'center'}}>
+        <View
+          style={{height: height * 0.4}}>
+          <Image source={bgSUKA} style={{width, height}} />
+        </View>
+      </View>
       <View style={styles.searchContainer}>
         <View style={styles.inner}>
-          <TouchableOpacity style={styles.search} onPress={hardleSearch}>
+          <TextInput style={styles.field} placeholder='Search'/>
+          <TouchableOpacity style={styles.search}>
             <MagnifyingGlass size={22} weight="bold" color="#777790" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.field}
-            placeholder='Search'
-            onChangeText={text => setSearchInput(text)}
-          />
-          <TouchableOpacity style={styles.cancel}>
-            <XCircle size={22} weight="fill" color="#BABCCA" />
           </TouchableOpacity>
         </View>
       </View>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : ResultPublic.length > 0 ? (
-        <View style={styles.contentContainer}>
-          {
-            ResultPublic.map((item:any) => 
-              <View key={item._id} style={styles.content}>
-                <View style={styles.itemLeftTop}>
-                  <View style={styles.tagFree}>
-                    <Text style={styles.textFree}>฿ Free</Text>
-                  </View>
-                  <View style={styles.tagHandicap}>
-                    <Wheelchair
-                      size={10}
-                      weight="fill"
-                      color="#00845A"
-                      style={{
-                        marginRight: 2,
-                        marginLeft: 6,
-                      }}
-                    />
-                    <Text style={styles.textHandicap}>Handicap access</Text>
-                  </View>
 
-                  <View style={styles.tagType}>
-                    <Text style={styles.textType}>{item.type}</Text>
-                  </View>
-                </View>
-
-                <Text style={styles.placeName}>{item.title}</Text>
-
-                <View style={styles.itemBottom}>
-                  <View style={styles.itemLeftBottom}>
-                    <Clock
-                      size={14}
-                      weight="fill"
-                      color="#31C596"
-                      style={{
-                        marginRight: 5,
-                      }}
-                    />
-                    <Text style={styles.time}>
-                      {item.timeOpen} - {item.timeClose}
-                    </Text>
-                  </View>
-                  <View style={styles.itemRightBottom}>
-                    <Star
-                      size={14}
-                      weight="fill"
-                      color="#FBD17B"
-                      style={{
-                        marginRight: 2,
-                      }}
-                    />
-                    <Text style={styles.rate}>5.0</Text>
-                  </View>
-                </View>
-              </View>
-            )
-          }
-        </View>
-      ) : (
-        <Text>{errorResult}</Text>
-      )
-      }
+      <ScrollView>
+        <Search />
+        <Search />
+        <Search />
+        <Search />
+        <Search />
+        <Search />
+        <View style={{height: height * 0.1}} />
+      </ScrollView>
     </View>
   )
 }
@@ -141,32 +82,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5EAFA',
   },
   searchContainer: {
+    position: 'absolute',
     marginHorizontal: 25,
-    marginTop: 58,
+    marginTop: 60,
     elevation: 3,
   },
   inner: {
     flexDirection: 'row',
-  },
-  search: {
-    position: 'absolute',
-    top: 8.5,
-    left: 14,
-    zIndex: 1,
   },
   field: {
     backgroundColor: '#fff',
     height: 39,
     width: '100%',
     borderRadius: 3,
-    paddingHorizontal: 50,
+    paddingLeft: 16,
+    paddingRight: 50,
     paddingVertical: 10,
     fontFamily: 'Fredoka-Regular',
   },
-  cancel: {
+  search: {
     position: 'absolute',
     top: 8.5,
-    right: 14,
+    right: 12,
     zIndex: 1,
   },
 
