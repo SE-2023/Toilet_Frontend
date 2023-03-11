@@ -12,8 +12,13 @@ export const createComment = async (body: IcommentbyUser) => {
   return res;
 };
 
-// export const getAlltoiletPrivate = async () => {
-//   const res = await axios.get('/toilet');
+// export const getComment = async () => {
+//   const res = await axios.get('/comment');
 //   // console.log('res', res);
 //   return res;
 // };
+
+export const getComment = async (ToiletId: any) => {
+  const res = await axios.get('/comment', {params: {toiletId: ToiletId}});
+  return res;
+};

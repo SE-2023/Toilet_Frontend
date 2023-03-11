@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import toilet from '../assets/toilet.jpg';
 import {
   CaretLeft,
@@ -19,6 +19,7 @@ import {
   CaretRight,
   PersonSimpleWalk,
   X,
+  Key,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import Review from '../components/Review';
@@ -30,6 +31,18 @@ import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
 import {getProfile} from '../services/auth';
+import {createComment, getComment} from '../services/comment';
+import AuthContext from '../context/AuthContext';
+export interface IProfile {
+  _id: string;
+}
+
+interface Comment {
+  CreateBy: string;
+  toiletId: string;
+  comment: string;
+  rate: number;
+}
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
@@ -38,12 +51,16 @@ const height = width * aspectRatio;
 const DetailToilet = () => {
   const {params} = useRoute<RouteProp<HomeParamList, 'DetailToilet'>>();
   console.log(params);
+  const [ToiletId, setToiletId] = useState(params._id);
   const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
-
+  const [comment, setComment] = useState<Comment[]>([]);
   const [modal, setModal] = useState(false);
-  const [profile, setProfile] = useState('');
+  const [checkData, setCheckData] = useState('');
+  const [profile, setProfile] = React.useState<IProfile>({
+    _id: '',
+  });
   const [review, setReview] = React.useState('');
-
+  const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
   const TagFree = (): JSX.Element | null => {
     if (params.free === true) {
       return (
@@ -75,14 +92,57 @@ const DetailToilet = () => {
       return null;
     }
   };
-  const getUserProfile = async () => {
+
+  const submitCreateComment = async () => {
     const {data} = await getProfile();
-    console.log('user profile ', data);
-    setProfile(data);
+    const createcomment: any = await createComment({
+      createBy: data._id,
+      toiletId: params._id,
+      comment: review,
+      rate: 5,
+    });
+    console.log('createcomment', createcomment);
+    setModal(false);
   };
+
   useEffect(() => {
-    getUserProfile();
-  }, []);
+    const fetchData = async () => {
+      try {
+        const comments: any = await getComment(ToiletId);
+        // console.log(comments.data);
+        setComment(comments.Comment);
+        setCheckData(comments.message);
+      } catch (err: any) {
+        setCheckData(err.message);
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, [modal]);
+
+  const RenderComment = (): JSX.Element | null => {
+    if (checkData === 'success') {
+      return (
+        <>
+          {comment.map((item: any, index) => {
+            return (
+              <Review
+                key={index}
+                image={item.result[0].profile_picture}
+                username={item.result[0].firstname}
+                rating={item.rate}
+                date={item.updatedAt}
+                comment={item.comment}
+              />
+            );
+          })}
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
@@ -172,20 +232,21 @@ const DetailToilet = () => {
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              <Review
+              {/* <Review
                 image={''}
                 username={''}
                 rating={0}
                 date={''}
                 comment={''}
-              />
-              <Review
+              /> */}
+              {/* <Review
                 image={''}
                 username={''}
                 rating={0}
                 date={''}
                 comment={''}
-              />
+              /> */}
+              <RenderComment></RenderComment>
             </View>
           </View>
           <View
@@ -222,7 +283,9 @@ const DetailToilet = () => {
               onChangeText={text => setReview(text)}
               multiline
             />
-            <TouchableOpacity style={styles.btnSubmit}>
+            <TouchableOpacity
+              style={styles.btnSubmit}
+              onPress={submitCreateComment}>
               <Text style={styles.textSubmit}>SUBMIT</Text>
             </TouchableOpacity>
           </View>

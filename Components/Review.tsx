@@ -3,7 +3,7 @@ import React from 'react';
 import profile from '../assets/profile.jpg';
 import {Star} from 'phosphor-react-native';
 import toilet from '../assets/toilet.jpg';
-
+import Moment from 'react-moment';
 interface IReview {
   image: string;
   username: string;
@@ -24,7 +24,12 @@ const Review = (props: IReview) => {
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#BABCCA" />
-            <Text style={styles.textDate}>{props.date}</Text>
+            <Moment
+              format="YYYY/MM/DD HH:mm"
+              style={styles.textDate}
+              element={Text}>
+              {props.date}
+            </Moment>
           </View>
         </View>
       </View>
