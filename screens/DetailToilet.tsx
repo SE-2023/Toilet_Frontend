@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import toilet from '../assets/toilet.jpg';
@@ -33,6 +34,7 @@ import {TextInput} from 'react-native-paper';
 import {getProfile} from '../services/auth';
 import {createComment, getComment} from '../services/comment';
 import AuthContext from '../context/AuthContext';
+import LaunchNavigator from 'react-native-launch-navigator';
 export interface IProfile {
   _id: string;
 }
@@ -92,7 +94,17 @@ const DetailToilet = () => {
       return null;
     }
   };
-
+  const nevi = () => {
+    // // if (Platform.OS === 'android')
+    // //   LaunchNavigator.setGoogleApiKey(
+    // //     'AIzaSyD963fSegmx4oNEpqbrOJFm7V9b4di-Kn0',
+    // //   );
+    // LaunchNavigator.navigate([50.279306, -5.163158], {
+    //   start: '50.342847, -4.749904',
+    // });
+    //   .then(() => console.log('Launched navigator'))
+    //   .catch(err => console.error('Error launching navigator: ' + err));
+  };
   const submitCreateComment = async () => {
     const {data} = await getProfile();
     const createcomment: any = await createComment({
@@ -214,7 +226,7 @@ const DetailToilet = () => {
                 <Heart size={20} weight="fill" color="#E5EAFA" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.btnPerson}>
+              <TouchableOpacity style={styles.btnPerson} onPress={nevi}>
                 <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
               </TouchableOpacity>
             </View>
