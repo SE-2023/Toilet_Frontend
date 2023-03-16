@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    marginHorizontal: 25,
+    marginHorizontal: 16,
     marginTop: 25,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     
   placeName: {
     fontFamily: 'Fredoka-Medium',
-    fontSize: 16,
+    fontSize: 18,
     color: '#2C2F4A',
     marginBottom: 8,
   },

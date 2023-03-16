@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: 'absolute',
-    marginHorizontal: 25,
+    marginHorizontal: 16,
     marginTop: 60,
     elevation: 3,
   },
