@@ -6,7 +6,6 @@ import {
   Dimensions,
   ActivityIndicator,
   FlatList,
-  ScrollView,
   Image,
   ScrollView,
 } from 'react-native'
