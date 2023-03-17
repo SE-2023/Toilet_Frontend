@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  LogBox,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import toilet from '../assets/toilet.jpg';
@@ -35,6 +36,8 @@ import {getProfile} from '../services/auth';
 import {createComment, getComment} from '../services/comment';
 import AuthContext from '../context/AuthContext';
 import LaunchNavigator from 'react-native-launch-navigator';
+// import LaunchNavigator from 'react-native-launch-navigator';
+import openMap from 'react-native-open-maps';
 export interface IProfile {
   _id: string;
 }
@@ -44,12 +47,16 @@ interface Comment {
   toiletId: string;
   comment: string;
   rate: number;
+  updatedAt: string;
+  result: any;
 }
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
 const height = width * aspectRatio;
 
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const DetailToilet = () => {
   const {params} = useRoute<RouteProp<HomeParamList, 'DetailToilet'>>();
   console.log(params);
@@ -104,6 +111,8 @@ const DetailToilet = () => {
     // });
     //   .then(() => console.log('Launched navigator'))
     //   .catch(err => console.error('Error launching navigator: ' + err));
+    // openMap({latitude: 13.9147641, longitude: 99.7955964});
+    LaunchNavigator.navigate([13.6512522, 100.4942541]);
   };
   const submitCreateComment = async () => {
     const {data} = await getProfile();
@@ -136,7 +145,7 @@ const DetailToilet = () => {
     if (checkData === 'success') {
       return (
         <>
-          {comment.map((item: any, index) => {
+          {/* {comment.map((item: any, index) => {
             return (
               <Review
                 key={index}
@@ -147,7 +156,14 @@ const DetailToilet = () => {
                 comment={item.comment}
               />
             );
-          })}
+          })} */}
+          <Review
+            image={comment[0].result[0].profile_picture}
+            username={comment[0].result[0].firstname}
+            rating={comment[0].rate}
+            date={comment[0].updatedAt}
+            comment={comment[0].comment}
+          />
         </>
       );
     } else {
