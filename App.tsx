@@ -17,7 +17,7 @@ import MyToilet from './screens/MyToilet';
 const App = () => {
   return (
     <NavigationContainer>
-      <MyToilet />
+      <RootStack />
     </NavigationContainer>
     // <NavigationContainer>
     //   <Search2 />

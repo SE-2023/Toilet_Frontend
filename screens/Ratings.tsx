@@ -5,21 +5,27 @@ import Review from '../components/Review'
 import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { HomeParamList } from '../stacks/HomeStack';
 
 const Ratings = () => {
   // const [modal, setModal] = useState(false);
   // const [review, setReview] = React.useState('');
+  const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.btnBack}>
+        <TouchableOpacity style={styles.btnBack} onPress={() => navigation.goBack()}>
           <CaretLeft size={24} color="#F4F6FD" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ratings</Text>
       </View>
       
       <View>
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.reviewContainer}>
             <Review />
             <Review />

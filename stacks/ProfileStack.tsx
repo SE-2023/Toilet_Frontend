@@ -2,6 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import MyToilet from '../screens/MyToilet';
 import UpdateProfile from '../screens/UpdateProfile';
 import Profile from '../screens/Profile';
 import AuthContext from '../context/AuthContext';
@@ -21,6 +22,7 @@ export type ProfileParamList = {
     // onSubmit: () => void;
     profile_picture: string;
   };
+  MyToilet: undefined;
 };
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator<ProfileParamList>();
@@ -35,6 +37,7 @@ const ProfileStack = () => {
         }}>
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+        <Stack.Screen name="MyToilet" component={MyToilet} />
       </Stack.Navigator>
     </RequireLogin>
   );

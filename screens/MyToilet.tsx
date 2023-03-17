@@ -6,24 +6,26 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
-import LinearGradient from 'react-native-linear-gradient';
 import {
   CaretLeft,
   Plus,
-  Wheelchair,
-  Star,
-  Clock,
-  PencilSimple,
 } from 'phosphor-react-native';
+import ContentMyToilet from '../components/ContentMyToilet';
+import { HomeParamList } from '../stacks/HomeStack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileParamList } from '../stacks/ProfileStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 380 / 500;
 const height = width * aspectRatio;
 
 const MyToilet = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<ProfileParamList>>();
   return (
     <SafeAreaView style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -32,7 +34,7 @@ const MyToilet = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.btnBack_44}>
+      <TouchableOpacity style={styles.btnBack_44} onPress={() => navigation.goBack()}>
         <CaretLeft size={24} weight="bold" color="#2C2F4A" />
       </TouchableOpacity>
 
@@ -42,66 +44,18 @@ const MyToilet = () => {
         <Plus size={24} weight="bold" color="#E5EAFA" />
       </TouchableOpacity>
 
-      <View style={styles.contentContainer}>
-        <View style={styles.content}>
-          <View style={styles.itemLeftTop}>
-            <View style={styles.tagFree}>
-              <Text style={styles.textFree}>฿ Free</Text>
-            </View>
-            <View style={styles.tagHandicap}>
-              <Wheelchair
-                size={10}
-                weight="fill"
-                color="#00845A"
-                style={{
-                  marginRight: 2,
-                  marginLeft: 6,
-                }}
-              />
-              <Text style={styles.textHandicap}>Handicap access</Text>
-            </View>
-
-            <View style={styles.tagType}>
-              <Text style={styles.textType}>Public</Text>
-            </View>
-          </View>
-          
-          <View style={styles.itemMid}>
-            <View style={styles.itemLeftMid}>
-              <Text style={styles.placeName}>Place Name</Text>
-              <View style={styles.itemRightBottom}>
-                <Star
-                  size={14}
-                  weight="fill"
-                  color="#FBD17B"
-                  style={{
-                    marginRight: 2,
-                  }}
-                />
-                <Text style={styles.rate}>5.0</Text>
-              </View>
-            </View>
-            <TouchableOpacity style={styles.btnEdit}>
-              <PencilSimple size={14} weight="fill" color="#FFA897" />
-            </TouchableOpacity>
-          </View>
-          
-
-          <View style={styles.itemBottom}>
-            <Clock
-              size={14}
-              weight="fill"
-              color="#31C596"
-              style={{
-                marginRight: 5,
-              }}
-            />
-            <Text style={styles.time}>
-              00:00 - 00:00
-            </Text>
-          </View>
-        </View>
-      </View>
+      <View style={{marginTop: -25}}/>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        <ContentMyToilet/>
+        <ContentMyToilet/>
+        <ContentMyToilet/>
+        <ContentMyToilet/>
+        <ContentMyToilet/>
+        <ContentMyToilet/>
+        <View style={{height: height * 0.08}} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -122,7 +76,7 @@ const styles = StyleSheet.create({
     left: 74,
     fontFamily: 'Fredoka-Medium',
     fontSize: 32,
-    color: '#fff',
+    color: '#2C2F4A',
   },
   btnBack_44: {
     position: 'absolute',
@@ -147,129 +101,5 @@ const styles = StyleSheet.create({
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  // Content
-  contentContainer: {
-    marginTop: 25,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderColor: '#ccc',
-    paddingHorizontal: 14,
-    paddingBottom: 12,
-    paddingTop: 8,
-  },
-  content: {
-    width: '100%',
-  },
-  itemLeftTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-    
-  // Tag Free
-  tagFree: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    marginBottom: 15,
-    marginRight: 12,
-    backgroundColor: '#0BF8AD',
-    borderRadius: 20,
-  },
-  textFree: {
-    fontFamily: 'Fredoka-Regular',
-    fontSize: 12,
-    color: '#00845A',
-    paddingLeft: 6,
-    paddingRight: 6,
-    paddingVertical: 2,
-  },
-    
-  // Tag Handicap
-  tagHandicap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    marginBottom: 15,
-    marginRight: 12,
-    backgroundColor: '#0BF8AD',
-    borderRadius: 20,
-  },
-  textHandicap: {
-    fontFamily: 'Fredoka-Regular',
-    fontSize: 12,
-    color: '#00845A',
-    paddingRight: 6,
-    paddingVertical: 2,
-  },
-    
-  // Tag Type
-  tagType: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    backgroundColor: '#CACCDA',
-    borderRadius: 20,
-  },
-  textType: {
-    fontFamily: 'Fredoka-Regular',
-    fontSize: 12,
-    color: '#555568',
-    marginLeft: 6,
-    paddingRight: 6,
-    paddingVertical: 2,
-  },
-    
-  itemMid: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  itemLeftMid: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-  placeName: {
-    fontFamily: 'Fredoka-Medium',
-    fontSize: 18,
-    color: '#2C2F4A',
-    marginRight: 12,
-  },
-  btnEdit: {
-    backgroundColor: '#F4F6FD',
-    width: 32,
-    height: 32,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-    
-  itemBottom: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  itemLeftBottom: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-  time: {
-    fontFamily: 'Fredoka-Regular',
-    fontSize: 14,
-    color: '#777790',
-  },
-  itemRightBottom: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-  rate: {
-    fontFamily: 'Fredoka-Regular',
-    fontSize: 14,
-    color: '#2C2F4A',
   },
 });

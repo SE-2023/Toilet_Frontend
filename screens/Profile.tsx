@@ -150,7 +150,7 @@ function Profile() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.btnRectangle}>
+        <TouchableOpacity style={styles.btnRectangle} onPress={()=>navigationProfile.navigate('MyToilet')}>
           <View style={styles.itemLeft}>
             <View style={styles.bgIconMyToilet}>
               <Toilet size={22} weight="fill" color="#2C2F4A" />

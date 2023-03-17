@@ -8,7 +8,6 @@ import {
   FlatList,
   ScrollView,
   Image,
-  ScrollView,
 } from 'react-native'
 
 import React, { useState } from 'react'
@@ -61,14 +60,16 @@ const Search2 = () => {
         </View>
       </View>
 
-      <ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
         <Search />
         <Search />
         <Search />
         <Search />
         <Search />
         <Search />
-        <View style={{height: height * 0.1}} />
+        <View style={{height: height * 0.08}} />
       </ScrollView>
     </View>
   )
