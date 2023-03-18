@@ -172,7 +172,7 @@ const AddDetailToilet2 = () => {
       PermissionsAndroid.PERMISSIONS.CAMERA,
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      const result = await launchCamera(options);
+      const result: any = await launchCamera(options);
       settoiletPicture(result.assets[0].uri);
     }
   };
@@ -225,7 +225,7 @@ const AddDetailToilet2 = () => {
     useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
   const navigation2 = useNavigation<NativeStackNavigationProp<RootStackList>>();
   const submitCreateToilet = async () => {
-    try{
+    try {
       if (cost.length > 1) {
         setfree(false);
         console.log(' not free ');
@@ -272,8 +272,6 @@ const AddDetailToilet2 = () => {
     }
   };
 
-  
-
   return (
     <KeyboardAwareScrollView
       style={styles.bgColor}
@@ -302,14 +300,11 @@ const AddDetailToilet2 = () => {
           />
         </TouchableOpacity>
 
-        
-        
         <TouchableOpacity style={styles.btnCamera_34} onPress={openCamera}>
-            <Camera size={18} weight="fill" color="#FFA897" />
-          </TouchableOpacity>
+          <Camera size={18} weight="fill" color="#FFA897" />
+        </TouchableOpacity>
         <Text style={styles.error}>{errorToiletPicture}</Text>
-        
-        
+
         {/* <TouchableOpacity onPress={openCamera} style={styles.addPhoto}>
           <PlusCircle
             size={28}
