@@ -19,6 +19,7 @@ import { HomeParamList } from '../stacks/HomeStack';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ProfileParamList } from '../stacks/ProfileStack';
+import { AddToiletParamList } from '../stacks/AddToiletStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 380 / 500;
@@ -26,6 +27,7 @@ const height = width * aspectRatio;
 
 const MyToilet = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ProfileParamList>>();
+  const navigationAddToilet = useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
   return (
     <SafeAreaView style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -40,7 +42,7 @@ const MyToilet = () => {
 
       <Text style={styles.title}>My Toilet</Text>
 
-      <TouchableOpacity style={styles.btnAdd_44}>
+      <TouchableOpacity style={styles.btnAdd_44} onPress={()=>navigationAddToilet.navigate('AddToilet')}>
         <Plus size={24} weight="bold" color="#E5EAFA" />
       </TouchableOpacity>
 

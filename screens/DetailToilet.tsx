@@ -32,6 +32,7 @@ import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
 import StarRating from '../components/StarRating';
+import ImageNotRating from '../components/ImageNotRating';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
@@ -168,8 +169,9 @@ const DetailToilet = () => {
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              <Review />
-              <Review />
+              <ImageNotRating/>
+              {/* <Review />
+              <Review /> */}
             </View>
             
           </View>
