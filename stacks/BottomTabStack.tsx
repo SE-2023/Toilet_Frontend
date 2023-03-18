@@ -50,7 +50,6 @@ import HomeStack, {HomeParamList} from './HomeStack';
 export type BottomTabParamList = {
   HomeStack: NavigatorScreenParams<HomeParamList>;
   MyList: undefined;
-
   AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
   Cartoon: undefined;
   ProfileStack: NavigatorScreenParams<ProfileParamList>;

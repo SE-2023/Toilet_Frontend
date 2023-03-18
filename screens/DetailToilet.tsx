@@ -5,7 +5,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Dimensions,
+  Animated,
   Platform,
   LogBox,
 } from 'react-native';
@@ -32,6 +34,8 @@ import {HomeParamList} from '../stacks/HomeStack';
 import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
+import StarRating from '../components/StarRating';
+import ImageNotRating from '../components/ImageNotRating';
 import {getProfile} from '../services/auth';
 import {createComment, getComment} from '../services/comment';
 import AuthContext from '../context/AuthContext';
@@ -295,13 +299,9 @@ const DetailToilet = () => {
 
           <View style={styles.detailPopupContainer}>
             <Text style={styles.titlePopup}>Rate & Review</Text>
-            <TouchableOpacity style={styles.btnStar}>
-              <Star size={34} weight="fill" color="#FAC353" />
-              <Star size={34} weight="fill" color="#FAC353" />
-              <Star size={34} weight="fill" color="#FAC353" />
-              <Star size={34} weight="fill" color="#FAC353" />
-              <Star size={34} weight="bold" color="#FAC353" />
-            </TouchableOpacity>
+            <View style={styles.btnStar}>
+              <StarRating/>
+            </View>
             <TextInput
               label="Review"
               value={review}
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   imageStar: {
-    width: 330,
+    width: '100%',
     height: 150,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,

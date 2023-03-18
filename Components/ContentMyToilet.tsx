@@ -1,84 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
+import LinearGradient from 'react-native-linear-gradient';
 import {
   Wheelchair,
   Star,
   Clock,
+  PencilSimple,
 } from 'phosphor-react-native';
-interface ISearch {
-  free: boolean,
-  handicap: boolean,
-  type: string,
-  placename: string,
-  timeOpen: string,
-  timeClose: string,
-  rating: string,
-}
 
-
-
-const Search = (props: ISearch) => {
-  const CheckTagFree = (): JSX.Element | null => {
-    if (props.free === true) {
-      return (
-        <View style={styles.tagFree}>
-          <Text style={styles.textFree}>฿ Free</Text>
-        </View>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  const CheckTagHandicap = (): JSX.Element | null => {
-    if (props.handicap === true) {
-      return (
-        <View style={styles.tagHandicap}>
-          <Wheelchair
-            size={10}
-            weight="fill"
-            color="#00845A"
-            style={{
-              marginRight: 2,
-              marginLeft: 6,
-            }}
-          />
-          <Text style={styles.textHandicap}>Handicap access</Text>
-        </View>
-      );
-    } else {
-      return null;
-    }
-  }
-
+const ContentMyToilet = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View style={styles.content}>
-          <View style={styles.itemLeftTop}>
-            <CheckTagFree></CheckTagFree>
-            <CheckTagHandicap></CheckTagHandicap>
-            <View style={styles.tagType}>
-              <Text style={styles.textType}>{props.type}</Text>
-            </View>
+    <View style={styles.contentContainer}>
+      <View style={styles.content}>
+        <View style={styles.itemLeftTop}>
+          <View style={styles.tagFree}>
+            <Text style={styles.textFree}>฿ Free</Text>
+          </View>
+          <View style={styles.tagHandicap}>
+            <Wheelchair
+              size={10}
+              weight="fill"
+              color="#00845A"
+              style={{
+                marginRight: 2,
+                marginLeft: 6,
+              }}
+            />
+            <Text style={styles.textHandicap}>Handicap access</Text>
           </View>
 
-          <Text style={styles.placeName}>{props.placename}</Text>
-
-          <View style={styles.itemBottom}>
-            <View style={styles.itemLeftBottom}>
-              <Clock
-                size={14}
-                weight="fill"
-                color="#31C596"
-                style={{
-                  marginRight: 5,
-                }}
-              />
-              <Text style={styles.time}>
-                {props.timeOpen} - {props.timeClose}
-              </Text>
-            </View>
+          <View style={styles.tagType}>
+            <Text style={styles.textType}>Public</Text>
+          </View>
+        </View>
+          
+        <View style={styles.itemMid}>
+          <View style={styles.itemLeftMid}>
+            <Text style={styles.placeName}>Place Name</Text>
             <View style={styles.itemRightBottom}>
               <Star
                 size={14}
@@ -91,20 +49,38 @@ const Search = (props: ISearch) => {
               <Text style={styles.rate}>5.0</Text>
             </View>
           </View>
+          <TouchableOpacity style={styles.btnEdit}>
+            <LinearGradient
+              colors={['#FFA897', '#FAC353']}
+              style={styles.btnEdit}>
+                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
+              </LinearGradient> 
+          </TouchableOpacity>
+        </View>
+          
+        <View style={styles.itemBottom}>
+          <Clock
+            size={14}
+            weight="fill"
+            color="#31C596"
+            style={{
+              marginRight: 5,
+            }}
+          />
+          <Text style={styles.time}>
+            00:00 - 00:00
+          </Text>
         </View>
       </View>
     </View>
   )
 }
 
-export default Search
+export default ContentMyToilet
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  // Content
   contentContainer: {
-    marginHorizontal: 16,
     marginTop: 25,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -121,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-
+    
   // Tag Free
   tagFree: {
     flexDirection: 'row',
@@ -140,7 +116,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-
+    
   // Tag Handicap
   tagHandicap: {
     flexDirection: 'row',
@@ -158,7 +134,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-
+    
   // Tag Type
   tagType: {
     flexDirection: 'row',
@@ -175,18 +151,36 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-
+    
+  itemMid: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  itemLeftMid: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
   placeName: {
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
-    marginBottom: 8,
+    marginRight: 12,
   },
-
+  btnEdit: {
+    width: 32,
+    height: 32,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+  },
+    
   itemBottom: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   itemLeftBottom: {
     flexDirection: 'row',
