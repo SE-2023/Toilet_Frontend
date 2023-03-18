@@ -1,7 +1,14 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, } from 'react-native'
-import React, {useState, useEffect} from 'react'
-import { CaretLeft, X, Star } from 'phosphor-react-native'
-import Review from '../components/Review'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {CaretLeft, X, Star} from 'phosphor-react-native';
+import Review from '../components/Review';
 import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
@@ -17,16 +24,52 @@ const Ratings = () => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ratings</Text>
       </View>
-      
+
       <View>
         <ScrollView>
           <View style={styles.reviewContainer}>
-            <Review />
-            <Review />
-            <Review />
-            <Review />
-            <Review />
-            <Review />  
+            <Review
+              image={''}
+              username={''}
+              rating={0}
+              date={''}
+              comment={''}
+            />
+            <Review
+              image={''}
+              username={''}
+              rating={0}
+              date={''}
+              comment={''}
+            />
+            <Review
+              image={''}
+              username={''}
+              rating={0}
+              date={''}
+              comment={''}
+            />
+            <Review
+              image={''}
+              username={''}
+              rating={0}
+              date={''}
+              comment={''}
+            />
+            <Review
+              image={''}
+              username={''}
+              rating={0}
+              date={''}
+              comment={''}
+            />
+            <Review
+              image={''}
+              username={''}
+              rating={0}
+              date={''}
+              comment={''}
+            />
           </View>
 
           {/* <View style={styles.rateContainer}>
@@ -37,7 +80,7 @@ const Ratings = () => {
 
           <View style={{height: 68, backgroundColor: '#F4F6FD'}}></View>
         </ScrollView>
-        
+
         {/* <Modal isVisible={modal}>
           <View style={styles.modalContainer}>
             <Image source={star} style={styles.imageStar}/>
@@ -72,10 +115,10 @@ const Ratings = () => {
         </Modal> */}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Ratings
+export default Ratings;
 
 const theme = {
   colors: {
@@ -193,4 +236,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-SemiBold',
     color: '#F4F6FD',
   },
-})
+});
