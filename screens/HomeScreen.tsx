@@ -26,6 +26,8 @@ import {
   GasPump,
   House,
   Toilet,
+  CheckCircle,
+  Circle,
 } from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
@@ -647,38 +649,6 @@ const HomeScreen = () => {
               setShowbuttompopup(false);
             }}
           />
-
-          {/* <TouchableOpacity style={styles.btnBaht_44} onPress={filterFree}>
-            <Text style={styles.baht}>฿</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.btnWheelchair_44}
-            onPress={filterHandicap}>
-            <Wheelchair size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.btnWc_44} onPress={filterPublic}>
-            <Image source={wc} style={styles.iconPublic} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.btnForkKnife_44}
-            onPress={filterRestaurant}>
-            <ForkKnife size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.btnTote_44} onPress={filterStore}>
-            <Tote size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.btnGasPump_44} onPress={filterGas}>
-            <GasPump size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.btnHouse_44} onPress={filterHome}>
-            <House size={22} weight="fill" color="#2C2F4A" />
-          </TouchableOpacity> */}
         </SafeAreaView>
       </View>
     </View>
@@ -693,7 +663,7 @@ const styles = StyleSheet.create({
   },
 
   // Button StackSimple
-  btnStackSimple_44: {
+  btnFilter_44: {
     position: 'absolute',
     width: 39,
     height: 39,
@@ -708,7 +678,7 @@ const styles = StyleSheet.create({
   },
 
   // Button Search
-  btnSearch_44: {
+  btnStackSimple_44: {
     position: 'absolute',
     width: 39,
     height: 39,
@@ -722,7 +692,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 
-  btnFilter_44: {
+  btnSearch_44: {
     width: 39,
     height: 39,
     borderRadius: 3,
@@ -736,101 +706,6 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 
-  // btnBaht_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-  // baht: {
-  //   fontSize: 18,
-  //   fontFamily: 'Fredoka-Medium',
-  //   color: '#2C2F4A',
-  // },
-  // btnWheelchair_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-  // btnWc_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-  // iconPublic: {
-  //   width: 22,
-  //   height: 22,
-  //   opacity: 0.8,
-  // },
-  // btnForkKnife_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-  // btnTote_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-  // btnGasPump_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-  // btnHouse_44: {
-  //   width: 39,
-  //   height: 39,
-  //   borderRadius: 3,
-  //   backgroundColor: '#fff',
-  //   marginBottom: 10,
-  //   left: 13.5,
-  //   elevation: 3,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   opacity: 0.8,
-  // },
-
   // Callout
   bubble: {
     flexDirection: 'column',
@@ -839,7 +714,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: '#ccc',
     borderWidth: 0.5,
-    padding: 15,
+    paddingHorizontal: 14,
+    paddingBottom: 12,
+    paddingTop: 8,
     width: 273,
   },
   imageToilet: {
