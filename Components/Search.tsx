@@ -1,21 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import {
-  Wheelchair,
-  Star,
-  Clock,
-} from 'phosphor-react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Wheelchair, Star, Clock} from 'phosphor-react-native';
 interface ISearch {
-  free: boolean,
-  handicap: boolean,
-  type: string,
-  placename: string,
-  timeOpen: string,
-  timeClose: string,
-  rating: string,
+  free: boolean;
+  handicap: boolean;
+  type: string;
+  placename: string;
+  timeOpen: string;
+  timeClose: string;
+  rating: string;
 }
-
-
 
 const Search = (props: ISearch) => {
   const CheckTagFree = (): JSX.Element | null => {
@@ -49,7 +43,7 @@ const Search = (props: ISearch) => {
     } else {
       return null;
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -94,10 +88,10 @@ const Search = (props: ISearch) => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
 
 const styles = StyleSheet.create({
   container: {
@@ -164,6 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    marginBottom: 15,
     backgroundColor: '#CACCDA',
     borderRadius: 20,
   },
@@ -208,4 +203,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2C2F4A',
   },
-})
+});
