@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -13,15 +13,15 @@ import {
 } from 'react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import profile from '../assets/profile.jpg';
-import {Check, Camera, X} from 'phosphor-react-native';
-import {TextInput} from 'react-native-paper';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ProfileParamList} from '../stacks/ProfileStack';
-import {updateProfile} from '../services/user';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {fileToBase64} from '../utils/convert';
+import { Check, Camera, X } from 'phosphor-react-native';
+import { TextInput } from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileParamList } from '../stacks/ProfileStack';
+import { updateProfile } from '../services/user';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { fileToBase64 } from '../utils/convert';
 
 export interface IProfileEdit {
   firstname: string;
@@ -31,12 +31,12 @@ export interface IProfileEdit {
   profile_picture: string;
 }
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const aspectRatio = 500 / 500;
 const height = width * aspectRatio;
 
 function UpdateProfile() {
-  const {params} = useRoute<RouteProp<ProfileParamList, 'UpdateProfile'>>();
+  const { params } = useRoute<RouteProp<ProfileParamList, 'UpdateProfile'>>();
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -49,22 +49,55 @@ function UpdateProfile() {
   const navigation =
     useNavigation<NativeStackNavigationProp<ProfileParamList>>();
   // console.log('props edit profile', params);
+  const [errorsFirstname, setErrorsFirstname] = useState('');
+  const [errorsLastname, setErrorsLastname] = useState('');
+  const [errorsPhone, setErrorsPhone] = useState('');
+  const [errorsEmail, setErrorsEmail] = useState('');
+  const [errorsPassword, setErrorsPassword] = useState('');
+  const [errorsConpassword, setErrorsConpassword] = useState('');
   const onSubmit = async () => {
-    const body = {
-      firstname: firstname,
-      lastname: lastname,
-      phone: phoneNum,
-      profile_picture: profilePicture,
-    };
-    await updateProfile(params._id, body);
-    navigation.replace('Profile');
+    try {
+      const body = {
+        firstname: firstname,
+        lastname: lastname,
+        phone: phoneNum,
+        email: email,
+        profile_picture: profilePicture,
+      };
+      await updateProfile(params._id, body);
+      navigation.replace('Profile');
+    } catch (err: any) {
+      setErrorsFirstname('');
+      setErrorsLastname('');
+      setErrorsPhone('');
+      setErrorsEmail('');
+      setErrorsPassword('');
+      setErrorsConpassword('');
+      err.errors.map((item: any) => {
+        if (item.param === 'firstname') {
+          setErrorsFirstname(item.msg);
+        } else if (item.param === 'lastname') {
+          setErrorsLastname(item.msg);
+        } else if (item.param === 'phone') {
+          setErrorsPhone(item.msg);
+        } else if (item.param === 'email') {
+          setErrorsEmail(item.msg);
+        } else if (item.param === 'password') {
+          setErrorsPassword(item.msg);
+        } else if (item.param === 'conPassword') {
+          setErrorsConpassword(item.msg);
+        }
+      });
+      console.log(err);
+    }
+
   };
   const chooseImage = async () => {
     let options: any = {
       includeBase64: true,
       title: 'Select Image',
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -105,21 +138,22 @@ function UpdateProfile() {
     setFirstname(params.firstname);
     setLastname(params.lastname);
     setPhoneNum(params.phone);
+    setEmail(params.email);
     setprofilePicture(params.profile_picture);
   }, []);
 
   return (
     <KeyboardAwareScrollView
       style={styles.container}
-      // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <SafeAreaView style={styles.space}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           <View
             // borderBottomLeftRadius={60}
             // overflow='hidden'
-            style={{height: height * 0.4}}>
-            <Image source={bgSUKA} style={{width, height}} />
+            style={{ height: height * 0.4 }}>
+            <Image source={bgSUKA} style={{ width, height }} />
           </View>
         </View>
 
@@ -138,7 +172,7 @@ function UpdateProfile() {
 
           <View style={styles.circle}></View>
 
-          <Image source={{uri: profilePicture}} style={styles.profile} />
+          <Image source={{ uri: profilePicture }} style={styles.profile} />
 
           <View style={styles.textInputSmall}>
             <View>
@@ -150,6 +184,7 @@ function UpdateProfile() {
                 mode="outlined"
                 onChangeText={text => setFirstname(text)}
               />
+              <Text style={styles.error}>{errorsFirstname}</Text>
             </View>
 
             <View style={styles.textInputRight}>
@@ -161,11 +196,12 @@ function UpdateProfile() {
                 mode="outlined"
                 onChangeText={text => setLastname(text)}
               />
+              <Text style={styles.error}>{errorsLastname}</Text>
             </View>
           </View>
 
           <View style={styles.textInput}>
-            <View style={{paddingBottom: 20}}>
+            <View style={{ paddingBottom: 20 }}>
               <TextInput
                 label="Phone number"
                 defaultValue={params.phone}
@@ -174,20 +210,22 @@ function UpdateProfile() {
                 mode="outlined"
                 onChangeText={text => setPhoneNum(text)}
               />
+              <Text style={styles.error}>{errorsPhone}</Text>
             </View>
 
-            <View style={{paddingBottom: 20}}>
+            <View style={{ paddingBottom: 20 }}>
               <TextInput
                 label="Email"
                 defaultValue={params.email}
                 theme={theme}
                 style={styles.bgTextInput}
                 mode="outlined"
-                onChangeText={text => setprofilePicture(text)}
+                onChangeText={text => setEmail(text)}
               />
+              <Text style={styles.error}>{errorsEmail}</Text>
             </View>
 
-            <View style={{paddingBottom: 20}}>
+            <View style={{ paddingBottom: 20 }}>
               <TextInput
                 label="Password"
                 value={password}
@@ -198,6 +236,7 @@ function UpdateProfile() {
                 // right={<TextInput.Icon icon="eye" />}
                 onChangeText={text => setPassword(text)}
               />
+              <Text style={styles.error}>{errorsPassword}</Text>
             </View>
 
             <View>
@@ -211,11 +250,12 @@ function UpdateProfile() {
                 // right={<TextInput.Icon icon="eye" />}
                 onChangeText={text => setConPassword(text)}
               />
+              <Text style={styles.error}>{errorsConpassword}</Text>
             </View>
           </View>
         </View>
       </SafeAreaView>
-      <View style={{height: 20}} />
+      <View style={{ height: 20 }} />
     </KeyboardAwareScrollView>
   );
 }
@@ -354,6 +394,13 @@ const styles = StyleSheet.create({
   bgTextInput: {
     backgroundColor: '#F4F6FD',
     fontFamily: 'Fredoka-Regular',
+  },
+  error: {
+    color: '#D75D5D',
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 12,
+    paddingTop: 2,
+    paddingLeft: 16,
   },
 });
 
