@@ -94,6 +94,11 @@ const AddDetailToilet2 = () => {
   const [selectedTimeClose, setSelectedTimeClose] = useState('00:00');
   const [free, setfree] = useState(true);
   const [cameraPhoto, setCamera] = useState();
+  const [errorPlaceName, setErrorPlaceName] = useState('');
+  const [errorToiletPicture, setErrorToiletPicture] = useState('');
+  const [errorCost, setErrorCost] = useState('');
+  const [errorContact, setErrorContact] = useState('');
+  const [errorTime, setErrorTime] = useState('');
   let popupRef = React.createRef();
 
   const Tag = (): JSX.Element | null => {
@@ -168,7 +173,7 @@ const AddDetailToilet2 = () => {
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       const result = await launchCamera(options);
-      setCamera(result.assets[0].uri);
+      settoiletPicture(result.assets[0].uri);
     }
   };
 
@@ -220,31 +225,54 @@ const AddDetailToilet2 = () => {
     useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
   const navigation2 = useNavigation<NativeStackNavigationProp<RootStackList>>();
   const submitCreateToilet = async () => {
-    if (cost.length > 1) {
-      setfree(false);
-      console.log(' not free ');
-    } else {
-      setfree(true);
-      console.log(' free');
+    try{
+      if (cost.length > 1) {
+        setfree(false);
+        console.log(' not free ');
+      } else {
+        setfree(true);
+        console.log(' free');
+      }
+      const createtoilet: any = await createToilet({
+        title: placeName,
+        latitude: params.latitude,
+        longitude: params.longitude,
+        desc: 'test',
+        contact: contact,
+        cost: cost,
+        handicap: handicap,
+        free: free,
+        createBy: params._id,
+        type: type,
+        timeOpen: selectedTimeOpen,
+        timeClose: selectedTimeClose,
+        toiletpicture: toiletPicture,
+      });
+      console.log('createtoilet', createtoilet);
+      navigation2.replace('MainStack', {screen: 'HomeStack'});
+    } catch (err: any) {
+      setErrorPlaceName('');
+      setErrorCost('');
+      setErrorContact('');
+      setErrorTime('');
+      setErrorToiletPicture('');
+      err.errors.map((item: any) => {
+        if (item.param === 'placename') {
+          setErrorPlaceName(item.msg);
+        } else if (item.param === 'cost') {
+          setErrorCost(item.msg);
+        } else if (item.param === 'contact') {
+          setErrorContact(item.msg);
+        } else if (item.param === 'timeClose') {
+          setErrorTime(item.msg);
+        } else if (item.param === 'password') {
+          setErrorToiletPicture(item.msg);
+        }
+      });
     }
-    const createtoilet: any = await createToilet({
-      title: placeName,
-      latitude: params.latitude,
-      longitude: params.longitude,
-      desc: 'test',
-      contact: contact,
-      cost: cost,
-      handicap: handicap,
-      free: free,
-      createBy: params._id,
-      type: type,
-      timeOpen: selectedTimeOpen,
-      timeClose: selectedTimeClose,
-      toiletpicture: toiletPicture,
-    });
-    console.log('createtoilet', createtoilet);
-    navigation2.replace('MainStack', {screen: 'HomeStack'});
   };
+
+  
 
   return (
     <KeyboardAwareScrollView
@@ -274,9 +302,14 @@ const AddDetailToilet2 = () => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnCamera_34} onPress={chooseImage}>
+        
+        
+        <TouchableOpacity style={styles.btnCamera_34} onPress={openCamera}>
             <Camera size={18} weight="fill" color="#FFA897" />
           </TouchableOpacity>
+        <Text style={styles.error}>{errorToiletPicture}</Text>
+        
+        
         {/* <TouchableOpacity onPress={openCamera} style={styles.addPhoto}>
           <PlusCircle
             size={28}
@@ -303,6 +336,7 @@ const AddDetailToilet2 = () => {
             onChangeText={text => setPlaceName(text)}
           />
         </View>
+        <Text style={styles.error}>{errorPlaceName}</Text>
       </View>
 
       <View style={styles.textInputContainer}>
@@ -315,6 +349,7 @@ const AddDetailToilet2 = () => {
             mode="outlined"
             onChangeText={text => setCost(text)}
           />
+          <Text style={styles.error}>{errorCost}</Text>
         </View>
 
         <View style={styles.textInputRight}>
@@ -326,6 +361,7 @@ const AddDetailToilet2 = () => {
             mode="outlined"
             onChangeText={text => setContact(text)}
           />
+          <Text style={styles.error}>{errorContact}</Text>
         </View>
       </View>
 
@@ -445,6 +481,7 @@ const AddDetailToilet2 = () => {
           onCancel={hideTimeClosePicker}
           is24Hour={true}
         />
+        <Text style={styles.error}>{errorTime}</Text>
       </View>
 
       <View style={styles.btnConfirmPosition}>
@@ -711,5 +748,12 @@ const styles = StyleSheet.create({
     color: '#F4F6FD',
     fontFamily: 'Fredoka-SemiBold',
     fontSize: 16,
+  },
+  error: {
+    color: '#D75D5D',
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 12,
+    paddingTop: 2,
+    paddingLeft: 16,
   },
 });

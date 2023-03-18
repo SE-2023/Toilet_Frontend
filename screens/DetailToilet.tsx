@@ -8,8 +8,10 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Animated,
+  Platform,
+  LogBox,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import toilet from '../assets/toilet.jpg';
 import {
   CaretLeft,
@@ -21,6 +23,7 @@ import {
   CaretRight,
   PersonSimpleWalk,
   X,
+  Key,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import Review from '../components/Review';
@@ -33,21 +36,44 @@ import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
 import StarRating from '../components/StarRating';
 import ImageNotRating from '../components/ImageNotRating';
+import {getProfile} from '../services/auth';
+import {createComment, getComment} from '../services/comment';
+import AuthContext from '../context/AuthContext';
+import LaunchNavigator from 'react-native-launch-navigator';
+// import LaunchNavigator from 'react-native-launch-navigator';
+import openMap from 'react-native-open-maps';
+export interface IProfile {
+  _id: string;
+}
+
+interface Comment {
+  CreateBy: string;
+  toiletId: string;
+  comment: string;
+  rate: number;
+  updatedAt: string;
+  result: any;
+}
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 360 / 400;
 const height = width * aspectRatio;
 
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const DetailToilet = () => {
   const {params} = useRoute<RouteProp<HomeParamList, 'DetailToilet'>>();
   console.log(params);
+  const [ToiletId, setToiletId] = useState(params._id);
   const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
-
-
+  const [comment, setComment] = useState<Comment[]>([]);
   const [modal, setModal] = useState(false);
+  const [checkData, setCheckData] = useState('');
+  const [profile, setProfile] = React.useState<IProfile>({
+    _id: '',
+  });
   const [review, setReview] = React.useState('');
-
-
+  const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
   const TagFree = (): JSX.Element | null => {
     if (params.free === true) {
       return (
@@ -74,6 +100,75 @@ const DetailToilet = () => {
           />
           <Text style={styles.textHandicap}>Handicap access</Text>
         </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const nevi = () => {
+    // // if (Platform.OS === 'android')
+    // //   LaunchNavigator.setGoogleApiKey(
+    // //     'AIzaSyD963fSegmx4oNEpqbrOJFm7V9b4di-Kn0',
+    // //   );
+    // LaunchNavigator.navigate([50.279306, -5.163158], {
+    //   start: '50.342847, -4.749904',
+    // });
+    //   .then(() => console.log('Launched navigator'))
+    //   .catch(err => console.error('Error launching navigator: ' + err));
+    // openMap({latitude: 13.9147641, longitude: 99.7955964});
+    LaunchNavigator.navigate([13.6512522, 100.4942541]);
+  };
+  const submitCreateComment = async () => {
+    const {data} = await getProfile();
+    const createcomment: any = await createComment({
+      createBy: data._id,
+      toiletId: params._id,
+      comment: review,
+      rate: 5,
+    });
+    console.log('createcomment', createcomment);
+    setModal(false);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const comments: any = await getComment(ToiletId);
+        // console.log(comments.data);
+        setComment(comments.Comment);
+        setCheckData(comments.message);
+      } catch (err: any) {
+        setCheckData(err.message);
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, [modal]);
+
+  const RenderComment = (): JSX.Element | null => {
+    if (checkData === 'success') {
+      return (
+        <>
+          {/* {comment.map((item: any, index) => {
+            return (
+              <Review
+                key={index}
+                image={item.result[0].profile_picture}
+                username={item.result[0].firstname}
+                rating={item.rate}
+                date={item.updatedAt}
+                comment={item.comment}
+              />
+            );
+          })} */}
+          <Review
+            image={comment[0].result[0].profile_picture}
+            username={comment[0].result[0].firstname}
+            rating={comment[0].rate}
+            date={comment[0].updatedAt}
+            comment={comment[0].comment}
+          />
+        </>
       );
     } else {
       return null;
@@ -151,7 +246,7 @@ const DetailToilet = () => {
                 <Heart size={20} weight="fill" color="#E5EAFA" />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.btnPerson}>
+              <TouchableOpacity style={styles.btnPerson} onPress={nevi}>
                 <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
               </TouchableOpacity>
             </View>
@@ -169,11 +264,22 @@ const DetailToilet = () => {
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              <ImageNotRating/>
-              {/* <Review />
-              <Review /> */}
+              {/* <Review
+                image={''}
+                username={''}
+                rating={0}
+                date={''}
+                comment={''}
+              /> */}
+              {/* <Review
+                image={''}
+                username={''}
+                rating={0}
+                date={''}
+                comment={''}
+              /> */}
+              <RenderComment></RenderComment>
             </View>
-            
           </View>
           <View
             style={{height: height * 0.25, backgroundColor: '#F4F6FD'}}></View>
@@ -205,7 +311,9 @@ const DetailToilet = () => {
               onChangeText={text => setReview(text)}
               multiline
             />
-            <TouchableOpacity style={styles.btnSubmit}>
+            <TouchableOpacity
+              style={styles.btnSubmit}
+              onPress={submitCreateComment}>
               <Text style={styles.textSubmit}>SUBMIT</Text>
             </TouchableOpacity>
           </View>
