@@ -1,9 +1,10 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import profile from '../assets/profile.jpg';
 import {Star} from 'phosphor-react-native';
 import toilet from '../assets/toilet.jpg';
 import Moment from 'react-moment';
+import Starsmall from './Starsmall';
 interface IReview {
   image: string;
   username: string;
@@ -12,6 +13,8 @@ interface IReview {
   comment: string;
 }
 const Review = (props: IReview) => {
+  // const
+  const [rating, setRating] = useState(props.rating);
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
@@ -19,11 +22,18 @@ const Review = (props: IReview) => {
         <View>
           <Text style={styles.textName}>{props.username}</Text>
           <View style={styles.starContainer}>
+            {/* <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
             <Star size={16} weight="fill" color="#FAC353" />
-            <Star size={16} weight="fill" color="#FAC353" />
-            <Star size={16} weight="fill" color="#BABCCA" />
+            <Star size={16} weight="fill" color="#BABCCA" /> */}
+            <Text>
+              {Array(5)
+                .fill(0)
+                .map((_, index) => (
+                  <Starsmall key={index} filled={index < rating} />
+                ))}
+            </Text>
             <Moment
               format="YYYY/MM/DD HH:mm"
               style={styles.textDate}

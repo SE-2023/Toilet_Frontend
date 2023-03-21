@@ -25,7 +25,9 @@ export type HomeParamList = {
     timeClose: string;
     toiletpicture: string;
   };
-  Ratings: undefined;
+  Ratings: {
+    toiletID: string;
+  };
   Search: undefined;
 };
 const HomeStack = () => {

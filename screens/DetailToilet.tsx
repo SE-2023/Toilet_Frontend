@@ -62,6 +62,8 @@ const height = width * aspectRatio;
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 const DetailToilet = () => {
+  let Rate: number = 0;
+  let sumRate: number = 0;
   const {params} = useRoute<RouteProp<HomeParamList, 'DetailToilet'>>();
   console.log(params);
   const [ToiletId, setToiletId] = useState(params._id);
@@ -72,7 +74,9 @@ const DetailToilet = () => {
   const [profile, setProfile] = React.useState<IProfile>({
     _id: '',
   });
+  const [SumRate, setsumRate] = useState(0);
   const [review, setReview] = React.useState('');
+  const [rating, setRating] = useState(0);
   const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
   const TagFree = (): JSX.Element | null => {
     if (params.free === true) {
@@ -106,17 +110,7 @@ const DetailToilet = () => {
     }
   };
   const nevi = () => {
-    // // if (Platform.OS === 'android')
-    // //   LaunchNavigator.setGoogleApiKey(
-    // //     'AIzaSyD963fSegmx4oNEpqbrOJFm7V9b4di-Kn0',
-    // //   );
-    // LaunchNavigator.navigate([50.279306, -5.163158], {
-    //   start: '50.342847, -4.749904',
-    // });
-    //   .then(() => console.log('Launched navigator'))
-    //   .catch(err => console.error('Error launching navigator: ' + err));
-    // openMap({latitude: 13.9147641, longitude: 99.7955964});
-    LaunchNavigator.navigate([13.6512522, 100.4942541]);
+    LaunchNavigator.navigate([params.latitude, params.longitude]);
   };
   const submitCreateComment = async () => {
     const {data} = await getProfile();
@@ -124,7 +118,7 @@ const DetailToilet = () => {
       createBy: data._id,
       toiletId: params._id,
       comment: review,
-      rate: 5,
+      rate: rating,
     });
     console.log('createcomment', createcomment);
     setModal(false);
@@ -146,7 +140,13 @@ const DetailToilet = () => {
   }, [modal]);
 
   const RenderComment = (): JSX.Element | null => {
-    if (checkData === 'success') {
+    if (checkData === 'success' && comment[1] !== undefined) {
+      comment.map((item: any, index) => {
+        Rate += item.rate;
+        sumRate = Rate / comment.length;
+      });
+      console.log('data145', sumRate);
+      setsumRate(sumRate);
       return (
         <>
           {/* {comment.map((item: any, index) => {
@@ -168,10 +168,34 @@ const DetailToilet = () => {
             date={comment[0].updatedAt}
             comment={comment[0].comment}
           />
+          <Review
+            image={comment[1].result[0].profile_picture}
+            username={comment[1].result[0].firstname}
+            rating={comment[1].rate}
+            date={comment[1].updatedAt}
+            comment={comment[1].comment}
+          />
+        </>
+      );
+    }
+    if (comment.length === 1) {
+      return (
+        <>
+          <Review
+            image={comment[0].result[0].profile_picture}
+            username={comment[0].result[0].firstname}
+            rating={comment[0].rate}
+            date={comment[0].updatedAt}
+            comment={comment[0].comment}
+          />
         </>
       );
     } else {
-      return null;
+      return (
+        <>
+          <ImageNotRating></ImageNotRating>
+        </>
+      );
     }
   };
 
@@ -207,7 +231,7 @@ const DetailToilet = () => {
             <View style={styles.detailContainer}>
               <View style={styles.priceContainer}>
                 <Text style={styles.baht}>฿ </Text>
-                <Text style={styles.price}>0</Text>
+                <Text style={styles.price}>{params.cost}</Text>
               </View>
               <View style={styles.phoneContainer}>
                 <Phone
@@ -253,31 +277,21 @@ const DetailToilet = () => {
 
             <TouchableOpacity
               style={styles.btnRate}
-              onPress={() => navigation.navigate('Ratings')}>
+              onPress={() =>
+                navigation.navigate('Ratings', {toiletID: params._id})
+              }>
               <View style={styles.itemLeft}>
                 <Text style={styles.titleRate}>Rate</Text>
                 <Star size={17} weight="fill" color="#FAC353" />
-                <Text style={styles.textRate}>4.5</Text>
-                <Text style={styles.textReview}>(0 Reviews)</Text>
+                <Text style={styles.textRate}>{SumRate}</Text>
+                <Text style={styles.textReview}>
+                  ({comment.length} Reviews)
+                </Text>
               </View>
               <CaretRight size={22} color="#2C2F4A" />
             </TouchableOpacity>
 
             <View style={styles.reviewContainer}>
-              {/* <Review
-                image={''}
-                username={''}
-                rating={0}
-                date={''}
-                comment={''}
-              /> */}
-              {/* <Review
-                image={''}
-                username={''}
-                rating={0}
-                date={''}
-                comment={''}
-              /> */}
               <RenderComment></RenderComment>
             </View>
           </View>
@@ -300,7 +314,11 @@ const DetailToilet = () => {
           <View style={styles.detailPopupContainer}>
             <Text style={styles.titlePopup}>Rate & Review</Text>
             <View style={styles.btnStar}>
-              <StarRating/>
+              <StarRating
+                onSelected={value => {
+                  setRating(value);
+                }}
+              />
             </View>
             <TextInput
               label="Review"

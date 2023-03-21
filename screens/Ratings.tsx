@@ -12,70 +12,82 @@ import Review from '../components/Review';
 import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { HomeParamList } from '../stacks/HomeStack';
-
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {HomeParamList} from '../stacks/HomeStack';
+import {getComment} from '../services/comment';
+import ImageNotRating from '../components/ImageNotRating';
+interface Comment {
+  CreateBy: string;
+  toiletId: string;
+  comment: string;
+  rate: number;
+  updatedAt: string;
+  result: any;
+}
 const Ratings = () => {
-  // const [modal, setModal] = useState(false);
-  // const [review, setReview] = React.useState('');
+  const {params} = useRoute<RouteProp<HomeParamList, 'Ratings'>>();
+  console.log(params);
   const navigation = useNavigation<NativeStackNavigationProp<HomeParamList>>();
+  const [ToiletId, setToiletId] = useState(params.toiletID);
+  const [comment, setComment] = useState<Comment[]>([]);
+  const [checkData, setCheckData] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const comments: any = await getComment(ToiletId);
+        // console.log(comments.data);
+        setComment(comments.Comment);
+        setCheckData(comments.message);
+      } catch (err: any) {
+        setCheckData(err.message);
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const RenderComment = (): JSX.Element | null => {
+    if (checkData === 'success' && comment[1] !== undefined) {
+      return (
+        <>
+          {comment.map((item: any, index) => {
+            return (
+              <Review
+                key={index}
+                image={item.result[0].profile_picture}
+                username={item.result[0].firstname}
+                rating={item.rate}
+                date={item.updatedAt}
+                comment={item.comment}
+              />
+            );
+          })}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <ImageNotRating></ImageNotRating>
+        </>
+      );
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.btnBack} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={styles.btnBack}
+          onPress={() => navigation.goBack()}>
           <CaretLeft size={24} color="#F4F6FD" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ratings</Text>
       </View>
 
       <View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.reviewContainer}>
-            <Review
-              image={''}
-              username={''}
-              rating={0}
-              date={''}
-              comment={''}
-            />
-            <Review
-              image={''}
-              username={''}
-              rating={0}
-              date={''}
-              comment={''}
-            />
-            <Review
-              image={''}
-              username={''}
-              rating={0}
-              date={''}
-              comment={''}
-            />
-            <Review
-              image={''}
-              username={''}
-              rating={0}
-              date={''}
-              comment={''}
-            />
-            <Review
-              image={''}
-              username={''}
-              rating={0}
-              date={''}
-              comment={''}
-            />
-            <Review
-              image={''}
-              username={''}
-              rating={0}
-              date={''}
-              comment={''}
-            />
+            <RenderComment></RenderComment>
           </View>
 
           {/* <View style={styles.rateContainer}>

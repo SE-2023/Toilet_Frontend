@@ -10,24 +10,23 @@ import {
 } from 'react-native';
 import React from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
-import {
-  CaretLeft,
-  Plus,
-} from 'phosphor-react-native';
+import {CaretLeft, Plus} from 'phosphor-react-native';
 import ContentMyToilet from '../components/ContentMyToilet';
-import { HomeParamList } from '../stacks/HomeStack';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ProfileParamList } from '../stacks/ProfileStack';
-import { AddToiletParamList } from '../stacks/AddToiletStack';
+import {HomeParamList} from '../stacks/HomeStack';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ProfileParamList} from '../stacks/ProfileStack';
+import {AddToiletParamList} from '../stacks/AddToiletStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 380 / 500;
 const height = width * aspectRatio;
 
 const MyToilet = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<ProfileParamList>>();
-  const navigationAddToilet = useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ProfileParamList>>();
+  const navigationAddToilet =
+    useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
   return (
     <SafeAreaView style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -36,26 +35,28 @@ const MyToilet = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.btnBack_44} onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        style={styles.btnBack_44}
+        onPress={() => navigation.goBack()}>
         <CaretLeft size={24} weight="bold" color="#2C2F4A" />
       </TouchableOpacity>
 
       <Text style={styles.title}>My Toilet</Text>
 
-      <TouchableOpacity style={styles.btnAdd_44} onPress={()=>navigationAddToilet.navigate('AddToilet')}>
+      <TouchableOpacity
+        style={styles.btnAdd_44}
+        onPress={() => navigationAddToilet.navigate('AddToilet')}>
         <Plus size={24} weight="bold" color="#E5EAFA" />
       </TouchableOpacity>
 
-      <View style={{marginTop: -25}}/>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
-        <ContentMyToilet/>
-        <ContentMyToilet/>
-        <ContentMyToilet/>
-        <ContentMyToilet/>
-        <ContentMyToilet/>
-        <ContentMyToilet/>
+      <View style={{marginTop: -25}} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ContentMyToilet />
+        <ContentMyToilet />
+        <ContentMyToilet />
+        <ContentMyToilet />
+        <ContentMyToilet />
+        <ContentMyToilet />
         <View style={{height: height * 0.08}} />
       </ScrollView>
     </SafeAreaView>
