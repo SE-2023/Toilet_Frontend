@@ -1,14 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  Wheelchair,
-  Star,
-  Clock,
-  PencilSimple,
-} from 'phosphor-react-native';
-
-const ContentMyToilet = () => {
+import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
+interface IContentMyToilet {
+  _id: string;
+  latitude: number;
+  longitude: number;
+  title: string;
+  contact: string;
+  cost: string;
+  handicap: boolean;
+  free: boolean;
+  type: string;
+  timeOpen: string;
+  timeClose: string;
+  toiletpicture: string;
+}
+const ContentMyToilet = (props: IContentMyToilet) => {
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
@@ -30,13 +38,13 @@ const ContentMyToilet = () => {
           </View>
 
           <View style={styles.tagType}>
-            <Text style={styles.textType}>Public</Text>
+            <Text style={styles.textType}>{props.type}</Text>
           </View>
         </View>
-          
+
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>Place Name</Text>
+            <Text style={styles.placeName}>{props.title}</Text>
             <View style={styles.itemRightBottom}>
               <Star
                 size={14}
@@ -53,11 +61,11 @@ const ContentMyToilet = () => {
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
-                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
-              </LinearGradient> 
+              <PencilSimple size={16} weight="fill" color="#2C2F4A" />
+            </LinearGradient>
           </TouchableOpacity>
         </View>
-          
+
         <View style={styles.itemBottom}>
           <Clock
             size={14}
@@ -68,15 +76,15 @@ const ContentMyToilet = () => {
             }}
           />
           <Text style={styles.time}>
-            00:00 - 00:00
+            {props.timeOpen} - {props.timeClose}
           </Text>
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ContentMyToilet
+export default ContentMyToilet;
 
 const styles = StyleSheet.create({
   // Content
@@ -97,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-    
+
   // Tag Free
   tagFree: {
     flexDirection: 'row',
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Handicap
   tagHandicap: {
     flexDirection: 'row',
@@ -134,7 +142,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Type
   tagType: {
     flexDirection: 'row',
@@ -151,7 +159,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   itemMid: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -177,7 +185,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 2,
   },
-    
+
   itemBottom: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -202,4 +210,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2C2F4A',
   },
-})
+});

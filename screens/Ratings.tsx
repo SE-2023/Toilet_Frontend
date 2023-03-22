@@ -17,6 +17,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HomeParamList} from '../stacks/HomeStack';
 import {getComment} from '../services/comment';
 import ImageNotRating from '../components/ImageNotRating';
+import NotRating from '../components/NotRating';
 interface Comment {
   CreateBy: string;
   toiletId: string;
@@ -68,7 +69,7 @@ const Ratings = () => {
     } else {
       return (
         <>
-          <ImageNotRating></ImageNotRating>
+          <NotRating></NotRating>
         </>
       );
     }

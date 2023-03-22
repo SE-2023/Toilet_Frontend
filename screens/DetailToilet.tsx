@@ -189,7 +189,7 @@ const DetailToilet = () => {
     } else {
       return (
         <>
-          <ImageNotRating></ImageNotRating>
+          <NotRating></NotRating>
         </>
       );
     }
@@ -215,8 +215,8 @@ const DetailToilet = () => {
             </View>
 
             <View style={styles.tagContainer}>
-              <TagFree/>
-              <TagHandicap/>
+              <TagFree />
+              <TagHandicap />
 
               <View style={styles.tagType}>
                 <Image source={wc} style={styles.iconType} />
