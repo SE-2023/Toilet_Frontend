@@ -5,7 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthContext from '../context/AuthContext';
 import RequireLogin from '../components/RequireLogin';
 import AddToilet from '../screens/AddToilet';
-import AddDetailToilet from '../screens/AddDetailToilet';
 import AddDetailToilet2 from '../screens/AddDetailToilet 2';
 export type AddToiletParamList = {
   AddToilet: undefined;
