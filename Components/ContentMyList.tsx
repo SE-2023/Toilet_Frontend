@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
+import { Clock, PersonSimpleWalk, Star, Wheelchair } from 'phosphor-react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import BtnHeartMyList from './BtnHeartMyList'
 
@@ -52,7 +52,7 @@ const ContentMyList = () => {
               <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
-                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
+                <PersonSimpleWalk size={16} weight="fill" color="#2C2F4A" />
               </LinearGradient> 
             </TouchableOpacity>
           </View>

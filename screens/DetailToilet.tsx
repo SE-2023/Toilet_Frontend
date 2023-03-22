@@ -189,7 +189,7 @@ const DetailToilet = () => {
     } else {
       return (
         <>
-          <ImageNotRating></ImageNotRating>
+          <NotRating/>
         </>
       );
     }

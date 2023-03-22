@@ -16,7 +16,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HomeParamList} from '../stacks/HomeStack';
 import {getComment} from '../services/comment';
-import ImageNotRating from '../components/ImageNotRating';
+import NotRating from '../components/NotRating';
 interface Comment {
   CreateBy: string;
   toiletId: string;
@@ -67,9 +67,9 @@ const Ratings = () => {
       );
     } else {
       return (
-        <>
-          <ImageNotRating></ImageNotRating>
-        </>
+        <View style={styles.notRating}>
+          <NotRating/>
+        </View>
       );
     }
   };
@@ -150,6 +150,9 @@ const theme = {
 };
 
 const styles = StyleSheet.create({
+  notRating: {
+    marginTop: '55%',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F4F6FD',
