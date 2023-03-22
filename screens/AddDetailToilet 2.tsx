@@ -1,7 +1,6 @@
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
   View,
   Platform,
   TouchableOpacity,
@@ -23,7 +22,6 @@ import {
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import {TextInput} from 'react-native-paper';
-import LinearGradient from 'react-native-linear-gradient';
 import Switch from '../components/Switch';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -653,7 +651,7 @@ const styles = StyleSheet.create({
     width: 24,
   },
   textTypeLocation: {
-    fontFamily: 'Fredoka-Regular',
+    fontFamily: 'Fredoka-Medium',
     fontSize: 16,
     color: '#2C2F4A',
     marginLeft: 12,

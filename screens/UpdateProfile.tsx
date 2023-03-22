@@ -7,9 +7,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Button,
-  Platform,
-  Alert,
 } from 'react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import profile from '../assets/profile.jpg';
@@ -150,8 +147,6 @@ function UpdateProfile() {
       <SafeAreaView style={styles.space}>
         <View style={{ alignItems: 'center' }}>
           <View
-            // borderBottomLeftRadius={60}
-            // overflow='hidden'
             style={{ height: height * 0.4 }}>
             <Image source={bgSUKA} style={{ width, height }} />
           </View>
@@ -174,88 +169,89 @@ function UpdateProfile() {
 
           <Image source={{ uri: profilePicture }} style={styles.profile} />
 
-          <View style={styles.textInputSmall}>
-            <View>
-              <TextInput
-                label="Fristname"
-                defaultValue={params.firstname}
-                theme={theme}
-                style={styles.bgTextInput}
-                mode="outlined"
-                onChangeText={text => setFirstname(text)}
-              />
-              <Text style={styles.error}>{errorsFirstname}</Text>
+          <View style={styles.mainContainer}>
+            <View style={styles.textInputContainer}>
+              <View style={styles.textInputLeft}>
+                <TextInput
+                  label="Fristname"
+                  value={firstname}
+                  theme={theme}
+                  style={styles.bgTextInput}
+                  mode="outlined"
+                  onChangeText={text => setFirstname(text)}
+                />
+                <Text style={styles.error}>{errorsFirstname}</Text>
+              </View>
+
+              <View style={styles.textInputRight}>
+                <TextInput
+                  label="Lastname"
+                  value={lastname}
+                  theme={theme}
+                  style={styles.bgTextInput}
+                  mode="outlined"
+                  onChangeText={text => setLastname(text)}
+                />
+                <Text style={styles.error}>{errorsLastname}</Text>
+              </View>
             </View>
 
-            <View style={styles.textInputRight}>
-              <TextInput
-                label="Lastname"
-                defaultValue={params.lastname}
-                theme={theme}
-                style={styles.bgTextInput}
-                mode="outlined"
-                onChangeText={text => setLastname(text)}
-              />
-              <Text style={styles.error}>{errorsLastname}</Text>
-            </View>
-          </View>
+            <View style={styles.textInput}>
+              <View style={{paddingBottom: 12}}>
+                <TextInput
+                  label="Phone number"
+                  value={phoneNum}
+                  theme={theme}
+                  style={styles.bgTextInput}
+                  mode="outlined"
+                  onChangeText={text => setPhoneNum(text)}
+                />
+                <Text style={styles.error}>{errorsPhone}</Text>
+              </View>
 
-          <View style={styles.textInput}>
-            <View style={{ paddingBottom: 20 }}>
-              <TextInput
-                label="Phone number"
-                defaultValue={params.phone}
-                theme={theme}
-                style={styles.bgTextInput}
-                mode="outlined"
-                onChangeText={text => setPhoneNum(text)}
-              />
-              <Text style={styles.error}>{errorsPhone}</Text>
-            </View>
+              <View style={{paddingBottom: 12}}>
+                <TextInput
+                  label="Email"
+                  value={email}
+                  theme={theme}
+                  style={styles.bgTextInput}
+                  mode="outlined"
+                  onChangeText={text => setEmail(text)}
+                />
+                <Text style={styles.error}>{errorsEmail}</Text>
+              </View>
 
-            <View style={{ paddingBottom: 20 }}>
-              <TextInput
-                label="Email"
-                defaultValue={params.email}
-                theme={theme}
-                style={styles.bgTextInput}
-                mode="outlined"
-                onChangeText={text => setEmail(text)}
-              />
-              <Text style={styles.error}>{errorsEmail}</Text>
-            </View>
+              <View style={{paddingBottom: 12}}>
+                <TextInput
+                  label="Password"
+                  value={password}
+                  theme={theme}
+                  style={styles.bgTextInput}
+                  mode="outlined"
+                  secureTextEntry
+                  // right={<TextInput.Icon icon="eye" />}
+                  onChangeText={text => setPassword(text)}
+                />
+                <Text style={styles.error}>{errorsPassword}</Text>
+              </View>
 
-            <View style={{ paddingBottom: 20 }}>
-              <TextInput
-                label="Password"
-                value={password}
-                theme={theme}
-                style={styles.bgTextInput}
-                mode="outlined"
-                secureTextEntry
-                // right={<TextInput.Icon icon="eye" />}
-                onChangeText={text => setPassword(text)}
-              />
-              <Text style={styles.error}>{errorsPassword}</Text>
-            </View>
-
-            <View>
-              <TextInput
-                label="Confirm Password"
-                value={conPassword}
-                theme={theme}
-                style={styles.bgTextInput}
-                mode="outlined"
-                secureTextEntry
-                // right={<TextInput.Icon icon="eye" />}
-                onChangeText={text => setConPassword(text)}
-              />
-              <Text style={styles.error}>{errorsConpassword}</Text>
+              <View>
+                <TextInput
+                  label="Confirm Password"
+                  value={conPassword}
+                  theme={theme}
+                  style={styles.bgTextInput}
+                  mode="outlined"
+                  secureTextEntry
+                  // right={<TextInput.Icon icon="eye" />}
+                  onChangeText={text => setConPassword(text)}
+                />
+                <Text style={styles.error}>{errorsConpassword}</Text>
+              </View>
             </View>
           </View>
         </View>
       </SafeAreaView>
-      <View style={{ height: 20 }} />
     </KeyboardAwareScrollView>
   );
 }
@@ -318,9 +314,10 @@ const styles = StyleSheet.create({
   // Profile
   box: {
     marginTop: -50,
+    marginBottom: 25,
     alignSelf: 'center',
     width: '100%',
-    height: 460,
+    height: 510,
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     elevation: 4,
@@ -374,22 +371,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 2,
   },
-  textInput: {
-    color: '#F4F6FD',
-    paddingLeft: 16,
-    paddingRight: 16,
-    top: -36,
+  mainContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 25,
   },
-  textInputSmall: {
-    color: '#F4F6FD',
-    width: 182,
-    paddingLeft: 16,
-    paddingTop: 20,
+  textInputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: 12,
+  },
+  textInputLeft: {
+    width: '48%',
   },
   textInputRight: {
-    position: 'relative',
-    top: -56,
-    left: 181,
+    width: '48%',
+  },
+  textInput: {
+    color: '#F4F6FD',
   },
   bgTextInput: {
     backgroundColor: '#F4F6FD',

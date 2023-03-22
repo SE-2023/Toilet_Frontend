@@ -8,7 +8,6 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Alert,
   Pressable,
 } from 'react-native';
 import Switch from '../components/Switch';
@@ -46,9 +45,7 @@ const BottomPopupMap = (props: IPop) => {
     if (!onTouch) return view;
 
     return (
-      <TouchableWithoutFeedback
-        onPress={onTouch}
-        style={{flex: 1, width: '100%'}}>
+      <TouchableWithoutFeedback style={{flex: 1, width: '100%'}} onPress={onTouch}>
         {view}
       </TouchableWithoutFeedback>
     );
@@ -56,16 +53,7 @@ const BottomPopupMap = (props: IPop) => {
   const renderTitle = () => {
     return (
       <View>
-        <Text
-          style={{
-            fontFamily: 'Fredoka-SemiBold',
-            fontSize: 18,
-            color: '#2C2F4A',
-            marginVertical: 16,
-            alignSelf: 'center',
-          }}>
-          {props.title}
-        </Text>
+        <Text style={styles.title}>{props.title}</Text>
       </View>
     );
   };
@@ -115,32 +103,10 @@ const BottomPopupMap = (props: IPop) => {
 
   const renderItem = ({item}: any) => {
     return (
-      <TouchableOpacity
-        onPress={() => setType(item.name)}
-        style={{
-          height: 46,
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        }}>
-        <View
-          style={{
-            height: 50,
-            flex: 1,
-            alignItems: 'flex-start',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginHorizontal: 20,
-          }}>
+      <TouchableOpacity style={styles.btnContainer} onPress={() => setType(item.name)}>
+        <View style={styles.containerItem}>
           {item.icon}
-          <Text
-            style={{
-              fontFamily: 'Fredoka-Medium',
-              fontSize: 16,
-              color: '#2C2F4A',
-            }}>
-            {item.name}
-          </Text>
+          <Text style={styles.text}>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -160,7 +126,7 @@ const BottomPopupMap = (props: IPop) => {
   const renderBtn = () => {
     return (
       <View style={{marginHorizontal: 20}}>
-        <TouchableOpacity style={styles.btnContainer} onPress={()=>{props.onSelectedHandicap(handicap),props.onSelectedFree(free),props.onSelected(type)}}>
+        <TouchableOpacity style={styles.btnContainerSubmit} onPress={()=>{props.onSelectedHandicap(handicap),props.onSelectedFree(free),props.onSelected(type)}}>
           <Text style={styles.txtBtnSubmit}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
@@ -195,22 +161,9 @@ const BottomPopupMap = (props: IPop) => {
       transparent={true}
       visible={props.show}
       onRequestClose={props.close}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#000A',
-          justifyContent: 'flex-end',
-        }}>
+      <View style={styles.btnOutside}>
         {renderOutsideTouchable(props.close)}
-        <View
-          style={{
-            backgroundColor: '#fff',
-            width: '100%',
-            borderTopRightRadius: 20,
-            borderTopLeftRadius: 20,
-            paddingHorizontal: 16,
-            maxHeight: deviceHeight * 0.9,
-          }}>
+        <View style={styles.modalInside}>
           {renderTitle()}
           {renderSwitchFreeHandicap()}
           {renderTitle2()}
@@ -275,6 +228,14 @@ const BottomPopupMap = (props: IPop) => {
 export default BottomPopupMap;
 
 const styles = StyleSheet.create({
+  title: {
+    fontFamily: 'Fredoka-SemiBold',
+    fontSize: 18,
+    color: '#2C2F4A',
+    marginVertical: 16,
+    alignSelf: 'center',
+  },
+
   itemFree: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -326,6 +287,27 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 
+  // Item
+  btnContainer: {
+    height: 46,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  containerItem: {
+    height: 50,
+    flex: 1,
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 16,
+    color: '#2C2F4A',
+  },
+
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -339,7 +321,7 @@ const styles = StyleSheet.create({
     color: '#2C2F4A',
   },
   
-  btnContainer: {
+  btnContainerSubmit: {
     height: 44,
     backgroundColor: '#6D7DD3',
     borderRadius: 10,
@@ -352,5 +334,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-Medium',
     fontSize: 16,
     color: '#fff',
+  },
+
+  // Modal
+  btnOutside: {
+    flex: 1,
+    backgroundColor: '#000A',
+    justifyContent: 'flex-end',
+  },
+  modalInside: {
+    backgroundColor: '#fff',
+    width: '100%',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    paddingHorizontal: 16,
+    maxHeight: deviceHeight * 0.9,
   },
 });

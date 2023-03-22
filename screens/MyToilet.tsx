@@ -19,7 +19,7 @@ import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 
 const {width} = Dimensions.get('window');
-const aspectRatio = 380 / 500;
+const aspectRatio = 290 / 500;
 const height = width * aspectRatio;
 
 const MyToilet = () => {
@@ -49,7 +49,6 @@ const MyToilet = () => {
         <Plus size={24} weight="bold" color="#E5EAFA" />
       </TouchableOpacity>
 
-      <View style={{marginTop: -25}} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ContentMyToilet />
         <ContentMyToilet />
@@ -57,6 +56,7 @@ const MyToilet = () => {
         <ContentMyToilet />
         <ContentMyToilet />
         <ContentMyToilet />
+        
         <View style={{height: height * 0.08}} />
       </ScrollView>
     </SafeAreaView>

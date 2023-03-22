@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Button,
   ScrollView,
   RefreshControl,
 } from 'react-native';
@@ -30,6 +29,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackList} from '../stacks/RootStack';
 import {ProfileParamList} from '../stacks/ProfileStack';
 import {getProfile} from '../services/auth';
+
 // const {isLoggedIn} = useContext(AuthContext);
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -111,8 +111,9 @@ function Profile() {
     <ScrollView
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
-      <SafeAreaView style={styles.container}>
+      }
+      style={styles.container}>
+      <SafeAreaView style={{paddingHorizontal: 16}}>
         <View style={{alignItems: 'center'}}>
           <View
             // borderBottomLeftRadius={60}
@@ -123,11 +124,11 @@ function Profile() {
         </View>
 
         <Text style={styles.title}>Profile</Text>
-        <LinearGradient
+        {/* <LinearGradient
           colors={['#FAC353', '#FFA897']}
           style={styles.btnCircle_44}>
           <Bell size={24} weight="fill" color="#2C2F4A" />
-        </LinearGradient>
+        </LinearGradient> */}
 
         <View style={styles.box}>
           <TouchableOpacity style={styles.btnCircle_34} onPress={gotoEdit}>
@@ -183,8 +184,6 @@ function Profile() {
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </TouchableOpacity>
       </SafeAreaView>
-      <View
-        style={{height: height * 0.1, backgroundColor: '#E5EAFA'}}></View>
     </ScrollView>
   );
 }
@@ -193,7 +192,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E5EAFA',
-    paddingHorizontal: 16,
   },
 
   // Header
@@ -203,7 +201,7 @@ const styles = StyleSheet.create({
     left: 16,
     fontFamily: 'Fredoka-Medium',
     fontSize: 32,
-    color: '#F4F6FD',
+    color: '#2C2F4A',
   },
   btnCircle_44: {
     position: 'absolute',
@@ -279,7 +277,7 @@ const styles = StyleSheet.create({
 
   // Footer
   btnRectangle: {
-    marginTop: 35,
+    marginTop: 45,
     marginBottom: 12,
     backgroundColor: '#FFFFFF',
     paddingLeft: 8,

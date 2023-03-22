@@ -5,10 +5,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Dimensions,
-  Animated,
-  Platform,
   LogBox,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
@@ -18,12 +15,10 @@ import {
   Clock,
   Phone,
   Wheelchair,
-  Heart,
   Star,
   CaretRight,
   PersonSimpleWalk,
   X,
-  Key,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import Review from '../components/Review';
@@ -35,13 +30,14 @@ import Modal from 'react-native-modal';
 import star from '../assets/star.png';
 import {TextInput} from 'react-native-paper';
 import StarRating from '../components/StarRating';
-import ImageNotRating from '../components/ImageNotRating';
+import NotRating from '../components/NotRating';
 import {getProfile} from '../services/auth';
 import {createComment, getComment} from '../services/comment';
 import AuthContext from '../context/AuthContext';
 import LaunchNavigator from 'react-native-launch-navigator';
 // import LaunchNavigator from 'react-native-launch-navigator';
 import openMap from 'react-native-open-maps';
+import ButtonHeart from '../components/ButtonHeart';
 export interface IProfile {
   _id: string;
 }
@@ -219,8 +215,8 @@ const DetailToilet = () => {
             </View>
 
             <View style={styles.tagContainer}>
-              <TagFree></TagFree>
-              <TagHandicap></TagHandicap>
+              <TagFree/>
+              <TagHandicap/>
 
               <View style={styles.tagType}>
                 <Image source={wc} style={styles.iconType} />
@@ -266,9 +262,7 @@ const DetailToilet = () => {
                 <Text style={styles.review}>REVIEW</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.btnHeart}>
-                <Heart size={20} weight="fill" color="#E5EAFA" />
-              </TouchableOpacity>
+              <ButtonHeart />
 
               <TouchableOpacity style={styles.btnPerson} onPress={nevi}>
                 <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
@@ -513,8 +507,6 @@ const styles = StyleSheet.create({
     height: 44,
     backgroundColor: '#2C2F4A',
     borderRadius: 8,
-    // borderWidth: 0.5,
-    // borderColor: '#777790',
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -524,8 +516,6 @@ const styles = StyleSheet.create({
     height: 44,
     backgroundColor: '#2C2F4A',
     borderRadius: 8,
-    // borderWidth: 0.5,
-    // borderColor: '#2C2F4A',
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
