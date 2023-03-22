@@ -17,7 +17,6 @@ import {
   Key,
 } from 'phosphor-react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Colors} from '../components/colors';
 import {TextInput} from 'react-native-paper';
 import {signIn} from '../services/auth';
 import AuthContext from '../context/AuthContext';
@@ -152,8 +151,8 @@ const styles = StyleSheet.create({
   // },
   title: {
     position: 'absolute',
+    alignSelf: 'center',
     top: 40,
-    left: '28%',
     fontFamily: 'Fredoka-SemiBold',
     fontSize: 64,
     color: '#2C2F4A',

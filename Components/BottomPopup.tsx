@@ -8,7 +8,6 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 interface IPop {
   show: boolean;
@@ -38,48 +37,17 @@ const BottomPopup = (props: IPop) => {
   const renderTitle = () => {
     return (
       <View style={{marginHorizontal: 16}}>
-        <Text
-          style={{
-            fontFamily: 'Fredoka-Medium',
-            fontSize: 20,
-            color: '#777790',
-            marginVertical: 28,
-          }}>
-          {props.title}
-        </Text>
+        <Text style={styles.title}>{props.title}</Text>
       </View>
     );
   };
 
   const renderItem = ({item}: any) => {
     return (
-      <TouchableOpacity
-        onPress={() => props.onSelected(item.name)}
-        style={{
-          height: 48,
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        }}>
-        <View
-          style={{
-            height: 50,
-            flex: 1,
-            alignItems: 'flex-start',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginLeft: 20,
-          }}>
-            {item.icon}
-          <Text
-            style={{
-              fontFamily: 'Fredoka-Regular',
-              fontSize: 18,
-              color: '#2C2F4A',
-              marginLeft: 12,
-            }}>
-            {item.name}
-          </Text>
+      <TouchableOpacity style={styles.btnContainer} onPress={() => props.onSelected(item.name)}>
+        <View style={styles.containerItem}>
+          {item.icon}
+          <Text style={styles.text}>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -124,22 +92,9 @@ const BottomPopup = (props: IPop) => {
       transparent={true}
       visible={props.show}
       onRequestClose={props.close}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#000A',
-          justifyContent: 'flex-end',
-        }}>
+      <View style={styles.btnOutside}>
         {renderOutsideTouchable(props.close)}
-        <View
-          style={{
-            backgroundColor: '#fff',
-            width: '100%',
-            borderTopRightRadius: 20,
-            borderTopLeftRadius: 20,
-            paddingHorizontal: 16,
-            maxHeight: deviceHeight * 0.46,
-          }}>
+        <View style={styles.modalInside}>
           {renderTitle()}
           {renderContent()}
         </View>
@@ -148,3 +103,50 @@ const BottomPopup = (props: IPop) => {
   );
 };
 export default BottomPopup;
+
+const styles = StyleSheet.create({
+  // Title
+  title: {
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 20,
+    color: '#777790',
+    marginVertical: 28,
+  },
+
+  // Item
+  btnContainer: {
+    height: 48,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  containerItem: {
+    height: 50,
+    flex: 1,
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginLeft: 20,
+  },
+  text: {
+    fontFamily: 'Fredoka-Medium',
+    fontSize: 16,
+    color: '#2C2F4A',
+    marginLeft: 12,
+  },
+
+  // Modal
+  btnOutside: {
+    flex: 1,
+    backgroundColor: '#000A',
+    justifyContent: 'flex-end',
+  },
+  modalInside: {
+    backgroundColor: '#fff',
+    width: '100%',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    paddingHorizontal: 16,
+    maxHeight: deviceHeight * 0.46,
+  },
+});

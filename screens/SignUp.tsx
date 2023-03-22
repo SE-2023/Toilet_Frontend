@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
   },
   title: {
     position: 'absolute',
+    alignSelf: 'center',
     top: 40,
-    left: '26%',
     fontFamily: 'Fredoka-SemiBold',
     fontSize: 64,
     color: '#2C2F4A',
