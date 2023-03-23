@@ -3,13 +3,27 @@ import React from 'react'
 import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import BtnHeartMyList from './BtnHeartMyList'
-
-const ContentMyList = () => {
+interface IContentMyList {
+  _id: string;
+  latitude: number;
+  longitude: number;
+  title: string;
+  contact: string;
+  cost: string;
+  handicap: boolean;
+  free: boolean;
+  type: string;
+  timeOpen: string;
+  timeClose: string;
+  toiletpicture: string;
+}
+const ContentMyList = (props: IContentMyList) => {
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <View style={styles.tagFree}>
+            
             <Text style={styles.textFree}>฿ Free</Text>
           </View>
           <View style={styles.tagHandicap}>
