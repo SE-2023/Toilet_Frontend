@@ -65,26 +65,49 @@ const MyToilet = () => {
   }, []);
 
   const RenderMytoilet = (): JSX.Element | null => {
+    const navigation =
+      useNavigation<NativeStackNavigationProp<HomeParamList>>();
     if (checkData === 'success') {
       return (
         <>
           {myList.map((item: any, index) => {
+            const onClick = () => {
+              console.log('call api detail toilet', item);
+              if (item) {
+                navigation.navigate('DetailToilet', {
+                  _id: item._id,
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                  title: item.title,
+                  contact: item.contact,
+                  cost: item.cost,
+                  handicap: item.handicap,
+                  free: item.free,
+                  type: item.type,
+                  timeOpen: item.timeOpen,
+                  timeClose: item.timeClose,
+                  toiletpicture: item.toiletpicture,
+                });
+              }
+            };
             return (
-              <ContentMyToilet
-                key={index}
-                _id={''}
-                latitude={0}
-                longitude={0}
-                title={item.title}
-                contact={''}
-                cost={''}
-                handicap={false}
-                free={false}
-                type={item.type}
-                timeOpen={''}
-                timeClose={''}
-                toiletpicture={''}
-              />
+              <TouchableOpacity onPress={onClick}>
+                <ContentMyToilet
+                  key={index}
+                  _id={item._id}
+                  latitude={item.latitude}
+                  longitude={item.longitude}
+                  title={item.title}
+                  contact={item.contact}
+                  cost={item.cost}
+                  handicap={item.handicap}
+                  free={item.free}
+                  type={item.type}
+                  timeOpen={item.timeOpen}
+                  timeClose={item.timeClose}
+                  toiletpicture={item.toiletpicture}
+                />
+              </TouchableOpacity>
             );
           })}
         </>
