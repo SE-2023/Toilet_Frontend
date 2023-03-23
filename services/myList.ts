@@ -11,7 +11,7 @@ export const addMyList = async (body: ImyListbyUser) => {
 };
 
 export const getMyList = async (UserId: any) => {
-    const res = await axios.get('/myList', {params: {toiletId: UserId}});
+    const res = await axios.get('/myList', {params: {userId: UserId}});
     return res;
 };
 
