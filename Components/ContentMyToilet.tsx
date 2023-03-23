@@ -1,7 +1,8 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
+import {getComment} from '../services/comment';
 interface IContentMyToilet {
   _id: string;
   latitude: number;
@@ -16,26 +17,71 @@ interface IContentMyToilet {
   timeClose: string;
   toiletpicture: string;
 }
+interface Comment {
+  rate: number;
+}
 const ContentMyToilet = (props: IContentMyToilet) => {
+  let Rate: number = 0;
+  let sumRate: number = 0;
+  const [comment, setComment] = useState<Comment[]>([]);
+  const [SumRate, setsumRate] = useState(0);
+  const TagFree = (): JSX.Element | null => {
+    if (props.free === true) {
+      return (
+        <View style={styles.tagFree}>
+          <Text style={styles.textFree}>฿ Free</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const TagHandicap = (): JSX.Element | null => {
+    if (props.handicap === true) {
+      return (
+        <View style={styles.tagHandicap}>
+          <Wheelchair
+            size={10}
+            weight="fill"
+            color="#00845A"
+            style={{
+              marginRight: 2,
+              marginLeft: 6,
+            }}
+          />
+          <Text style={styles.textHandicap}>Handicap access</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const comments: any = await getComment(props._id);
+        // console.log(comments.data);
+        setComment(comments.Comment);
+        if (comment) {
+          comment.map((item: any, index) => {
+            Rate += item.rate;
+            sumRate = Rate / comment.length;
+          });
+
+          setsumRate(sumRate);
+        }
+      } catch (err: any) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-          <View style={styles.tagFree}>
-            <Text style={styles.textFree}>฿ Free</Text>
-          </View>
-          <View style={styles.tagHandicap}>
-            <Wheelchair
-              size={10}
-              weight="fill"
-              color="#00845A"
-              style={{
-                marginRight: 2,
-                marginLeft: 6,
-              }}
-            />
-            <Text style={styles.textHandicap}>Handicap access</Text>
-          </View>
+          <TagFree></TagFree>
+          <TagHandicap></TagHandicap>
 
           <View style={styles.tagType}>
             <Text style={styles.textType}>{props.type}</Text>
@@ -54,7 +100,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
                   marginRight: 2,
                 }}
               />
-              <Text style={styles.rate}>5.0</Text>
+              <Text style={styles.rate}>{SumRate}</Text>
             </View>
           </View>
           <TouchableOpacity style={styles.btnEdit}>
