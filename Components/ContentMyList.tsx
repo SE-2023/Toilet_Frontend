@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
+import { Clock, PersonSimpleWalk, Star, Wheelchair } from 'phosphor-react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import BtnHeartMyList from './BtnHeartMyList'
 interface IContentMyList {
@@ -47,31 +47,20 @@ const ContentMyList = (props: IContentMyList) => {
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
             <Text style={styles.placeName}>Place Name</Text>
-            <View style={styles.itemRightBottom}>
-              <Star
-                size={14}
-                weight="fill"
-                color="#FBD17B"
-                style={{
-                  marginRight: 2,
-                }}
-              />
-              <Text style={styles.rate}>5.0</Text>
-            </View>
           </View>
           
           <View style={styles.btnRight}>
             <BtnHeartMyList />
             <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
-              colors={['#FFA897', '#FAC353']}
-              style={styles.btnEdit}>
-                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
+                colors={['#FFA897', '#FAC353']}
+                style={styles.btnEdit}>
+                <PersonSimpleWalk size={16} weight="fill" color="#2C2F4A" />
               </LinearGradient> 
             </TouchableOpacity>
           </View>
         </View>
-          
+
         <View style={styles.itemBottom}>
           <Clock
             size={14}
@@ -84,6 +73,19 @@ const ContentMyList = (props: IContentMyList) => {
           <Text style={styles.time}>
             00:00 - 00:00
           </Text>
+
+          <View style={styles.itemRightBottom}>
+            <Star
+              size={14}
+              weight="fill"
+              color="#FBD17B"
+              style={{
+                marginRight: 2,
+              }}
+            />
+            <Text style={styles.rate}>5.0</Text>
+          </View>
+          
         </View>
       </View>
     </View>
@@ -95,6 +97,7 @@ export default ContentMyList
 const styles = StyleSheet.create({
   // Content
   contentContainer: {
+    flexWrap: 'wrap',
     marginTop: 25,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -176,6 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    width: '80%',
   },
   placeName: {
     fontFamily: 'Fredoka-Medium',
@@ -187,7 +191,6 @@ const styles = StyleSheet.create({
   // Button Right
   btnRight: {
     flexDirection: 'row',
-    alignItems: 'center',
   },
   btnEdit: {
     width: 32,
@@ -215,7 +218,7 @@ const styles = StyleSheet.create({
   itemRightBottom: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    marginLeft: 12,
   },
   rate: {
     fontFamily: 'Fredoka-Regular',
