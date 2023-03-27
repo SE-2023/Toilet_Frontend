@@ -575,14 +575,17 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   textInputLeft: {
     color: '#F4F6FD',
+    // width: 151,
     width: '37%',
     paddingLeft: 25,
   },
   textInputRight: {
     color: '#F4F6FD',
+    // width: 245,
     width: '63%',
     paddingLeft: 16,
     paddingRight: 25,
@@ -598,6 +601,7 @@ const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   boxHandicap: {
     alignItems: 'center',

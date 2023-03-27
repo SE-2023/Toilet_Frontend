@@ -22,7 +22,9 @@ export type ProfileParamList = {
     // onSubmit: () => void;
     profile_picture: string;
   };
-  MyToilet: undefined;
+  MyToilet: {
+    CreateBy: string;
+  };
 };
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator<ProfileParamList>();

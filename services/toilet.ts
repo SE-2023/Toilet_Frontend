@@ -26,3 +26,10 @@ export const getAlltoiletPrivate = async () => {
   // console.log('res', res);
   return res;
 };
+
+export const getMytoilet = async (CreateBy: any) => {
+  const res = await axios.get('/toilet/mytoilet', {
+    params: {createBy: CreateBy},
+  });
+  return res;
+};

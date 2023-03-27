@@ -1,53 +1,125 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  Wheelchair,
-  Star,
-  Clock,
-  PencilSimple,
-} from 'phosphor-react-native';
+import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
+import {getComment} from '../services/comment';
+interface IContentMyToilet {
+  _id: string;
+  latitude: number;
+  longitude: number;
+  title: string;
+  contact: string;
+  cost: string;
+  handicap: boolean;
+  free: boolean;
+  type: string;
+  timeOpen: string;
+  timeClose: string;
+  toiletpicture: string;
+}
+interface Comment {
+  rate: number;
+}
+const ContentMyToilet = (props: IContentMyToilet) => {
+  let Rate: number = 0;
+  let sumRate: number = 0;
+  const [comment, setComment] = useState<Comment[]>([]);
+  const [SumRate, setsumRate] = useState(0);
+  const [ShowRate, setShowRate] = useState(SumRate);
+  const TagFree = (): JSX.Element | null => {
+    if (props.free === true) {
+      return (
+        <View style={styles.tagFree}>
+          <Text style={styles.textFree}>฿ Free</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const TagHandicap = (): JSX.Element | null => {
+    if (props.handicap === true) {
+      return (
+        <View style={styles.tagHandicap}>
+          <Wheelchair
+            size={10}
+            weight="fill"
+            color="#00845A"
+            style={{
+              marginRight: 2,
+              marginLeft: 6,
+            }}
+          />
+          <Text style={styles.textHandicap}>Handicap access</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  useEffect(() => {
+    setShowRate(SumRate);
+    console.log('line61', ShowRate);
+  }, [comment]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const comments: any = await getComment(props._id);
+        // console.log(comments.data);
+        setComment(comments.Comment);
+        if (comment) {
+          comment.map((item: any, index) => {
+            Rate += item.rate;
+            sumRate = Rate / comment.length;
+          });
+          // setsumRate(sumRate);
+          // console.log(SumRate);
+          setsumRate(sumRate);
+        }
+      } catch (err: any) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, []);
 
-const ContentMyToilet = () => {
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-          <View style={styles.tagFree}>
-            <Text style={styles.textFree}>฿ Free</Text>
-          </View>
-          <View style={styles.tagHandicap}>
-            <Wheelchair
-              size={10}
-              weight="fill"
-              color="#00845A"
-              style={{
-                marginRight: 2,
-                marginLeft: 6,
-              }}
-            />
-            <Text style={styles.textHandicap}>Handicap access</Text>
-          </View>
+          <TagFree></TagFree>
+          <TagHandicap></TagHandicap>
 
           <View style={styles.tagType}>
-            <Text style={styles.textType}>Public</Text>
+            <Text style={styles.textType}>{props.type}</Text>
           </View>
         </View>
-          
+
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>Place Name</Text>
+            <Text style={styles.placeName}>{props.title}</Text>
+            <View style={styles.itemRightBottom}>
+              <Star
+                size={14}
+                weight="fill"
+                color="#FBD17B"
+                style={{
+                  marginRight: 2,
+                }}
+              />
+              <Text style={styles.rate}>{SumRate}</Text>
+            </View>
           </View>
 
           <TouchableOpacity style={styles.btnEdit}>
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
-                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
-              </LinearGradient> 
+              <PencilSimple size={16} weight="fill" color="#2C2F4A" />
+            </LinearGradient>
           </TouchableOpacity>
         </View>
-          
+
         <View style={styles.itemBottom}>
           <Clock
             size={14}
@@ -58,7 +130,7 @@ const ContentMyToilet = () => {
             }}
           />
           <Text style={styles.time}>
-            00:00 - 00:00
+            {props.timeOpen} - {props.timeClose}
           </Text>
 
           <View style={styles.itemRightBottom}>
@@ -75,10 +147,10 @@ const ContentMyToilet = () => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ContentMyToilet
+export default ContentMyToilet;
 
 const styles = StyleSheet.create({
   // Content
@@ -99,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-    
+
   // Tag Free
   tagFree: {
     flexDirection: 'row',
@@ -118,7 +190,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Handicap
   tagHandicap: {
     flexDirection: 'row',
@@ -136,7 +208,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Type
   tagType: {
     flexDirection: 'row',
@@ -153,7 +225,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   itemMid: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -180,7 +252,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 2,
   },
-    
+
   itemBottom: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -205,4 +277,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2C2F4A',
   },
-})
+});
