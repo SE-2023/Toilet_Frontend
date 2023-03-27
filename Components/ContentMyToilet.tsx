@@ -25,6 +25,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   let sumRate: number = 0;
   const [comment, setComment] = useState<Comment[]>([]);
   const [SumRate, setsumRate] = useState(0);
+  const [ShowRate, setShowRate] = useState(SumRate);
   const TagFree = (): JSX.Element | null => {
     if (props.free === true) {
       return (
@@ -57,6 +58,10 @@ const ContentMyToilet = (props: IContentMyToilet) => {
     }
   };
   useEffect(() => {
+    setShowRate(SumRate);
+    console.log('line61', ShowRate);
+  }, [comment]);
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const comments: any = await getComment(props._id);
@@ -67,7 +72,8 @@ const ContentMyToilet = (props: IContentMyToilet) => {
             Rate += item.rate;
             sumRate = Rate / comment.length;
           });
-
+          // setsumRate(sumRate);
+          // console.log(SumRate);
           setsumRate(sumRate);
         }
       } catch (err: any) {
@@ -76,6 +82,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
     };
     fetchData();
   }, []);
+
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>

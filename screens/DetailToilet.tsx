@@ -70,7 +70,7 @@ const DetailToilet = () => {
   const [profile, setProfile] = React.useState<IProfile>({
     _id: '',
   });
-  const [SumRate, setsumRate] = useState(0);
+  const [SumRate, setsumRate] = useState('');
   const [review, setReview] = React.useState('');
   const [rating, setRating] = useState(0);
   const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
@@ -142,7 +142,7 @@ const DetailToilet = () => {
         sumRate = Rate / comment.length;
       });
       console.log('data145', sumRate);
-      setsumRate(sumRate);
+      setsumRate(sumRate.toFixed(1));
       return (
         <>
           {/* {comment.map((item: any, index) => {
