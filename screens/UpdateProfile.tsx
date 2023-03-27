@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import profile from '../assets/profile.jpg';
-import { Check, Camera, X } from 'phosphor-react-native';
+import { Check, Camera, X, Eye } from 'phosphor-react-native';
 import { TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -52,6 +52,8 @@ function UpdateProfile() {
   const [errorsEmail, setErrorsEmail] = useState('');
   const [errorsPassword, setErrorsPassword] = useState('');
   const [errorsConpassword, setErrorsConpassword] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureTextEntry2, setSecureTextEntry2] = useState(true);
   const onSubmit = async () => {
     try {
       const body = {
@@ -228,9 +230,17 @@ function UpdateProfile() {
                   theme={theme}
                   style={styles.bgTextInput}
                   mode="outlined"
-                  secureTextEntry
-                  // right={<TextInput.Icon icon="eye" />}
+                  secureTextEntry={secureTextEntry}
                   onChangeText={text => setPassword(text)}
+                  right={
+                    <TextInput.Icon
+                      icon="eye"
+                      onPress={() => {
+                        setSecureTextEntry(!secureTextEntry);
+                        return false;
+                      }}
+                    />
+                  }
                 />
                 <Text style={styles.error}>{errorsPassword}</Text>
               </View>
@@ -242,9 +252,17 @@ function UpdateProfile() {
                   theme={theme}
                   style={styles.bgTextInput}
                   mode="outlined"
-                  secureTextEntry
-                  // right={<TextInput.Icon icon="eye" />}
+                  secureTextEntry={secureTextEntry2}
                   onChangeText={text => setConPassword(text)}
+                  right={
+                    <TextInput.Icon
+                      icon="eye"
+                      onPress={() => {
+                        setSecureTextEntry2(!secureTextEntry2);
+                        return false;
+                      }}
+                    />
+                  }
                 />
                 <Text style={styles.error}>{errorsConpassword}</Text>
               </View>

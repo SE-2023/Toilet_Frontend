@@ -37,18 +37,8 @@ const ContentMyToilet = () => {
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
             <Text style={styles.placeName}>Place Name</Text>
-            <View style={styles.itemRightBottom}>
-              <Star
-                size={14}
-                weight="fill"
-                color="#FBD17B"
-                style={{
-                  marginRight: 2,
-                }}
-              />
-              <Text style={styles.rate}>5.0</Text>
-            </View>
           </View>
+
           <TouchableOpacity style={styles.btnEdit}>
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
@@ -70,6 +60,18 @@ const ContentMyToilet = () => {
           <Text style={styles.time}>
             00:00 - 00:00
           </Text>
+
+          <View style={styles.itemRightBottom}>
+            <Star
+              size={14}
+              weight="fill"
+              color="#FBD17B"
+              style={{
+                marginRight: 2,
+              }}
+            />
+            <Text style={styles.rate}>5.0</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    width: '85%',
   },
   placeName: {
     fontFamily: 'Fredoka-Medium',
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
   itemRightBottom: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    marginLeft: 12,
   },
   rate: {
     fontFamily: 'Fredoka-Regular',
