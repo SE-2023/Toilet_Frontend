@@ -57,27 +57,28 @@ const ContentMyToilet = (props: IContentMyToilet) => {
       return null;
     }
   };
-  useEffect(() => {
-    setShowRate(SumRate);
-    console.log('line61', ShowRate);
-  }, [comment]);
+  // useEffect(() => {
+  //   setShowRate(SumRate);
+  //   console.log('line61', ShowRate);
+  // }, [comment]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const comments: any = await getComment(props._id);
-        // console.log(comments.data);
-        setComment(comments.Comment);
-        if (comment) {
-          comment.map((item: any, index) => {
+        const res_comments: any = await getComment(props._id);
+        // console.log('line 68', res_comments);
+        setComment(res_comments.Comment);
+        if (res_comments) {
+          // console.log('line71', res_comments);
+          res_comments.Comment.map((item: any, index: number) => {
             Rate += item.rate;
-            sumRate = Rate / comment.length;
+            sumRate = Rate / res_comments.Comment.length;
           });
           // setsumRate(sumRate);
           // console.log(SumRate);
           setsumRate(sumRate);
         }
       } catch (err: any) {
-        console.log(err.message);
+        // console.log(err.message);
       }
     };
     fetchData();
