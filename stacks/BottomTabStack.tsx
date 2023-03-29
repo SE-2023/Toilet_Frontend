@@ -76,6 +76,7 @@ const BottomTabStack = () => {
           // tabBarInactiveTintColor: '#BABCCA',
           tabBarStyle: {
             backgroundColor: '#2C2F4A',
+            height: 50,
           },
         }}>
         <Stack.Screen
@@ -85,7 +86,7 @@ const BottomTabStack = () => {
             tabBarIcon: ({focused, color, size}) => (
               <MapTrifold
                 color={focused ? '#FFA897' : '#BABCCA'}
-                size={24}
+                size={27}
                 weight="fill"
               />
             ),
@@ -98,7 +99,7 @@ const BottomTabStack = () => {
             tabBarIcon: ({focused, color, size}) => (
               <Heart
                 color={focused ? '#FFA897' : '#BABCCA'}
-                size={24}
+                size={27}
                 weight="fill"
               />
             ),
@@ -116,7 +117,7 @@ const BottomTabStack = () => {
             tabBarIcon: ({focused, color, size}) => (
               <Plus
                 color={focused ? '#FFA897' : '#BABCCA'}
-                size={24}
+                size={27}
                 weight="fill"
               />
             ),
@@ -129,7 +130,7 @@ const BottomTabStack = () => {
             tabBarIcon: ({focused, color, size}) => (
               <SquaresFour
                 color={focused ? '#FFA897' : '#BABCCA'}
-                size={24}
+                size={27}
                 weight="fill"
               />
             ),
@@ -142,7 +143,7 @@ const BottomTabStack = () => {
             tabBarIcon: ({focused, color, size}) => (
               <User
                 color={focused ? '#FFA897' : '#BABCCA'}
-                size={24}
+                size={27}
                 weight="fill"
               />
             ),

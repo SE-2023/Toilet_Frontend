@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import profile from '../assets/profile.jpg';
-import { Check, Camera, X, Eye } from 'phosphor-react-native';
+import { Check, Camera, X, Eye, EyeSlash } from 'phosphor-react-native';
 import { TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -234,7 +234,7 @@ function UpdateProfile() {
                   onChangeText={text => setPassword(text)}
                   right={
                     <TextInput.Icon
-                      icon="eye"
+                      icon={() => secureTextEntry ? <EyeSlash size={28} weight="duotone" color='#2C2F4A' /> : <Eye size={28} weight="duotone" color='#2C2F4A' /> }
                       onPress={() => {
                         setSecureTextEntry(!secureTextEntry);
                         return false;
@@ -256,7 +256,7 @@ function UpdateProfile() {
                   onChangeText={text => setConPassword(text)}
                   right={
                     <TextInput.Icon
-                      icon="eye"
+                      icon={() => secureTextEntry2 ? <EyeSlash size={28} weight="duotone" color='#2C2F4A' /> : <Eye size={28} weight="duotone" color='#2C2F4A' /> }
                       onPress={() => {
                         setSecureTextEntry2(!secureTextEntry2);
                         return false;

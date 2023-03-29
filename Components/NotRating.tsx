@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
-import HamsterSad2 from '../assets/HamsterSad2.png'
+import NotRatings from '../assets/NotRatings.png'
 
 const NotRating = () => {
   return (
     <View style={styles.containerImageNotRating}>
-      <Image source={HamsterSad2} style={styles.ImageNotRating} />
+      <Image source={NotRatings} style={styles.ImageNotRating} />
     </View>
   )
 }

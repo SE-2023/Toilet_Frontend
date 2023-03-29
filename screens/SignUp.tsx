@@ -13,10 +13,12 @@ import {
   CaretLeft,
   CaretRight,
   EnvelopeSimple,
+  Eye,
+  EyeSlash,
   Key,
 } from 'phosphor-react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {TextInput} from 'react-native-paper';
+import {configureFonts, DefaultTheme, Provider as PaperProvider, TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import OutlineInput from 'react-native-outline-input'
 import {signUp} from '../services/auth';
@@ -42,6 +44,8 @@ function SignUp({navigation}: {navigation: any}) {
   const [errorsEmail, setErrorsEmail] = useState('');
   const [errorsPassword, setErrorsPassword] = useState('');
   const [errorsConpassword, setErrorsConpassword] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureTextEntry2, setSecureTextEntry2] = useState(true);
   const handleSignUp = async () => {
     try {
       const res: any = await signUp({
@@ -159,9 +163,17 @@ function SignUp({navigation}: {navigation: any}) {
               theme={theme}
               style={styles.bgTextInput}
               mode="outlined"
-              secureTextEntry
-              // right={<TextInput.Icon icon="eye" />}
+              secureTextEntry={secureTextEntry}
               onChangeText={text => setPassword(text)}
+              right={
+                <TextInput.Icon
+                  icon={() => secureTextEntry ? <EyeSlash size={28} weight="duotone" color='#2C2F4A' /> : <Eye size={28} weight="duotone" color='#2C2F4A' /> }
+                  onPress={() => {
+                    setSecureTextEntry(!secureTextEntry);
+                    return false;
+                  }}
+                />
+              }
             />
             <Text style={styles.error}>{errorsPassword}</Text>
           </View>
@@ -173,9 +185,17 @@ function SignUp({navigation}: {navigation: any}) {
               theme={theme}
               style={styles.bgTextInput}
               mode="outlined"
-              secureTextEntry
-              // right={<TextInput.Icon icon="eye" />}
+              secureTextEntry={secureTextEntry2}
               onChangeText={text => setConPassword(text)}
+              right={
+                <TextInput.Icon
+                  icon={() => secureTextEntry2 ? <EyeSlash size={28} weight="duotone" color='#2C2F4A' /> : <Eye size={28} weight="duotone" color='#2C2F4A' /> }
+                  onPress={() => {
+                    setSecureTextEntry2(!secureTextEntry2);
+                    return false;
+                  }}
+                />
+              }
             />
             <Text style={styles.error}>{errorsConpassword}</Text>
           </View>
