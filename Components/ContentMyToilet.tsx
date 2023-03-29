@@ -3,6 +3,10 @@ import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
 import {getComment} from '../services/comment';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {HomeParamList} from '../stacks/HomeStack';
+import {ProfileParamList} from '../stacks/ProfileStack';
 interface IContentMyToilet {
   _id: string;
   latitude: number;
@@ -26,6 +30,8 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   const [comment, setComment] = useState<Comment[]>([]);
   const [SumRate, setsumRate] = useState(0);
   const [ShowRate, setShowRate] = useState(SumRate);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ProfileParamList>>();
   const TagFree = (): JSX.Element | null => {
     if (props.free === true) {
       return (
@@ -99,20 +105,11 @@ const ContentMyToilet = (props: IContentMyToilet) => {
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
             <Text style={styles.placeName}>{props.title}</Text>
-            <View style={styles.itemRightBottom}>
-              <Star
-                size={14}
-                weight="fill"
-                color="#FBD17B"
-                style={{
-                  marginRight: 2,
-                }}
-              />
-              <Text style={styles.rate}>{SumRate}</Text>
-            </View>
           </View>
 
-          <TouchableOpacity style={styles.btnEdit}>
+          <TouchableOpacity
+            style={styles.btnEdit}
+            onPress={() => navigation.navigate('UpdateToilet')}>
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
@@ -143,7 +140,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
                 marginRight: 2,
               }}
             />
-            <Text style={styles.rate}>5.0</Text>
+            <Text style={styles.rate}>{SumRate}</Text>
           </View>
         </View>
       </View>
