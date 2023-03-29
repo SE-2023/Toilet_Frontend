@@ -1,9 +1,15 @@
-
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import BtnHeartMyList from './BtnHeartMyList'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Clock,
+  PencilSimple,
+  PersonSimpleWalk,
+  Star,
+  Wheelchair,
+} from 'phosphor-react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import BtnHeartMyList from './BtnHeartMyList';
+import {set} from 'react-native-reanimated';
 interface IContentMyList {
   myListId: string;
   _id: string;
@@ -22,7 +28,15 @@ interface IContentMyList {
 }
 
 const ContentMyList = (props: IContentMyList) => {
-
+  const [Heart, setHeart] = useState(false);
+  const [first, setfirst] = useState(0);
+  const aom: boolean = true;
+  useEffect(() => {
+    if (Heart === true) {
+      console.log(aom);
+      props.onSelected(aom);
+    }
+  }, [Heart]);
   const TagFree = (): JSX.Element | null => {
     if (props.free === true) {
       return (
@@ -59,21 +73,19 @@ const ContentMyList = (props: IContentMyList) => {
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-
           <TagFree></TagFree>
           <TagHandicap></TagHandicap>
-
 
           <View style={styles.tagType}>
             <Text style={styles.textType}>{props.type}</Text>
           </View>
-          
         </View>
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-
-            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
+            <Text style={styles.placeName} numberOfLines={1}>
+              {props.title}
+            </Text>
             <View style={styles.itemRightBottom}>
               <Star
                 size={14}
@@ -88,9 +100,14 @@ const ContentMyList = (props: IContentMyList) => {
           </View>
 
           <View style={styles.btnRight}>
-
-            <BtnHeartMyList 
+            <BtnHeartMyList
               myListId={props.myListId}
+              onSelected={value => {
+                setHeart(value);
+              }}
+              onCheck={value => {
+                setfirst(value);
+              }}
             />
             <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
@@ -113,9 +130,8 @@ const ContentMyList = (props: IContentMyList) => {
           />
 
           <Text style={styles.time}>
-          {props.timeOpen} - {props.timeClose}
+            {props.timeOpen} - {props.timeClose}
           </Text>
-
         </View>
       </View>
     </View>
