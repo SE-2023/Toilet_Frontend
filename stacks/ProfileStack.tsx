@@ -7,6 +7,7 @@ import UpdateProfile from '../screens/UpdateProfile';
 import Profile from '../screens/Profile';
 import AuthContext from '../context/AuthContext';
 import RequireLogin from '../components/RequireLogin';
+import UpdateToilet from '../screens/UpdateToilet';
 export type ProfileParamList = {
   Profile: undefined;
   UpdateProfile: {
@@ -25,6 +26,7 @@ export type ProfileParamList = {
   MyToilet: {
     CreateBy: string;
   };
+  UpdateToilet: undefined;
 };
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator<ProfileParamList>();
@@ -40,6 +42,7 @@ const ProfileStack = () => {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
         <Stack.Screen name="MyToilet" component={MyToilet} />
+        <Stack.Screen name="UpdateToilet" component={UpdateToilet} />
       </Stack.Navigator>
     </RequireLogin>
   );
