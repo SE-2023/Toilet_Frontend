@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Clock, PersonSimpleWalk, Star, Wheelchair } from 'phosphor-react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import BtnHeartMyList from './BtnHeartMyList'
@@ -16,8 +16,15 @@ interface IContentMyList {
   timeOpen: string;
   timeClose: string;
   toiletpicture: string;
+  onSelected: (value: boolean) => void;
 }
+
 const ContentMyList = (props: IContentMyList) => {
+  const [Heart, setHeart] = useState(Boolean);
+  useEffect(() => {
+    console.log(Heart);
+    props.onSelected(Heart);
+  }, [Heart]);
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
@@ -46,11 +53,13 @@ const ContentMyList = (props: IContentMyList) => {
           
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>Place Name</Text>
+            <Text style={styles.placeName} numberOfLines={1}>Place Name</Text>
           </View>
           
           <View style={styles.btnRight}>
-            <BtnHeartMyList />
+            <BtnHeartMyList onSelected={value => {
+                  setHeart(value);
+                }}/>
             <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
@@ -73,19 +82,6 @@ const ContentMyList = (props: IContentMyList) => {
           <Text style={styles.time}>
             00:00 - 00:00
           </Text>
-
-          <View style={styles.itemRightBottom}>
-            <Star
-              size={14}
-              weight="fill"
-              color="#FBD17B"
-              style={{
-                marginRight: 2,
-              }}
-            />
-            <Text style={styles.rate}>5.0</Text>
-          </View>
-          
         </View>
       </View>
     </View>

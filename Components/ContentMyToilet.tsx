@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+  TouchableHighlight,
+  StatusBar,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
@@ -84,7 +92,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   }, []);
 
   return (
-    <View style={styles.contentContainer}>
+    <TouchableHighlight style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <TagFree></TagFree>
@@ -97,18 +105,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>{props.title}</Text>
-            <View style={styles.itemRightBottom}>
-              <Star
-                size={14}
-                weight="fill"
-                color="#FBD17B"
-                style={{
-                  marginRight: 2,
-                }}
-              />
-              <Text style={styles.rate}>{SumRate}</Text>
-            </View>
+            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
           </View>
 
           <TouchableOpacity style={styles.btnEdit}>
@@ -132,21 +129,9 @@ const ContentMyToilet = (props: IContentMyToilet) => {
           <Text style={styles.time}>
             {props.timeOpen} - {props.timeClose}
           </Text>
-
-          <View style={styles.itemRightBottom}>
-            <Star
-              size={14}
-              weight="fill"
-              color="#FBD17B"
-              style={{
-                marginRight: 2,
-              }}
-            />
-            <Text style={styles.rate}>5.0</Text>
-          </View>
         </View>
       </View>
-    </View>
+    </TouchableHighlight>
   );
 };
 

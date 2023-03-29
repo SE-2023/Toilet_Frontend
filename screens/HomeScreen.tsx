@@ -329,17 +329,6 @@ const HomeScreen = () => {
                           {item.timeOpen} - {item.timeClose}
                         </Text>
                       </View>
-                      <View style={styles.itemRightBottom}>
-                        <Star
-                          size={14}
-                          weight="fill"
-                          color="#FBD17B"
-                          style={{
-                            marginRight: 2,
-                          }}
-                        />
-                        <Text style={styles.rate}>5.0</Text>
-                      </View>
                     </View>
                   </View>
                   <View style={styles.arrowBorder} />
