@@ -1,11 +1,14 @@
-import { StyleSheet, View, Pressable} from 'react-native'
+import { StyleSheet, View, Pressable,TouchableOpacity} from 'react-native'
 import React, { useState } from 'react'
 import { Heart } from 'phosphor-react-native';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-
-const BtnHeartMyList = () => {
+import { deleteMyList } from '../services/myList';
+interface Iheart{
+  myListId: string;
+}
+const BtnHeartMyList = (props: Iheart) => {
   const liked = useSharedValue(0);
-
+  console.log(props.myListId)
   const outlineStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -23,11 +26,12 @@ const BtnHeartMyList = () => {
     };
   });
   
+
   return (
-    <Pressable style={styles.btnHeart} onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}>
+    <Pressable style={styles.btnHeart} onPress={() => {deleteMyList(props.myListId)}}>
       <View style={styles.containerHeart}>
-        <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
-          <Heart size={16} weight="fill" color={"#E5EAFA"} />
+        <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> 
+          <Heart size={16} weight="fill" color={"#FC8066"} />
         </Animated.View>
       </View>
   
@@ -35,6 +39,7 @@ const BtnHeartMyList = () => {
         <Heart size={16} weight="fill" color={"#FC8066"} />
       </Animated.View>
     </Pressable>
+    
   )
 }
 

@@ -36,26 +36,58 @@ const AddList = () => {
   const getUserProfile = async () => {
     const {data} = await getProfile();
     const list:any = await getMyList(data._id);
-    setMyList(list.myList)
-    setCheckData(list.message)
-    
+    await setMyList(list.myList)
+    await setCheckData(list.message)  
   };
   
-  useEffect(() => {
+  useEffect(()=>{
     getUserProfile();
-    console.log('********************************',myList)
-    console.log('********************************',checkData)
-  }, []);
-  
+  },[])
+
   const RenderMyList = (): JSX.Element | null =>{
+    
     if (checkData === 'success' && myList[0] !== undefined){
       return(
       <>
         {myList.map((item: any, index) =>{
-          return(
-            
-            <></>
-          );
+          if(item.myListPrivate[0]!== undefined){ 
+          return( 
+            <ContentMyList
+              key={index}
+              myListId={item._id}
+              _id={item.myListPrivate[0]._id}
+              latitude={item.myListPrivate[0].latitude}
+              longitude={item.myListPrivate[0].longitude}
+              title={item.myListPrivate[0].title}
+              contact={item.myListPrivate[0].contact}
+              cost={item.myListPrivate[0].cost}
+              handicap={item.myListPrivate[0].handicap}
+              free={item.myListPrivate[0].free}
+              type={item.myListPrivate[0].type}
+              timeOpen={item.myListPrivate[0].timeOpen}
+              timeClose={item.myListPrivate[0].timeClose}
+              toiletpicture={item.myListPrivate[0].toiletpicture}
+            />
+          )}
+          if(item.myListPublic[0]!== undefined){ 
+            return( 
+              <ContentMyList
+                key={index}
+                myListId={item._id}
+                _id={item.myListPublic[0]._id}
+                latitude={item.myListPublic[0].latitude}
+                longitude={item.myListPublic[0].longitude}
+                title={item.myListPublic[0].title}
+                contact={item.myListPublic[0].contact}
+                cost={item.myListPublic[0].cost}
+                handicap={item.myListPublic[0].handicap}
+                free={item.myListPublic[0].free}
+                type={item.myListPublic[0].type}
+                timeOpen={item.myListPublic[0].timeOpen}
+                timeClose={item.myListPublic[0].timeClose}
+                toiletpicture={item.myListPublic[0].toiletpicture}
+              />
+            );}
         })}
       </>
       );
@@ -64,6 +96,7 @@ const AddList = () => {
       return null
     }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -77,11 +110,7 @@ const AddList = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <ContentMyList/>
-        <ContentMyList/>
-        <ContentMyList/>
-        <ContentMyList/>
-        <ContentMyList/>
+        <RenderMyList></RenderMyList>
         <View style={{height: height * 0.08}} />
       </ScrollView>
     </SafeAreaView>

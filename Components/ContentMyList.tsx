@@ -1,9 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import BtnHeartMyList from './BtnHeartMyList'
 interface IContentMyList {
+  myListId: string;
   _id: string;
   latitude: number;
   longitude: number;
@@ -18,35 +19,53 @@ interface IContentMyList {
   toiletpicture: string;
 }
 const ContentMyList = (props: IContentMyList) => {
+  const TagFree = (): JSX.Element | null => {
+    if (props.free === true) {
+      return (
+        <View style={styles.tagFree}>
+          <Text style={styles.textFree}>฿ Free</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const TagHandicap = (): JSX.Element | null => {
+    if (props.handicap === true) {
+      return (
+        <View style={styles.tagHandicap}>
+          <Wheelchair
+            size={10}
+            weight="fill"
+            color="#00845A"
+            style={{
+              marginRight: 2,
+              marginLeft: 6,
+            }}
+          />
+          <Text style={styles.textHandicap}>Handicap access</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-          <View style={styles.tagFree}>
-            
-            <Text style={styles.textFree}>฿ Free</Text>
-          </View>
-          <View style={styles.tagHandicap}>
-            <Wheelchair
-              size={10}
-              weight="fill"
-              color="#00845A"
-              style={{
-                marginRight: 2,
-                marginLeft: 6,
-              }}
-            />
-            <Text style={styles.textHandicap}>Handicap access</Text>
-          </View>
+          <TagFree></TagFree>
+          <TagHandicap></TagHandicap>
 
           <View style={styles.tagType}>
-            <Text style={styles.textType}>Public</Text>
+            <Text style={styles.textType}>{props.type}</Text>
           </View>
+          
         </View>
           
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>Place Name</Text>
+            <Text style={styles.placeName}>{props.title}</Text>
             <View style={styles.itemRightBottom}>
               <Star
                 size={14}
@@ -61,7 +80,9 @@ const ContentMyList = (props: IContentMyList) => {
           </View>
           
           <View style={styles.btnRight}>
-            <BtnHeartMyList />
+            <BtnHeartMyList 
+              myListId={props.myListId}
+            />
             <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
               colors={['#FFA897', '#FAC353']}
@@ -82,7 +103,7 @@ const ContentMyList = (props: IContentMyList) => {
             }}
           />
           <Text style={styles.time}>
-            00:00 - 00:00
+          {props.timeOpen} - {props.timeClose}
           </Text>
         </View>
       </View>
