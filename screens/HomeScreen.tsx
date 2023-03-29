@@ -83,7 +83,14 @@ enum MapType {
 export const popuplist = [
   {
     id: 1,
-    icon: <Toilet size={22} color="#2C2F4A" weight="fill" style={{marginRight: 10}}/>,
+    icon: (
+      <Toilet
+        size={22}
+        color="#2C2F4A"
+        weight="fill"
+        style={{marginRight: 10}}
+      />
+    ),
     name: 'All',
   },
   {
@@ -329,6 +336,17 @@ const HomeScreen = () => {
                           {item.timeOpen} - {item.timeClose}
                         </Text>
                       </View>
+                      {/* <View style={styles.itemRightBottom}>
+                        <Star
+                          size={14}
+                          weight="fill"
+                          color="#FBD17B"
+                          style={{
+                            marginRight: 2,
+                          }}
+                        />
+                        <Text style={styles.rate}>5.0</Text>
+                      </View> */}
                     </View>
                   </View>
                   <View style={styles.arrowBorder} />
@@ -454,7 +472,7 @@ const HomeScreen = () => {
                           {item.timeOpen} - {item.timeClose}
                         </Text>
                       </View>
-                      <View style={styles.itemRightBottom}>
+                      {/* <View style={styles.itemRightBottom}>
                         <Star
                           size={14}
                           weight="fill"
@@ -464,7 +482,7 @@ const HomeScreen = () => {
                           }}
                         />
                         <Text style={styles.rate}>5.0</Text>
-                      </View>
+                      </View> */}
                     </View>
                   </View>
                   <View style={styles.arrowBorder} />
