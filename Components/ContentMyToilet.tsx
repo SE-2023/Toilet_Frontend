@@ -99,7 +99,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   }, []);
 
   return (
-    <TouchableHighlight style={styles.contentContainer}>
+    <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <TagFree></TagFree>
@@ -112,7 +112,20 @@ const ContentMyToilet = (props: IContentMyToilet) => {
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
+            <Text style={styles.placeName} numberOfLines={1}>
+              {props.title}
+            </Text>
+            <View style={styles.itemRightBottom}>
+              <Star
+                size={14}
+                weight="fill"
+                color="#FBD17B"
+                style={{
+                  marginRight: 2,
+                }}
+              />
+              <Text style={styles.rate}>{SumRate}</Text>
+            </View>
           </View>
 
           <TouchableOpacity
@@ -151,7 +164,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
           </View>
         </View>
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 

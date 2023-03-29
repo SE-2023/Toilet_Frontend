@@ -22,7 +22,7 @@ import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getMytoilet} from '../services/toilet';
 import NotToilet from '../components/NotToilet';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 interface Mytoilet {
   _id: string;
@@ -95,9 +95,8 @@ const MyToilet = () => {
               }
             };
             return (
-              <TouchableOpacity onPress={onClick}>
+              <TouchableOpacity key={index} onPress={onClick}>
                 <ContentMyToilet
-                  key={index}
                   _id={item._id}
                   latitude={item.latitude}
                   longitude={item.longitude}
@@ -119,7 +118,7 @@ const MyToilet = () => {
     } else {
       return (
         <View style={styles.notToilet}>
-          <NotToilet/>
+          <NotToilet />
         </View>
       );
     }
