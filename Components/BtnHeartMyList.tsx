@@ -2,6 +2,7 @@ import { StyleSheet, View, Pressable,TouchableOpacity} from 'react-native'
 import React, { useState } from 'react'
 import { Heart } from 'phosphor-react-native';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+
 import { deleteMyList } from '../services/myList';
 interface Iheart{
   myListId: string;
@@ -41,6 +42,8 @@ const BtnHeartMyList = (props: Iheart) => {
     </Pressable>
     
   )
+
+
 }
 
 export default BtnHeartMyList
@@ -55,10 +58,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 6,
-  },
-  containerHeart: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: 16,
   },
 })

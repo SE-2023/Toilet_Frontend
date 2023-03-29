@@ -1,8 +1,20 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+  TouchableHighlight,
+  StatusBar,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
 import {getComment} from '../services/comment';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {HomeParamList} from '../stacks/HomeStack';
+import {ProfileParamList} from '../stacks/ProfileStack';
 interface IContentMyToilet {
   _id: string;
   latitude: number;
@@ -25,6 +37,9 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   let sumRate: number = 0;
   const [comment, setComment] = useState<Comment[]>([]);
   const [SumRate, setsumRate] = useState(0);
+  const [ShowRate, setShowRate] = useState(SumRate);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ProfileParamList>>();
   const TagFree = (): JSX.Element | null => {
     if (props.free === true) {
       return (
@@ -56,28 +71,35 @@ const ContentMyToilet = (props: IContentMyToilet) => {
       return null;
     }
   };
+  // useEffect(() => {
+  //   setShowRate(SumRate);
+  //   console.log('line61', ShowRate);
+  // }, [comment]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const comments: any = await getComment(props._id);
-        // console.log(comments.data);
-        setComment(comments.Comment);
-        if (comment) {
-          comment.map((item: any, index) => {
+        const res_comments: any = await getComment(props._id);
+        // console.log('line 68', res_comments);
+        setComment(res_comments.Comment);
+        if (res_comments) {
+          // console.log('line71', res_comments);
+          res_comments.Comment.map((item: any, index: number) => {
             Rate += item.rate;
-            sumRate = Rate / comment.length;
+            sumRate = Rate / res_comments.Comment.length;
           });
-
+          // setsumRate(sumRate);
+          // console.log(SumRate);
           setsumRate(sumRate);
         }
       } catch (err: any) {
-        console.log(err.message);
+        // console.log(err.message);
       }
     };
     fetchData();
   }, []);
+
   return (
-    <View style={styles.contentContainer}>
+    <TouchableHighlight style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <TagFree></TagFree>
@@ -90,20 +112,12 @@ const ContentMyToilet = (props: IContentMyToilet) => {
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>{props.title}</Text>
-            <View style={styles.itemRightBottom}>
-              <Star
-                size={14}
-                weight="fill"
-                color="#FBD17B"
-                style={{
-                  marginRight: 2,
-                }}
-              />
-              <Text style={styles.rate}>{SumRate}</Text>
-            </View>
+            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
           </View>
-          <TouchableOpacity style={styles.btnEdit}>
+
+          <TouchableOpacity
+            style={styles.btnEdit}
+            onPress={() => navigation.navigate('UpdateToilet')}>
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
@@ -124,9 +138,20 @@ const ContentMyToilet = (props: IContentMyToilet) => {
           <Text style={styles.time}>
             {props.timeOpen} - {props.timeClose}
           </Text>
+          <View style={styles.itemRightBottom}>
+            <Star
+              size={14}
+              weight="fill"
+              color="#FBD17B"
+              style={{
+                marginRight: 2,
+              }}
+            />
+            <Text style={styles.rate}>{SumRate}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableHighlight>
   );
 };
 
@@ -216,6 +241,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    width: '85%',
   },
   placeName: {
     fontFamily: 'Fredoka-Medium',
@@ -249,7 +275,7 @@ const styles = StyleSheet.create({
   itemRightBottom: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    marginLeft: 12,
   },
   rate: {
     fontFamily: 'Fredoka-Regular',

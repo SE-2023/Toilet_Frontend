@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
@@ -17,8 +18,11 @@ interface IContentMyList {
   timeOpen: string;
   timeClose: string;
   toiletpicture: string;
+  onSelected: (value: boolean) => void;
 }
+
 const ContentMyList = (props: IContentMyList) => {
+
   const TagFree = (): JSX.Element | null => {
     if (props.free === true) {
       return (
@@ -50,22 +54,26 @@ const ContentMyList = (props: IContentMyList) => {
       return null;
     }
   };
+
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
+
           <TagFree></TagFree>
           <TagHandicap></TagHandicap>
+
 
           <View style={styles.tagType}>
             <Text style={styles.textType}>{props.type}</Text>
           </View>
           
         </View>
-          
+
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName}>{props.title}</Text>
+
+            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
             <View style={styles.itemRightBottom}>
               <Star
                 size={14}
@@ -78,21 +86,22 @@ const ContentMyList = (props: IContentMyList) => {
               <Text style={styles.rate}>5.0</Text>
             </View>
           </View>
-          
+
           <View style={styles.btnRight}>
+
             <BtnHeartMyList 
               myListId={props.myListId}
             />
             <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
-              colors={['#FFA897', '#FAC353']}
-              style={styles.btnEdit}>
-                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
-              </LinearGradient> 
+                colors={['#FFA897', '#FAC353']}
+                style={styles.btnEdit}>
+                <PersonSimpleWalk size={16} weight="fill" color="#2C2F4A" />
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </View>
-          
+
         <View style={styles.itemBottom}>
           <Clock
             size={14}
@@ -102,20 +111,23 @@ const ContentMyList = (props: IContentMyList) => {
               marginRight: 5,
             }}
           />
+
           <Text style={styles.time}>
           {props.timeOpen} - {props.timeClose}
           </Text>
+
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ContentMyList
+export default ContentMyList;
 
 const styles = StyleSheet.create({
   // Content
   contentContainer: {
+    flexWrap: 'wrap',
     marginTop: 25,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -132,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-    
+
   // Tag Free
   tagFree: {
     flexDirection: 'row',
@@ -151,7 +163,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Handicap
   tagHandicap: {
     flexDirection: 'row',
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Type
   tagType: {
     flexDirection: 'row',
@@ -186,7 +198,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   itemMid: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -197,6 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    width: '80%',
   },
   placeName: {
     fontFamily: 'Fredoka-Medium',
@@ -208,7 +221,6 @@ const styles = StyleSheet.create({
   // Button Right
   btnRight: {
     flexDirection: 'row',
-    alignItems: 'center',
   },
   btnEdit: {
     width: 32,
@@ -218,7 +230,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 2,
   },
-  
+
   itemBottom: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -236,11 +248,11 @@ const styles = StyleSheet.create({
   itemRightBottom: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    marginLeft: 12,
   },
   rate: {
     fontFamily: 'Fredoka-Regular',
     fontSize: 14,
     color: '#2C2F4A',
   },
-})
+});

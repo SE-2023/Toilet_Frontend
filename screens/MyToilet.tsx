@@ -7,10 +7,13 @@ import {
   View,
   Dimensions,
   ScrollView,
+  Animated,
+  TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
-import {CaretLeft, Plus} from 'phosphor-react-native';
+import {CaretLeft, KeyReturn, Plus} from 'phosphor-react-native';
 import ContentMyToilet from '../components/ContentMyToilet';
 import {HomeParamList} from '../stacks/HomeStack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -18,7 +21,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getMytoilet} from '../services/toilet';
-import NotRating from '../components/NotRating';
+import NotToilet from '../components/NotToilet';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 interface Mytoilet {
   _id: string;
@@ -114,9 +118,9 @@ const MyToilet = () => {
       );
     } else {
       return (
-        <>
-          <NotRating></NotRating>
-        </>
+        <View style={styles.notToilet}>
+          <NotToilet/>
+        </View>
       );
     }
   };
@@ -154,6 +158,9 @@ const MyToilet = () => {
 export default MyToilet;
 
 const styles = StyleSheet.create({
+  notToilet: {
+    marginTop: '55%',
+  },
   container: {
     flex: 1,
     backgroundColor: '#E5EAFA',

@@ -288,7 +288,6 @@ const AddDetailToilet2 = () => {
           <Image source={{uri: toiletPicture}} style={styles.addPhoto} />
           <PlusCircle
             size={28}
-            // weight='fill'
             color="#F4F6FD"
             style={{
               position: 'absolute',
@@ -328,8 +327,8 @@ const AddDetailToilet2 = () => {
             mode="outlined"
             onChangeText={text => setPlaceName(text)}
           />
+          <Text style={styles.error}>{errorPlaceName}</Text>
         </View>
-        <Text style={styles.error}>{errorPlaceName}</Text>
       </View>
 
       <View style={styles.textInputContainer}>
@@ -340,6 +339,7 @@ const AddDetailToilet2 = () => {
             theme={theme}
             style={styles.bgTextInput}
             mode="outlined"
+            keyboardType="numeric"
             onChangeText={text => setCost(text)}
           />
           <Text style={styles.error}>{errorCost}</Text>
@@ -352,6 +352,7 @@ const AddDetailToilet2 = () => {
             theme={theme}
             style={styles.bgTextInput}
             mode="outlined"
+            keyboardType="numeric"
             onChangeText={text => setContact(text)}
           />
           <Text style={styles.error}>{errorContact}</Text>
@@ -552,7 +553,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 20,
-    top: '90%',
+    top: '84.5%',
     right: 10,
     backgroundColor: '#2C2F4A',
     elevation: 2,
@@ -603,6 +604,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   boxHandicap: {
+    alignItems: 'center',
+    flexWrap: 'wrap',
     width: '35%',
     height: 77,
     backgroundColor: '#fff',

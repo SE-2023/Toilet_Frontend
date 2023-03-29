@@ -14,6 +14,8 @@ import {
   CaretLeft,
   CaretRight,
   EnvelopeSimple,
+  Eye,
+  EyeSlash,
   Key,
 } from 'phosphor-react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -34,6 +36,7 @@ function Login({navigation}: {navigation: any}) {
   const {setLoggedIn} = useContext(AuthContext);
   const [errorsEmail, setErrorsEmail] = useState('');
   const [errorsPassword, setErrorsPassword] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const hardleLogin = async () => {
     try {
       const res: any = await signIn({
@@ -100,9 +103,17 @@ function Login({navigation}: {navigation: any}) {
               theme={theme}
               style={styles.bgTextInput}
               mode="outlined"
-              secureTextEntry
-              // right={<TextInput.Icon icon="eye" />}
+              secureTextEntry={secureTextEntry}
               onChangeText={text => setPassword(text)}
+              right={
+                <TextInput.Icon
+                  icon={() => secureTextEntry ? <EyeSlash size={28} weight="duotone" color='#2C2F4A' /> : <Eye size={28} weight="duotone" color='#2C2F4A' /> }
+                  onPress={() => {
+                    setSecureTextEntry(!secureTextEntry);
+                    return false;
+                  }}
+                />
+              }
             />
             <Text style={styles.error}>{errorsPassword}</Text>
           </View>
