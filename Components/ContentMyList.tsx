@@ -1,9 +1,11 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Clock, PersonSimpleWalk, Star, Wheelchair} from 'phosphor-react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import BtnHeartMyList from './BtnHeartMyList';
+
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import BtnHeartMyList from './BtnHeartMyList'
 interface IContentMyList {
+  myListId: string;
   _id: string;
   latitude: number;
   longitude: number;
@@ -20,48 +22,75 @@ interface IContentMyList {
 }
 
 const ContentMyList = (props: IContentMyList) => {
-  const [Heart, setHeart] = useState(Boolean);
-  useEffect(() => {
-    console.log(Heart);
-    props.onSelected(Heart);
-  }, [Heart]);
+
+  const TagFree = (): JSX.Element | null => {
+    if (props.free === true) {
+      return (
+        <View style={styles.tagFree}>
+          <Text style={styles.textFree}>฿ Free</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+  const TagHandicap = (): JSX.Element | null => {
+    if (props.handicap === true) {
+      return (
+        <View style={styles.tagHandicap}>
+          <Wheelchair
+            size={10}
+            weight="fill"
+            color="#00845A"
+            style={{
+              marginRight: 2,
+              marginLeft: 6,
+            }}
+          />
+          <Text style={styles.textHandicap}>Handicap access</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-          <View style={styles.tagFree}>
-            <Text style={styles.textFree}>฿ Free</Text>
-          </View>
-          <View style={styles.tagHandicap}>
-            <Wheelchair
-              size={10}
-              weight="fill"
-              color="#00845A"
-              style={{
-                marginRight: 2,
-                marginLeft: 6,
-              }}
-            />
-            <Text style={styles.textHandicap}>Handicap access</Text>
-          </View>
+
+          <TagFree></TagFree>
+          <TagHandicap></TagHandicap>
+
 
           <View style={styles.tagType}>
-            <Text style={styles.textType}>Public</Text>
+            <Text style={styles.textType}>{props.type}</Text>
           </View>
+          
         </View>
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName} numberOfLines={1}>
-              Place Name
-            </Text>
+
+            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
+            <View style={styles.itemRightBottom}>
+              <Star
+                size={14}
+                weight="fill"
+                color="#FBD17B"
+                style={{
+                  marginRight: 2,
+                }}
+              />
+              <Text style={styles.rate}>5.0</Text>
+            </View>
           </View>
 
           <View style={styles.btnRight}>
-            <BtnHeartMyList
-              onSelected={value => {
-                setHeart(value);
-              }}
+
+            <BtnHeartMyList 
+              myListId={props.myListId}
             />
             <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
@@ -82,18 +111,11 @@ const ContentMyList = (props: IContentMyList) => {
               marginRight: 5,
             }}
           />
-          <Text style={styles.time}>00:00 - 00:00</Text>
-          <View style={styles.itemRightBottom}>
-            <Star
-              size={14}
-              weight="fill"
-              color="#FBD17B"
-              style={{
-                marginRight: 2,
-              }}
-            />
-            <Text style={styles.rate}>5.0</Text>
-          </View>
+
+          <Text style={styles.time}>
+          {props.timeOpen} - {props.timeClose}
+          </Text>
+
         </View>
       </View>
     </View>

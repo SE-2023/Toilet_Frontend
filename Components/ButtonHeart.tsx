@@ -2,10 +2,18 @@ import { StyleSheet, View, Pressable} from 'react-native'
 import React, { useState } from 'react'
 import { Heart } from 'phosphor-react-native';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { deleteMyList, addMyList } from '../services/myList';
 
-const ButtonHeart = () => {
+interface Iheart {
+  heartIcon:Boolean;
+  myListID : string;
+  userID : string;
+  toiletID : string;
+  onSelected: (value: boolean) => void;
+}
+
+const ButtonHeart = (props:Iheart) => {
   const liked = useSharedValue(0);
-
   const outlineStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -23,18 +31,58 @@ const ButtonHeart = () => {
       };
   });
 
-  return (
-    <Pressable style={styles.btnHeart} onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}>
-      <View style={styles.containerHeart}>
-        <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
+ 
+
+  const actionMyList = async() =>{
+    if(props.heartIcon===false){
+      addMyList({
+        userId : props.userID,
+        toiletId : props.toiletID
+      });
+      props.onSelected(true);
+    }
+    if(props.heartIcon===true){
+      deleteMyList(props.myListID);
+      props.onSelected(false);
+    }
+    
+  }
+
+  const HeartBotton = (): JSX.Element | null =>{
+    if(props.heartIcon === true){
+      return(
+      <Pressable style={styles.btnHeart} onPress={() => {actionMyList()}}>
+        <View style={styles.containerHeart}>
+          <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
+            <Heart size={20} weight="fill" color={"#FC8066"} />
+          </Animated.View>
+        </View>
+      
+        <Animated.View style={fillStyle}>
           <Heart size={20} weight="fill" color={"#E5EAFA"} />
         </Animated.View>
-      </View>
+      </Pressable>
+      )
+    }
+    else{
+      return(
+      <Pressable style={styles.btnHeart} onPress={() => {actionMyList()}}>
+        <View style={styles.containerHeart}>
+          <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
+            <Heart size={20} weight="fill" color={"#E5EAFA"} />
+          </Animated.View>
+        </View>
+        
+        <Animated.View style={fillStyle}>
+          <Heart size={20} weight="fill" color={"#FC8066"} />
+        </Animated.View>
+      </Pressable>
+        )
+    }
+  }
 
-      <Animated.View style={fillStyle}>
-        <Heart size={20} weight="fill" color={"#FC8066"} />
-      </Animated.View>
-    </Pressable>
+  return (
+    <HeartBotton></HeartBotton>
   )
 }
 

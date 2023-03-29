@@ -17,4 +17,5 @@ export const getMyList = async (UserId: any) => {
 
 export const deleteMyList = async (myListId: any) => {
   const res = await axios.delete('/myList', {params: {_id: myListId}});
+  return res;
 };
