@@ -1,7 +1,7 @@
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Clock, PencilSimple, Star, Wheelchair } from 'phosphor-react-native'
+import { Clock, PencilSimple, PersonSimpleWalk, Star, Wheelchair } from 'phosphor-react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import BtnHeartMyList from './BtnHeartMyList'
 interface IContentMyList {

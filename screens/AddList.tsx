@@ -71,8 +71,9 @@ const AddList = () => {
               type={item.myListPrivate[0].type}
               timeOpen={item.myListPrivate[0].timeOpen}
               timeClose={item.myListPrivate[0].timeClose}
-              toiletpicture={item.myListPrivate[0].toiletpicture}
-            />
+              toiletpicture={item.myListPrivate[0].toiletpicture} onSelected={function (value: boolean): void {
+                throw new Error('Function not implemented.');
+              } }            />
           )}
           if(item.myListPublic[0]!== undefined){ 
             return( 
@@ -90,8 +91,9 @@ const AddList = () => {
                 type={item.myListPublic[0].type}
                 timeOpen={item.myListPublic[0].timeOpen}
                 timeClose={item.myListPublic[0].timeClose}
-                toiletpicture={item.myListPublic[0].toiletpicture}
-              />
+                toiletpicture={item.myListPublic[0].toiletpicture} onSelected={function (value: boolean): void {
+                  throw new Error('Function not implemented.');
+                } }              />
             );}
         })}
       </>
