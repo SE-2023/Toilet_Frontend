@@ -1,9 +1,16 @@
-
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import { Clock, PencilSimple, PersonSimpleWalk, Star, Wheelchair } from 'phosphor-react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import BtnHeartMyList from './BtnHeartMyList'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Clock,
+  PencilSimple,
+  PersonSimpleWalk,
+  Star,
+  Wheelchair,
+} from 'phosphor-react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import BtnHeartMyList from './BtnHeartMyList';
+import {set} from 'react-native-reanimated';
+import LaunchNavigator from 'react-native-launch-navigator';
 interface IContentMyList {
   myListId: string;
   _id: string;
@@ -19,10 +26,20 @@ interface IContentMyList {
   timeClose: string;
   toiletpicture: string;
   onSelected: (value: boolean) => void;
+  onClick: (value: string) => void;
 }
 
 const ContentMyList = (props: IContentMyList) => {
-
+  const [Heart, setHeart] = useState(false);
+  const [myListID, setMyListID] = useState('');
+  const aom: boolean = true;
+  useEffect(() => {
+    if (Heart === true) {
+      console.log(aom);
+      props.onSelected(aom);
+      props.onClick(myListID);
+    }
+  }, [Heart]);
   const TagFree = (): JSX.Element | null => {
     if (props.free === true) {
       return (
@@ -54,26 +71,26 @@ const ContentMyList = (props: IContentMyList) => {
       return null;
     }
   };
-
+  const nevi = () => {
+    LaunchNavigator.navigate([props.latitude, props.longitude]);
+  };
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-
           <TagFree></TagFree>
           <TagHandicap></TagHandicap>
-
 
           <View style={styles.tagType}>
             <Text style={styles.textType}>{props.type}</Text>
           </View>
-          
         </View>
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-
-            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
+            <Text style={styles.placeName} numberOfLines={1}>
+              {props.title}
+            </Text>
             <View style={styles.itemRightBottom}>
               <Star
                 size={14}
@@ -88,11 +105,16 @@ const ContentMyList = (props: IContentMyList) => {
           </View>
 
           <View style={styles.btnRight}>
-
-            <BtnHeartMyList 
+            <BtnHeartMyList
               myListId={props.myListId}
+              onSelected={value => {
+                setHeart(value);
+              }}
+              onClick={value =>{
+                setMyListID(value);
+              }}
             />
-            <TouchableOpacity style={styles.btnEdit}>
+            <TouchableOpacity style={styles.btnEdit} onPress={nevi}>
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
@@ -113,9 +135,8 @@ const ContentMyList = (props: IContentMyList) => {
           />
 
           <Text style={styles.time}>
-          {props.timeOpen} - {props.timeClose}
+            {props.timeOpen} - {props.timeClose}
           </Text>
-
         </View>
       </View>
     </View>
