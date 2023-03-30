@@ -51,22 +51,27 @@ const MyToilet = () => {
   const [userId, setUserId] = useState(params.CreateBy);
   const [myList, setMyList] = useState<Mytoilet[]>([]);
   const [checkData, setCheckData] = useState('');
-
+  const fetchData = async () => {
+    try {
+      const myList: any = await getMytoilet(userId);
+      // console.log(comments.data);
+      setMyList(myList.Mytoilet);
+      setCheckData(myList.message);
+    } catch (err: any) {
+      setCheckData(err.message);
+      console.log(err.message);
+    }
+  };
   useEffect(() => {
-    console.log(userId);
-    const fetchData = async () => {
-      try {
-        const myList: any = await getMytoilet(userId);
-        // console.log(comments.data);
-        setMyList(myList.Mytoilet);
-        setCheckData(myList.message);
-      } catch (err: any) {
-        setCheckData(err.message);
-        console.log(err.message);
-      }
-    };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const RenderMytoilet = (): JSX.Element | null => {
     const navigation =
