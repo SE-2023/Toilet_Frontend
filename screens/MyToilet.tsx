@@ -72,7 +72,7 @@ const MyToilet = () => {
     });
     return unsubscribe;
   }, [navigation]);
-
+  ///Update
   const RenderMytoilet = (): JSX.Element | null => {
     const navigation =
       useNavigation<NativeStackNavigationProp<HomeParamList>>();
