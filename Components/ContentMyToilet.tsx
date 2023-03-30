@@ -119,7 +119,20 @@ const ContentMyToilet = (props: IContentMyToilet) => {
 
           <TouchableOpacity
             style={styles.btnEdit}
-            onPress={() => navigation.navigate('UpdateToilet')}>
+            onPress={() =>
+              navigation.navigate('UpdateToilet', {
+                _id: props._id,
+                title: props.title,
+                contact: props.contact,
+                cost: props.cost,
+                handicap: props.handicap,
+                free: props.free,
+                type: props.type,
+                timeOpen: props.timeOpen,
+                timeClose: props.timeClose,
+                toiletpicture: props.toiletpicture,
+              })
+            }>
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>

@@ -27,12 +27,13 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {createToilet} from '../services/toilet';
+import {createToilet, updateToilet} from '../services/toilet';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import handicapContext from '../context/handicapContext';
 import BottomPopup from '../components/BottomPopup';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {RootStackList} from '../stacks/RootStack';
+import {ProfileParamList} from '../stacks/ProfileStack';
 
 export const popuplist = [
   {
@@ -216,59 +217,46 @@ const UpdateToilet = () => {
     hideTimeClosePicker();
   };
 
-  const {params} =
-    useRoute<RouteProp<AddToiletParamList, 'AddDetailToilet2'>>();
+  const {params} = useRoute<RouteProp<ProfileParamList, 'UpdateToilet'>>();
   console.log(params);
   const navigation =
-    useNavigation<NativeStackNavigationProp<AddToiletParamList>>();
+    useNavigation<NativeStackNavigationProp<ProfileParamList>>();
   const navigation2 = useNavigation<NativeStackNavigationProp<RootStackList>>();
   const submitCreateToilet = async () => {
-    try {
-      if (cost.length > 1) {
-        setfree(false);
-        console.log(' not free ');
-      } else {
-        setfree(true);
-        console.log(' free');
-      }
-      const createtoilet: any = await createToilet({
-        title: placeName,
-        latitude: params.latitude,
-        longitude: params.longitude,
-        desc: 'test',
-        contact: contact,
-        cost: cost,
-        handicap: handicap,
-        free: free,
-        createBy: params._id,
-        type: type,
-        timeOpen: selectedTimeOpen,
-        timeClose: selectedTimeClose,
-        toiletpicture: toiletPicture,
-      });
-      console.log('createtoilet', createtoilet);
-      navigation2.replace('MainStack', {screen: 'HomeStack'});
-    } catch (err: any) {
-      setErrorPlaceName('');
-      setErrorCost('');
-      setErrorContact('');
-      setErrorTime('');
-      setErrorToiletPicture('');
-      err.errors.map((item: any) => {
-        if (item.param === 'placename') {
-          setErrorPlaceName(item.msg);
-        } else if (item.param === 'cost') {
-          setErrorCost(item.msg);
-        } else if (item.param === 'contact') {
-          setErrorContact(item.msg);
-        } else if (item.param === 'timeClose') {
-          setErrorTime(item.msg);
-        } else if (item.param === 'password') {
-          setErrorToiletPicture(item.msg);
-        }
-      });
-    }
+    // const body = {
+    //   firstname: firstname,
+    //   lastname: lastname,
+    //   phone: phoneNum,
+    //   email: email,
+    //   profile_picture: profilePicture,
+    // };
+    // await updateProfile(params._id, body);
+    // navigation.replace('Profile');
+    const updatetoilet: any = await updateToilet({
+      _id: params._id,
+      title: placeName,
+      contact: contact,
+      cost: cost,
+      handicap: handicap,
+      free: free,
+      type: type,
+      timeOpen: selectedTimeOpen,
+      timeClose: selectedTimeClose,
+      toiletpicture: toiletPicture,
+    });
+    console.log('updateToilet', updatetoilet);
+    navigation.replace('Profile');
   };
+  useEffect(() => {
+    setPlaceName(params.title);
+    setContact(params.contact);
+    setCost(params.cost);
+    setType(params.type);
+    setHandicap(params.handicap);
+    settoiletPicture(params.toiletpicture);
+    setSelectedTimeOpen(params.timeOpen);
+    setSelectedTimeClose(params.timeClose);
+  }, []);
 
   return (
     <KeyboardAwareScrollView
