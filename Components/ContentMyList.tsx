@@ -10,6 +10,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import BtnHeartMyList from './BtnHeartMyList';
 import {set} from 'react-native-reanimated';
+import LaunchNavigator from 'react-native-launch-navigator';
 interface IContentMyList {
   myListId: string;
   _id: string;
@@ -25,16 +26,18 @@ interface IContentMyList {
   timeClose: string;
   toiletpicture: string;
   onSelected: (value: boolean) => void;
+  onClick: (value: string) => void;
 }
 
 const ContentMyList = (props: IContentMyList) => {
   const [Heart, setHeart] = useState(false);
-  const [first, setfirst] = useState(0);
+  const [myListID, setMyListID] = useState('');
   const aom: boolean = true;
   useEffect(() => {
     if (Heart === true) {
       console.log(aom);
       props.onSelected(aom);
+      props.onClick(myListID);
     }
   }, [Heart]);
   const TagFree = (): JSX.Element | null => {
@@ -68,7 +71,9 @@ const ContentMyList = (props: IContentMyList) => {
       return null;
     }
   };
-
+  const nevi = () => {
+    LaunchNavigator.navigate([props.latitude, props.longitude]);
+  };
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
@@ -105,11 +110,11 @@ const ContentMyList = (props: IContentMyList) => {
               onSelected={value => {
                 setHeart(value);
               }}
-              onCheck={value => {
-                setfirst(value);
+              onClick={value =>{
+                setMyListID(value);
               }}
             />
-            <TouchableOpacity style={styles.btnEdit}>
+            <TouchableOpacity style={styles.btnEdit} onPress={nevi}>
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
