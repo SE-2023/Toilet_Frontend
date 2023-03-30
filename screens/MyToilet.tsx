@@ -22,7 +22,7 @@ import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getMytoilet} from '../services/toilet';
 import NotToilet from '../components/NotToilet';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 interface Mytoilet {
   _id: string;
@@ -51,23 +51,28 @@ const MyToilet = () => {
   const [userId, setUserId] = useState(params.CreateBy);
   const [myList, setMyList] = useState<Mytoilet[]>([]);
   const [checkData, setCheckData] = useState('');
-
+  const fetchData = async () => {
+    try {
+      const myList: any = await getMytoilet(userId);
+      // console.log(comments.data);
+      setMyList(myList.Mytoilet);
+      setCheckData(myList.message);
+    } catch (err: any) {
+      setCheckData(err.message);
+      console.log(err.message);
+    }
+  };
   useEffect(() => {
-    console.log(userId);
-    const fetchData = async () => {
-      try {
-        const myList: any = await getMytoilet(userId);
-        // console.log(comments.data);
-        setMyList(myList.Mytoilet);
-        setCheckData(myList.message);
-      } catch (err: any) {
-        setCheckData(err.message);
-        console.log(err.message);
-      }
-    };
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+  ///Update
   const RenderMytoilet = (): JSX.Element | null => {
     const navigation =
       useNavigation<NativeStackNavigationProp<HomeParamList>>();
@@ -95,9 +100,8 @@ const MyToilet = () => {
               }
             };
             return (
-              <TouchableOpacity onPress={onClick}>
+              <TouchableOpacity key={index} onPress={onClick}>
                 <ContentMyToilet
-                  key={index}
                   _id={item._id}
                   latitude={item.latitude}
                   longitude={item.longitude}
@@ -119,7 +123,7 @@ const MyToilet = () => {
     } else {
       return (
         <View style={styles.notToilet}>
-          <NotToilet/>
+          <NotToilet />
         </View>
       );
     }

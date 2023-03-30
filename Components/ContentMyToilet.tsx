@@ -36,7 +36,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   let Rate: number = 0;
   let sumRate: number = 0;
   const [comment, setComment] = useState<Comment[]>([]);
-  const [SumRate, setsumRate] = useState(0);
+  const [SumRate, setsumRate] = useState('0');
   const [ShowRate, setShowRate] = useState(SumRate);
   const navigation =
     useNavigation<NativeStackNavigationProp<ProfileParamList>>();
@@ -89,7 +89,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
           });
           // setsumRate(sumRate);
           // console.log(SumRate);
-          setsumRate(sumRate);
+          setsumRate(sumRate.toFixed(1));
         }
       } catch (err: any) {
         // console.log(err.message);
@@ -99,7 +99,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   }, []);
 
   return (
-    <TouchableHighlight style={styles.contentContainer}>
+    <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <TagFree></TagFree>
@@ -112,12 +112,27 @@ const ContentMyToilet = (props: IContentMyToilet) => {
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
+            <Text style={styles.placeName} numberOfLines={1}>
+              {props.title}
+            </Text>
           </View>
 
           <TouchableOpacity
             style={styles.btnEdit}
-            onPress={() => navigation.navigate('UpdateToilet')}>
+            onPress={() =>
+              navigation.navigate('UpdateToilet', {
+                _id: props._id,
+                title: props.title,
+                contact: props.contact,
+                cost: props.cost,
+                handicap: props.handicap,
+                free: props.free,
+                type: props.type,
+                timeOpen: props.timeOpen,
+                timeClose: props.timeClose,
+                toiletpicture: props.toiletpicture,
+              })
+            }>
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
@@ -151,7 +166,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
           </View>
         </View>
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 
