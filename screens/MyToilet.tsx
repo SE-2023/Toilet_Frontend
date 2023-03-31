@@ -99,6 +99,7 @@ const MyToilet = () => {
                 });
               }
             };
+            //das
             return (
               <TouchableOpacity key={index} onPress={onClick}>
                 <ContentMyToilet
