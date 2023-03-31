@@ -16,7 +16,7 @@ import {getLocation} from '../services/location';
 import {StackSimple, CaretLeft} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
-import Buttonmap from '../components/Buttonmap';
+import Buttonmap from '../components/BottomPopupMap';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getProfile} from '../services/auth';

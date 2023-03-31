@@ -68,7 +68,7 @@ const Ratings = () => {
     } else {
       return (
         <View style={styles.notRating}>
-          <NotRating/>
+          <NotRating />
         </View>
       );
     }
