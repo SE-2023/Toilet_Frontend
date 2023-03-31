@@ -115,7 +115,6 @@ const ContentMyList = (props: IContentMyList) => {
               }}
             />
             <TouchableOpacity style={styles.btnEdit} onPress={nevi}>
-
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
@@ -138,17 +137,6 @@ const ContentMyList = (props: IContentMyList) => {
           <Text style={styles.time}>
             {props.timeOpen} - {props.timeClose}
           </Text>
-          <View style={styles.itemRightBottom}>
-            <Star
-              size={14}
-              weight="fill"
-              color="#FBD17B"
-              style={{
-                marginRight: 2,
-              }}
-            />
-            <Text style={styles.rate}>5.0</Text>
-          </View>
         </View>
       </View>
     </View>
