@@ -119,9 +119,6 @@ const ContentMyToilet = (props: IContentMyToilet) => {
 
           <TouchableOpacity
             style={styles.btnEdit}
-<<<<<<< HEAD
-            onPress={() => navigation.navigate('UpdateToilet')}>
-=======
             onPress={() =>
               navigation.navigate('UpdateToilet', {
                 _id: props._id,
@@ -136,7 +133,6 @@ const ContentMyToilet = (props: IContentMyToilet) => {
                 toiletpicture: props.toiletpicture,
               })
             }>
->>>>>>> 5a64aa79c9adc5606ef6895ef9c6a9bb41ed9f4f
             <LinearGradient
               colors={['#FFA897', '#FAC353']}
               style={styles.btnEdit}>
@@ -144,7 +140,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-
+        //dsa
         <View style={styles.itemBottom}>
           <Clock
             size={14}

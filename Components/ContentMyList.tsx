@@ -105,12 +105,6 @@ const ContentMyList = (props: IContentMyList) => {
           </View>
 
           <View style={styles.btnRight}>
-<<<<<<< HEAD
-            <BtnHeartMyList onSelected={value => {
-                  setHeart(value);
-                }}/>
-            <TouchableOpacity style={styles.btnEdit}>
-=======
             <BtnHeartMyList
               myListId={props.myListId}
               onSelected={value => {
@@ -122,7 +116,6 @@ const ContentMyList = (props: IContentMyList) => {
             />
             <TouchableOpacity style={styles.btnEdit} onPress={nevi}>
 
->>>>>>> 5a64aa79c9adc5606ef6895ef9c6a9bb41ed9f4f
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
