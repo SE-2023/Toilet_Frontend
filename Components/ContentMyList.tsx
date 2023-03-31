@@ -1,8 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Clock, PersonSimpleWalk, Star, Wheelchair } from 'phosphor-react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import BtnHeartMyList from './BtnHeartMyList'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Clock, PersonSimpleWalk, Star, Wheelchair} from 'phosphor-react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import BtnHeartMyList from './BtnHeartMyList';
 interface IContentMyList {
   _id: string;
   latitude: number;
@@ -30,7 +30,6 @@ const ContentMyList = (props: IContentMyList) => {
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <View style={styles.tagFree}>
-            
             <Text style={styles.textFree}>฿ Free</Text>
           </View>
           <View style={styles.tagHandicap}>
@@ -50,19 +49,21 @@ const ContentMyList = (props: IContentMyList) => {
             <Text style={styles.textType}>Public</Text>
           </View>
         </View>
-          
+
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
-            <Text style={styles.placeName} numberOfLines={1}>Place Name</Text>
+            <Text style={styles.placeName} numberOfLines={1}>
+              Place Name
+            </Text>
           </View>
-          
+
           <View style={styles.btnRight}>
             <BtnHeartMyList
               myListId={props.myListId}
               onSelected={value => {
                 setHeart(value);
               }}
-              onClick={value =>{
+              onClick={value => {
                 setMyListID(value);
               }}
             />
@@ -71,7 +72,7 @@ const ContentMyList = (props: IContentMyList) => {
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
                 <PersonSimpleWalk size={16} weight="fill" color="#2C2F4A" />
-              </LinearGradient> 
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,16 +86,14 @@ const ContentMyList = (props: IContentMyList) => {
               marginRight: 5,
             }}
           />
-          <Text style={styles.time}>
-            00:00 - 00:00
-          </Text>
+          <Text style={styles.time}></Text>
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ContentMyList
+export default ContentMyList;
 
 const styles = StyleSheet.create({
   // Content
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-    
+
   // Tag Free
   tagFree: {
     flexDirection: 'row',
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Handicap
   tagHandicap: {
     flexDirection: 'row',
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   // Tag Type
   tagType: {
     flexDirection: 'row',
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
     paddingRight: 6,
     paddingVertical: 2,
   },
-    
+
   itemMid: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 2,
   },
-  
+
   itemBottom: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -227,4 +226,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2C2F4A',
   },
-})
+});
