@@ -2,8 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Alert,
   TouchableOpacity,
   Platform,
   PermissionsAndroid,
@@ -163,7 +161,7 @@ const AddToilet = () => {
         showsBuildings={true}>
         {/* <RenderLocation></RenderLocation> */}
         <Marker
-          image={require('../assets/Map2.png')}
+          image={require('../assets/PinBlue.png')}
           title="test"
           description={profile._id}
           coordinate={pos}

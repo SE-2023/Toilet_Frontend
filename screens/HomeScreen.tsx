@@ -2,8 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Alert,
   TouchableOpacity,
   ActivityIndicator,
   Platform,
@@ -26,8 +24,6 @@ import {
   GasPump,
   House,
   Toilet,
-  CheckCircle,
-  Circle,
 } from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
@@ -297,7 +293,7 @@ const HomeScreen = () => {
           };
           return (
             <Marker
-              image={require('../assets/Map2.png')}
+              image={require('../assets/PinPink.png')}
               key={index}
               coordinate={{
                 latitude: item.latitude,
@@ -309,13 +305,11 @@ const HomeScreen = () => {
               <Callout tooltip onPress={onClick}>
                 <View>
                   <View style={styles.bubble}>
-                    {/* <Image source={toilet} style={styles.imageToilet} /> */}
                     <View style={styles.itemLeftTop}>
                       <TagFree></TagFree>
                       <TagHandicap></TagHandicap>
 
                       <View style={styles.tagType}>
-                        {/* <Image source={wc} style={styles.iconType} /> */}
                         <Text style={styles.textType}>{item.type}</Text>
                       </View>
                     </View>
@@ -433,7 +427,7 @@ const HomeScreen = () => {
           };
           return (
             <Marker
-              image={require('../assets/Map.png')}
+              image={require('../assets/PinBlue.png')}
               key={index}
               coordinate={{
                 latitude: item.latitude,
@@ -445,13 +439,11 @@ const HomeScreen = () => {
               <Callout tooltip onPress={onClick}>
                 <View>
                   <View style={styles.bubble}>
-                    {/* <Image source={toilet} style={styles.imageToilet} /> */}
                     <View style={styles.itemLeftTop}>
                       <TagFree></TagFree>
                       <TagHandicap></TagHandicap>
 
                       <View style={styles.tagType}>
-                        {/* <Image source={wc} style={styles.iconType} /> */}
                         <Text style={styles.textType}>{item.type}</Text>
                       </View>
                     </View>

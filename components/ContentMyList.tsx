@@ -2,7 +2,6 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   Clock,
-  PencilSimple,
   PersonSimpleWalk,
   Star,
   Wheelchair,
@@ -114,7 +113,7 @@ const ContentMyList = (props: IContentMyList) => {
                 setMyListID(value);
               }}
             />
-            <TouchableOpacity style={styles.btnEdit} onPress={nevi}>
+            <TouchableOpacity onPress={nevi}>
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
@@ -133,10 +132,20 @@ const ContentMyList = (props: IContentMyList) => {
               marginRight: 5,
             }}
           />
-
           <Text style={styles.time}>
             {props.timeOpen} - {props.timeClose}
           </Text>
+          <View style={styles.itemRightBottom}>
+            <Star
+              size={14}
+              weight="fill"
+              color="#FBD17B"
+              style={{
+                marginRight: 2,
+              }}
+            />
+            <Text style={styles.rate}>5.0</Text>
+          </View>
         </View>
       </View>
     </View>
