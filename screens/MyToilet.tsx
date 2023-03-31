@@ -7,6 +7,9 @@ import {
   View,
   Dimensions,
   ScrollView,
+  Animated,
+  TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
@@ -19,8 +22,7 @@ import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getMytoilet} from '../services/toilet';
 import NotToilet from '../components/NotToilet';
-import Modal from 'react-native-modal';
-
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 interface Mytoilet {
   _id: string;
@@ -49,8 +51,6 @@ const MyToilet = () => {
   const [userId, setUserId] = useState(params.CreateBy);
   const [myList, setMyList] = useState<Mytoilet[]>([]);
   const [checkData, setCheckData] = useState('');
-  const [modal, setModal] = useState(false);
-
   const fetchData = async () => {
     try {
       const myList: any = await getMytoilet(userId);
@@ -62,7 +62,6 @@ const MyToilet = () => {
       console.log(err.message);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -115,9 +114,6 @@ const MyToilet = () => {
                   timeOpen={item.timeOpen}
                   timeClose={item.timeClose}
                   toiletpicture={item.toiletpicture}
-                  onSelected={value => {
-                    setModal(value);
-                  }}
                 />
               </TouchableOpacity>
             );
@@ -159,22 +155,6 @@ const MyToilet = () => {
 
         <View style={{height: height * 0.08}} />
       </ScrollView>
-
-      {/* Modal */}
-      <Modal isVisible={modal}>
-        <View style={styles.modalContainer}>
-          {/* <Image source={BrokenHeart} style={styles.imageBrokenHeart} /> */}
-          <View style={styles.detailPopupContainer}>
-            <Text style={styles.titlePopup}>Do you want to delete this toilet ?</Text>
-            <TouchableOpacity style={styles.btnYes}>
-              <Text style={styles.textYes}>YES, DELETE</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModal(false)}>
-              <Text style={styles.textCancel}>CANCEL</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </SafeAreaView>
   );
 };
@@ -223,51 +203,5 @@ const styles = StyleSheet.create({
     elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  // Modal
-  modalContainer: {
-    backgroundColor: '#F4F6FD',
-    borderRadius: 8,
-    marginHorizontal: 40,
-  },
-  detailPopupContainer: {
-    paddingHorizontal: 20,
-  },
-  imageBrokenHeart: {
-    width: 190,
-    height: 140,
-    marginTop: -75,
-    alignSelf: 'center',
-  },
-  titlePopup: {
-    fontSize: 22,
-    fontFamily: 'Fredoka-Medium',
-    color: '#2C2F4A',
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  btnYes: {
-    backgroundColor: '#6D7DD3',
-    height: 44,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    marginTop: 20,
-    marginBottom: 15,
-    elevation: 3,
-  },
-  textYes: {
-    fontSize: 16,
-    fontFamily: 'Fredoka-SemiBold',
-    color: '#F4F6FD',
-  },
-  textCancel: {
-    alignSelf: 'center',
-    marginBottom: 20,
-    fontSize: 14,
-    fontFamily: 'Fredoka-Medium',
-    color: '#2C2F4A',
   },
 });
