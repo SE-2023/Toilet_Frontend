@@ -7,6 +7,9 @@ import {
   View,
   Dimensions,
   ScrollView,
+  Animated,
+  TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
@@ -19,7 +22,9 @@ import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getMytoilet} from '../services/toilet';
 import NotToilet from '../components/NotToilet';
+
 import Modal from 'react-native-modal';
+
 
 interface Mytoilet {
   _id: string;
@@ -49,7 +54,17 @@ const MyToilet = () => {
   const [myList, setMyList] = useState<Mytoilet[]>([]);
   const [checkData, setCheckData] = useState('');
   const [modal, setModal] = useState(false);
-
+  const fetchData = async () => {
+    try {
+      const myList: any = await getMytoilet(userId);
+      // console.log(comments.data);
+      setMyList(myList.Mytoilet);
+      setCheckData(myList.message);
+    } catch (err: any) {
+      setCheckData(err.message);
+      console.log(err.message);
+    }
+  };
   useEffect(() => {
     console.log(userId);
     const fetchData = async () => {
@@ -92,6 +107,7 @@ const MyToilet = () => {
                 });
               }
             };
+            //das
             return (
               <TouchableOpacity onPress={onClick}>
                 <ContentMyToilet
@@ -108,9 +124,6 @@ const MyToilet = () => {
                   timeOpen={item.timeOpen}
                   timeClose={item.timeClose}
                   toiletpicture={item.toiletpicture}
-                  onSelected={value => {
-                    setModal(value);
-                  }}
                 />
               </TouchableOpacity>
             );
@@ -152,22 +165,6 @@ const MyToilet = () => {
 
         <View style={{height: height * 0.08}} />
       </ScrollView>
-
-      {/* Modal */}
-      <Modal isVisible={modal}>
-        <View style={styles.modalContainer}>
-          {/* <Image source={BrokenHeart} style={styles.imageBrokenHeart} /> */}
-          <View style={styles.detailPopupContainer}>
-            <Text style={styles.titlePopup}>Do you want to delete this toilet ?</Text>
-            <TouchableOpacity style={styles.btnYes}>
-              <Text style={styles.textYes}>YES, DELETE</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModal(false)}>
-              <Text style={styles.textCancel}>CANCEL</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </SafeAreaView>
   );
 };
@@ -218,6 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   // Modal
   modalContainer: {
     backgroundColor: '#F4F6FD',
@@ -264,3 +262,4 @@ const styles = StyleSheet.create({
     color: '#2C2F4A',
   },
 });
+
