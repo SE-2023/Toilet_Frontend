@@ -1,25 +1,34 @@
-import { StyleSheet, View, Pressable} from 'react-native'
-import React, { useState } from 'react'
-import { Heart } from 'phosphor-react-native';
-import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-interface IHeart {
-  onSelected: (value: boolean) => void;
-}
-const BtnHeartMyList = (props:IHeart) => {
-  const [liked, setLiked] = useState(false);
+import {StyleSheet, View, Pressable, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Heart} from 'phosphor-react-native';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 
+interface Iheart {
+  myListId: string;
+  onSelected: (value: boolean) => void;
+  onClick: (value: string) => void;
+}
+
+const BtnHeartMyList = (props: Iheart) => {
+  const [liked, setLiked] = useState(false);
+  const clickHeart = ()=>{
+    props.onSelected(true)
+    props.onClick(props.myListId)
+  }
   return (
-    <Pressable style={styles.btnHeart} onPress={() => {setLiked((isLiked) => !isLiked),props.onSelected(true)}}>
-      <Heart
-        size={16}
-        weight="fill"
-        color={liked ? "#E5EAFA" : "#FC8066"}
-      />
+    <Pressable style={styles.btnHeart} onPress={() => clickHeart()}>
+      <Heart size={16} weight="fill" color={liked ? '#E5EAFA' : '#FC8066'} />
     </Pressable>
   );
-}
+};
 
-export default BtnHeartMyList
+export default BtnHeartMyList;
 
 const styles = StyleSheet.create({
   btnHeart: {
@@ -32,4 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 6,
   },
-})
+
+});
+
+

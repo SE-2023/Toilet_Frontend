@@ -26,7 +26,18 @@ export type ProfileParamList = {
   MyToilet: {
     CreateBy: string;
   };
-  UpdateToilet: undefined;
+  UpdateToilet: {
+    _id: string;
+    title: string;
+    contact: string;
+    cost: string;
+    handicap: boolean;
+    free: boolean;
+    type: string;
+    timeOpen: string;
+    timeClose: string;
+    toiletpicture: string;
+  };
 };
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator<ProfileParamList>();

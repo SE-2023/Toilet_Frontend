@@ -15,6 +15,18 @@ interface ItoiletbyUser {
   timeClose: string;
   toiletpicture: string;
 }
+interface IUpdatetoilet {
+  _id: string;
+  title: string;
+  contact: string;
+  cost: string;
+  handicap: boolean;
+  free: boolean;
+  type: string;
+  timeOpen: string;
+  timeClose: string;
+  toiletpicture: string;
+}
 export const createToilet = async (body: ItoiletbyUser) => {
   const res = await axios.post('/toilet', body);
   console.log('res createToilet ', res);
@@ -31,5 +43,11 @@ export const getMytoilet = async (CreateBy: any) => {
   const res = await axios.get('/toilet/mytoilet', {
     params: {createBy: CreateBy},
   });
+  return res;
+};
+
+export const updateToilet = async (body: IUpdatetoilet) => {
+  const res = await axios.put('/toilet/updateToilet', body);
+  console.log('res  updateToilet ', res);
   return res;
 };
