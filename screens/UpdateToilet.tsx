@@ -280,7 +280,7 @@ const UpdateToilet = () => {
           onPress={() => navigation.goBack()}>
           <CaretLeft size={24} color="#F4F6FD" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Update a toilet</Text>
+        <Text style={styles.headerTitle}>Edit a toilet</Text>
       </View>
 
       <View style={styles.container}>
