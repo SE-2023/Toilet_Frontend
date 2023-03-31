@@ -1,18 +1,9 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  Clock,
-  PencilSimple,
-  PersonSimpleWalk,
-  Star,
-  Wheelchair,
-} from 'phosphor-react-native';
+import {Clock, PersonSimpleWalk, Star, Wheelchair} from 'phosphor-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import BtnHeartMyList from './BtnHeartMyList';
-import {set} from 'react-native-reanimated';
-import LaunchNavigator from 'react-native-launch-navigator';
 interface IContentMyList {
-  myListId: string;
   _id: string;
   latitude: number;
   longitude: number;
@@ -26,82 +17,44 @@ interface IContentMyList {
   timeClose: string;
   toiletpicture: string;
   onSelected: (value: boolean) => void;
-  onClick: (value: string) => void;
 }
 
 const ContentMyList = (props: IContentMyList) => {
-  const [Heart, setHeart] = useState(false);
-  const [myListID, setMyListID] = useState('');
-  const aom: boolean = true;
+  const [Heart, setHeart] = useState(Boolean);
   useEffect(() => {
-    if (Heart === true) {
-      console.log(aom);
-      props.onSelected(aom);
-      props.onClick(myListID);
-    }
+    console.log(Heart);
+    props.onSelected(Heart);
   }, [Heart]);
-  const TagFree = (): JSX.Element | null => {
-    if (props.free === true) {
-      return (
-        <View style={styles.tagFree}>
-          <Text style={styles.textFree}>฿ Free</Text>
-        </View>
-      );
-    } else {
-      return null;
-    }
-  };
-  const TagHandicap = (): JSX.Element | null => {
-    if (props.handicap === true) {
-      return (
-        <View style={styles.tagHandicap}>
-          <Wheelchair
-            size={10}
-            weight="fill"
-            color="#00845A"
-            style={{
-              marginRight: 2,
-              marginLeft: 6,
-            }}
-          />
-          <Text style={styles.textHandicap}>Handicap access</Text>
-        </View>
-      );
-    } else {
-      return null;
-    }
-  };
-  const nevi = () => {
-    LaunchNavigator.navigate([props.latitude, props.longitude]);
-  };
   return (
     <View style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
-          <TagFree></TagFree>
-          <TagHandicap></TagHandicap>
+          <View style={styles.tagFree}>
+            <Text style={styles.textFree}>฿ Free</Text>
+          </View>
+          <View style={styles.tagHandicap}>
+            <Wheelchair
+              size={10}
+              weight="fill"
+              color="#00845A"
+              style={{
+                marginRight: 2,
+                marginLeft: 6,
+              }}
+            />
+            <Text style={styles.textHandicap}>Handicap access</Text>
+          </View>
 
           <View style={styles.tagType}>
-            <Text style={styles.textType}>{props.type}</Text>
+            <Text style={styles.textType}>Public</Text>
           </View>
         </View>
 
         <View style={styles.itemMid}>
           <View style={styles.itemLeftMid}>
             <Text style={styles.placeName} numberOfLines={1}>
-              {props.title}
+              Place Name
             </Text>
-            <View style={styles.itemRightBottom}>
-              <Star
-                size={14}
-                weight="fill"
-                color="#FBD17B"
-                style={{
-                  marginRight: 2,
-                }}
-              />
-              <Text style={styles.rate}>5.0</Text>
-            </View>
           </View>
 
           <View style={styles.btnRight}>
@@ -110,7 +63,7 @@ const ContentMyList = (props: IContentMyList) => {
               onSelected={value => {
                 setHeart(value);
               }}
-              onClick={value =>{
+              onClick={value => {
                 setMyListID(value);
               }}
             />
@@ -133,10 +86,7 @@ const ContentMyList = (props: IContentMyList) => {
               marginRight: 5,
             }}
           />
-
-          <Text style={styles.time}>
-            {props.timeOpen} - {props.timeClose}
-          </Text>
+          <Text style={styles.time}></Text>
         </View>
       </View>
     </View>
