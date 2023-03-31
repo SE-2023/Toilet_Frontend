@@ -3,16 +3,18 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Animated,
+  TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {Wheelchair, Star, Clock, PencilSimple, Trash} from 'phosphor-react-native';
+import {Wheelchair, Star, Clock, PencilSimple} from 'phosphor-react-native';
 import {getComment} from '../services/comment';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HomeParamList} from '../stacks/HomeStack';
 import {ProfileParamList} from '../stacks/ProfileStack';
-
 interface IContentMyToilet {
   _id: string;
   latitude: number;
@@ -26,7 +28,6 @@ interface IContentMyToilet {
   timeOpen: string;
   timeClose: string;
   toiletpicture: string;
-  onSelected: (value: boolean) => void;
 }
 interface Comment {
   rate: number;
@@ -98,7 +99,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
   }, []);
 
   return (
-    <View style={styles.contentContainer}>
+    <TouchableHighlight style={styles.contentContainer}>
       <View style={styles.content}>
         <View style={styles.itemLeftTop}>
           <TagFree></TagFree>
@@ -114,19 +115,15 @@ const ContentMyToilet = (props: IContentMyToilet) => {
             <Text style={styles.placeName} numberOfLines={1}>{props.title}</Text>
           </View>
 
-          <View style={styles.btnRight}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('UpdateToilet')}>
-              <LinearGradient
-                colors={['#FFA897', '#FAC353']}
-                style={styles.btnEdit}>
-                <PencilSimple size={16} weight="fill" color="#2C2F4A" />
-              </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnTrash} onPress={()=>props.onSelected(true)}>
-              <Trash size={16} weight="fill" color="#F4F6FD" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            style={styles.btnEdit}
+            onPress={() => navigation.navigate('UpdateToilet')}>
+            <LinearGradient
+              colors={['#FFA897', '#FAC353']}
+              style={styles.btnEdit}>
+              <PencilSimple size={16} weight="fill" color="#2C2F4A" />
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.itemBottom}>
@@ -154,7 +151,7 @@ const ContentMyToilet = (props: IContentMyToilet) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableHighlight>
   );
 };
 
@@ -244,18 +241,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    width: '80%',
+    width: '85%',
   },
   placeName: {
     fontFamily: 'Fredoka-Medium',
     fontSize: 18,
     color: '#2C2F4A',
     marginRight: 12,
-  },
-
-  // Button Right
-  btnRight: {
-    flexDirection: 'row',
   },
   btnEdit: {
     width: 32,
@@ -265,21 +257,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 2,
   },
-  btnTrash: {
-    backgroundColor: '#D75D5D',
-    width: 32,
-    height: 32,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 6,
-    elevation: 2,
-  },
 
-  // Item Bottom
   itemBottom: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  itemLeftBottom: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
   time: {
     fontFamily: 'Fredoka-Regular',

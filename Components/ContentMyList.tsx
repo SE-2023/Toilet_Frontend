@@ -60,7 +60,7 @@ const ContentMyList = (props: IContentMyList) => {
             <BtnHeartMyList onSelected={value => {
                   setHeart(value);
                 }}/>
-            <TouchableOpacity>
+            <TouchableOpacity style={styles.btnEdit}>
               <LinearGradient
                 colors={['#FFA897', '#FAC353']}
                 style={styles.btnEdit}>
@@ -82,17 +82,6 @@ const ContentMyList = (props: IContentMyList) => {
           <Text style={styles.time}>
             00:00 - 00:00
           </Text>
-          <View style={styles.itemRightBottom}>
-            <Star
-              size={14}
-              weight="fill"
-              color="#FBD17B"
-              style={{
-                marginRight: 2,
-              }}
-            />
-            <Text style={styles.rate}>5.0</Text>
-          </View>
         </View>
       </View>
     </View>
