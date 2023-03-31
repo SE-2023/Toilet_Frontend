@@ -38,6 +38,7 @@ import LaunchNavigator from 'react-native-launch-navigator';
 // import LaunchNavigator from 'react-native-launch-navigator';
 import openMap from 'react-native-open-maps';
 import ButtonHeart from '../components/ButtonHeart';
+import {getMyList} from '../services/myList';
 export interface IProfile {
   _id: string;
 }
@@ -195,6 +196,39 @@ const DetailToilet = () => {
     }
   };
 
+  const [userId, setUserId] = useState('');
+  const [myListId, setMyListId] = useState('');
+  const [heart, setHeart] = useState(false);
+  const checkHeart = async () => {
+    const {data} = await getProfile();
+    setUserId(data._id);
+    const list: any = await getMyList(data._id);
+    if (list.myList[0] !== undefined) {
+      {
+        list.myList.map((item: any, index: any) => {
+          if (item.myListPublic[0] !== undefined) {
+            if (item.myListPublic[0]._id === params._id) {
+              setHeart(true);
+              setMyListId(item._id);
+            }
+          }
+          if (item.myListPrivate[0] !== undefined) {
+            if (item.myListPrivate[0]._id === params._id) {
+              setHeart(true);
+              setMyListId(item._id);
+            }
+          }
+        });
+      }
+    }
+    console.log('userId', userId);
+    console.log('myListId', myListId);
+    console.log('heart', heart);
+  };
+  useEffect(() => {
+    checkHeart();
+  }, [heart]);
+
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
@@ -262,7 +296,15 @@ const DetailToilet = () => {
                 <Text style={styles.review}>REVIEW</Text>
               </TouchableOpacity>
 
-              <ButtonHeart />
+              <ButtonHeart
+                heartIcon={heart}
+                myListID={myListId}
+                userID={userId}
+                toiletID={params._id}
+                onSelected={value => {
+                  setHeart(value);
+                }}
+              />
 
               <TouchableOpacity style={styles.btnPerson} onPress={nevi}>
                 <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
