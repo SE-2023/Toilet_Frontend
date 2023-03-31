@@ -1,12 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {Wheelchair, Star, Clock, PencilSimple, Trash} from 'phosphor-react-native';
+import {
+  Wheelchair,
+  Star,
+  Clock,
+  PencilSimple,
+  Trash,
+} from 'phosphor-react-native';
 import {getComment} from '../services/comment';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -27,6 +28,7 @@ interface IContentMyToilet {
   timeClose: string;
   toiletpicture: string;
   onSelected: (value: boolean) => void;
+  onSelected2: (value: string) => void;
 }
 interface Comment {
   rate: number;
@@ -139,7 +141,11 @@ const ContentMyToilet = (props: IContentMyToilet) => {
                 <PencilSimple size={16} weight="fill" color="#2C2F4A" />
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnTrash} onPress={()=>props.onSelected(true)}>
+            <TouchableOpacity
+              style={styles.btnTrash}
+              onPress={() => {
+                props.onSelected(true), props.onSelected2(props._id);
+              }}>
               <Trash size={16} weight="fill" color="#F4F6FD" />
             </TouchableOpacity>
           </View>
