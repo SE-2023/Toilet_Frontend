@@ -255,7 +255,7 @@ const AddDetailToilet2 = () => {
       setErrorTime('');
       setErrorToiletPicture('');
       err.errors.map((item: any) => {
-        if (item.param === 'placename') {
+        if (item.param === 'title') {
           setErrorPlaceName(item.msg);
         } else if (item.param === 'cost') {
           setErrorCost(item.msg);

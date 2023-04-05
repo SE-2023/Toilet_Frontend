@@ -28,7 +28,7 @@ interface IUpdatetoilet {
   toiletpicture: string;
 }
 export const createToilet = async (body: ItoiletbyUser) => {
-  const res = await axios.post('/toilet', body);
+  const res = await axios.post('/toilet/createToilet', body);
   console.log('res createToilet ', res);
   return res;
 };
