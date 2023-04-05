@@ -8,23 +8,14 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import bgSUKA_6 from '../assets/bgSUKA_6.png';
-import {
-  CaretLeft,
-  CaretRight,
-  EnvelopeSimple,
-  Eye,
-  EyeSlash,
-  Key,
-} from 'phosphor-react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import bgSUKA_5 from '../assets/bgSUKA_5.png';
+import {Eye, EyeSlash} from 'phosphor-react-native';
 import {configureFonts, DefaultTheme, Provider as PaperProvider, TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import OutlineInput from 'react-native-outline-input'
 import {signUp} from '../services/auth';
 import AuthContext from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 500;
@@ -98,7 +89,7 @@ function SignUp({navigation}: {navigation: any}) {
           // borderBottomLeftRadius={60}
           // overflow='hidden'
           style={{height: height * 0.4}}>
-          <Image source={bgSUKA_6} style={{width, height}} />
+          <Image source={bgSUKA_5} style={{width, height}} />
         </View>
       </View>
 

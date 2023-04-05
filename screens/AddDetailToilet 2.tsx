@@ -249,24 +249,24 @@ const AddDetailToilet2 = () => {
       console.log('createtoilet', createtoilet);
       navigation2.replace('MainStack', {screen: 'HomeStack'});
     } catch (err: any) {
-      setErrorPlaceName('');
-      setErrorCost('');
-      setErrorContact('');
-      setErrorTime('');
-      setErrorToiletPicture('');
-      err.errors.map((item: any) => {
-        if (item.param === 'placename') {
-          setErrorPlaceName(item.msg);
-        } else if (item.param === 'cost') {
-          setErrorCost(item.msg);
-        } else if (item.param === 'contact') {
-          setErrorContact(item.msg);
-        } else if (item.param === 'timeClose') {
-          setErrorTime(item.msg);
-        } else if (item.param === 'password') {
-          setErrorToiletPicture(item.msg);
-        }
-      });
+      // setErrorPlaceName('');
+      // setErrorCost('');
+      // setErrorContact('');
+      // setErrorTime('');
+      // setErrorToiletPicture('');
+      // err.errors.map((item: any) => {
+      //   if (item.param === 'title') {
+      //     setErrorPlaceName(item.msg);
+      //   } else if (item.param === 'cost') {
+      //     setErrorCost(item.msg);
+      //   } else if (item.param === 'contact') {
+      //     setErrorContact(item.msg);
+      //   } else if (item.param === 'timeClose') {
+      //     setErrorTime(item.msg);
+      //   } else if (item.param === 'password') {
+      //     setErrorToiletPicture(item.msg);
+      //   }
+      // });
     }
   };
 

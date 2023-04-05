@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
-import {CaretLeft, KeyReturn, Plus} from 'phosphor-react-native';
+import {CaretLeft, Plus} from 'phosphor-react-native';
 import ContentMyToilet from '../components/ContentMyToilet';
 import {HomeParamList} from '../stacks/HomeStack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -20,6 +20,7 @@ import {AddToiletParamList} from '../stacks/AddToiletStack';
 import {getMytoilet} from '../services/toilet';
 import NotToilet from '../components/NotToilet';
 import Modal from 'react-native-modal';
+import Bin from '../assets/Bin.png';
 
 interface Mytoilet {
   _id: string;
@@ -160,7 +161,7 @@ const MyToilet = () => {
       {/* Modal */}
       <Modal isVisible={modal}>
         <View style={styles.modalContainer}>
-          {/* <Image source={BrokenHeart} style={styles.imageBrokenHeart} /> */}
+          <Image source={Bin} style={styles.imageBin} />
           <View style={styles.detailPopupContainer}>
             <Text style={styles.titlePopup}>Do you want to delete this toilet ?</Text>
             <TouchableOpacity style={styles.btnYes}>
@@ -231,17 +232,17 @@ const styles = StyleSheet.create({
   detailPopupContainer: {
     paddingHorizontal: 20,
   },
-  imageBrokenHeart: {
-    width: 190,
-    height: 140,
-    marginTop: -75,
+  imageBin: {
+    width: 130,
+    height: 165,
+    marginTop: -92,
     alignSelf: 'center',
   },
   titlePopup: {
     fontSize: 22,
     fontFamily: 'Fredoka-Medium',
     color: '#2C2F4A',
-    marginTop: 20,
+    marginTop: 15,
     textAlign: 'center',
   },
   btnYes: {
