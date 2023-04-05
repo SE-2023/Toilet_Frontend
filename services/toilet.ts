@@ -51,3 +51,8 @@ export const updateToilet = async (body: IUpdatetoilet) => {
   console.log('res  updateToilet ', res);
   return res;
 };
+
+export const deleteMyToilet = async (myToiletId: any) => {
+  const res = await axios.delete('/toilet/delete', {params: {_id: myToiletId}});
+  return res;
+};

@@ -249,6 +249,7 @@ const AddDetailToilet2 = () => {
       console.log('createtoilet', createtoilet);
       navigation2.replace('MainStack', {screen: 'HomeStack'});
     } catch (err: any) {
+
       // setErrorPlaceName('');
       // setErrorCost('');
       // setErrorContact('');

@@ -17,7 +17,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ProfileParamList} from '../stacks/ProfileStack';
 import {AddToiletParamList} from '../stacks/AddToiletStack';
-import {getMytoilet} from '../services/toilet';
+import {deleteMyToilet, getMytoilet} from '../services/toilet';
 import NotToilet from '../components/NotToilet';
 import Modal from 'react-native-modal';
 import Bin from '../assets/Bin.png';
@@ -50,6 +50,7 @@ const MyToilet = () => {
   const [myList, setMyList] = useState<Mytoilet[]>([]);
   const [checkData, setCheckData] = useState('');
   const [modal, setModal] = useState(false);
+  const [toiletID, settoiletID] = useState('');
   const fetchData = async () => {
     try {
       const myList: any = await getMytoilet(userId);
@@ -63,7 +64,7 @@ const MyToilet = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [modal]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -116,6 +117,9 @@ const MyToilet = () => {
                   onSelected={value => {
                     setModal(value);
                   }}
+                  onSelected2={value => {
+                    settoiletID(value);
+                  }}
                 />
               </TouchableOpacity>
             );
@@ -163,8 +167,14 @@ const MyToilet = () => {
         <View style={styles.modalContainer}>
           <Image source={Bin} style={styles.imageBin} />
           <View style={styles.detailPopupContainer}>
-            <Text style={styles.titlePopup}>Do you want to delete this toilet ?</Text>
-            <TouchableOpacity style={styles.btnYes}>
+            <Text style={styles.titlePopup}>
+              Do you want to delete this toilet ?
+            </Text>
+            <TouchableOpacity
+              style={styles.btnYes}
+              onPress={() => {
+                deleteMyToilet(toiletID), setModal(false);
+              }}>
               <Text style={styles.textYes}>YES, DELETE</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setModal(false)}>
