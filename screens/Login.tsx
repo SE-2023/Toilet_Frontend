@@ -9,16 +9,8 @@ import {
   Platform,
 } from 'react-native';
 import LogoSUKA from '../assets/LogoSUKA.png';
-import bgSUKA_5 from '../assets/bgSUKA_5.png';
-import {
-  CaretLeft,
-  CaretRight,
-  EnvelopeSimple,
-  Eye,
-  EyeSlash,
-  Key,
-} from 'phosphor-react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import bgSUKA_5 from '../assets/bgSUKA_6.png';
+import {Eye, EyeSlash} from 'phosphor-react-native';
 import {TextInput} from 'react-native-paper';
 import {signIn} from '../services/auth';
 import AuthContext from '../context/AuthContext';
@@ -27,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import OutlineInput from 'react-native-outline-input';
 
 const {width} = Dimensions.get('window');
-const aspectRatio = 500 / 500;
+const aspectRatio = 700 / 500;
 const height = width * aspectRatio;
 
 function Login({navigation}: {navigation: any}) {
@@ -78,10 +70,9 @@ function Login({navigation}: {navigation: any}) {
       </View>
 
       <Text style={styles.title}>Sign In</Text>
-      {/* <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center'}}>
         <Image source={LogoSUKA} style={styles.logo} />
-      </View> */}
-      <View style={{height: height * 0.4}}></View>
+      </View>
       <View style={styles.mainContainer}>
         <View style={styles.textInput}>
           <View style={{paddingBottom: 12}}>
@@ -154,12 +145,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F4F6FD',
   },
-  // logo: {
-  //   marginBottom: 30,
-  //   marginTop: -2,
-  //   width: 150,
-  //   height: 180,
-  // },
   title: {
     position: 'absolute',
     alignSelf: 'center',
@@ -167,6 +152,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka-SemiBold',
     fontSize: 64,
     color: '#2C2F4A',
+  },
+  logo: {
+    marginBottom: 40,
+    marginTop: -80,
+    width: 160,
+    height: 220,
   },
 
   mainContainer: {
