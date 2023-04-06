@@ -48,7 +48,7 @@ const Ratings = () => {
   }, []);
 
   const RenderComment = (): JSX.Element | null => {
-    if (checkData === 'success' && comment[1] !== undefined) {
+    if (checkData === 'success' && comment[0] !== undefined) {
       return (
         <>
           {comment.map((item: any, index) => {
