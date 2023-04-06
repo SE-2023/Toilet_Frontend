@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import Cartoon from '../screens/Cartoon';
 import Toon_1 from '../screens/Toon_1';
 import Toon_2 from '../screens/Toon_2';
@@ -28,7 +28,7 @@ export type CartoonStackList = {
 
 const CartoonStack = () => {
   const Stack = createNativeStackNavigator<CartoonStackList>();
-  
+
   return (
     // <NavigationContainer>
     <Stack.Navigator
@@ -36,17 +36,16 @@ const CartoonStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-        <Stack.Screen name='Cartoon'component={Cartoon}/>
-        <Stack.Screen name="Toon_1" component={Toon_1} />
-        <Stack.Screen name="Toon_2" component={Toon_2} />
-        <Stack.Screen name="Toon_3" component={Toon_3} />
-        <Stack.Screen name="Toon_4" component={Toon_4} />
-        <Stack.Screen name="Toon_5" component={Toon_5} />
-        <Stack.Screen name="Toon_6" component={Toon_6} />
-        <Stack.Screen name="Toon_7" component={Toon_7} />
-        <Stack.Screen name="Toon_8" component={Toon_8} />
-        <Stack.Screen name="Toon_9" component={Toon_9} />
-
+      <Stack.Screen name="Cartoon" component={Cartoon} />
+      <Stack.Screen name="Toon_1" component={Toon_1} />
+      <Stack.Screen name="Toon_2" component={Toon_2} />
+      <Stack.Screen name="Toon_3" component={Toon_3} />
+      <Stack.Screen name="Toon_4" component={Toon_4} />
+      <Stack.Screen name="Toon_5" component={Toon_5} />
+      <Stack.Screen name="Toon_6" component={Toon_6} />
+      <Stack.Screen name="Toon_7" component={Toon_7} />
+      <Stack.Screen name="Toon_8" component={Toon_8} />
+      <Stack.Screen name="Toon_9" component={Toon_9} />
     </Stack.Navigator>
     // </NavigationContainer>
   );
