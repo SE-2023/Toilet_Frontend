@@ -45,13 +45,14 @@ import {
 import ProfileStack, {ProfileParamList} from './ProfileStack';
 import AddToiletStack, {AddToiletParamList} from './AddToiletStack';
 import {RootStackList} from './RootStack';
+import CartoonStack, {CartoonStackList} from './CartoonStack';
 
 import HomeStack, {HomeParamList} from './HomeStack';
 export type BottomTabParamList = {
   HomeStack: NavigatorScreenParams<HomeParamList>;
   MyList: undefined;
   AddToiletStack: NavigatorScreenParams<AddToiletParamList>;
-  Cartoon: undefined;
+  CartoonStack: NavigatorScreenParams<CartoonStackList>;
   ProfileStack: NavigatorScreenParams<ProfileParamList>;
 };
 export type NaviTabParamList = {
@@ -124,8 +125,8 @@ const BottomTabStack = () => {
           }}
         />
         <Stack.Screen
-          name="Cartoon"
-          component={Cartoon}
+          name="CartoonStack"
+          component={CartoonStack}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <SquaresFour
