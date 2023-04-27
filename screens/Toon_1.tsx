@@ -1,7 +1,5 @@
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, ScrollView, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import img1 from '../assets/toon1/IMG_4095.jpg'
 import img2 from '../assets/toon1/IMG_4096.jpg'
 import img3 from '../assets/toon1/IMG_4097.jpg'
@@ -30,18 +28,26 @@ import img25 from '../assets/toon1/IMG_4119.jpg'
 import img26 from '../assets/toon1/IMG_4120.jpg'
 import img27 from '../assets/toon1/IMG_4121.jpg'
 import img28 from '../assets/toon1/IMG_4122.jpg'
-
-// const Stack = createStackNavigator();
+import { CaretLeft } from 'phosphor-react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackList} from '../stacks/RootStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 280;
 const height = width * aspectRatio;
 
 const Toon_1 = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    <ScrollView >
+    <SafeAreaView>
+      <TouchableOpacity
+        style={styles.btnBack_44}
+        onPress={() => navigation.goBack()}>
+        <CaretLeft size={24} weight="bold" color="#F4F6FD" />
+      </TouchableOpacity>
+
+      <ScrollView >
         <View style={styles.container}>
           <View style={{alignItems: 'center'}}>
             <View style={{height: height * 1}}>
@@ -178,11 +184,9 @@ const Toon_1 = () => {
               <Image source={img28} style={{width, height}} />
             </View>
           </View>
-            
         </View>
-    </ScrollView>
-    // </Stack.Navigator>
-    // </NavigationContainer>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -191,5 +195,18 @@ export default Toon_1
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-  }
+  },
+  btnBack_44: {
+    position: 'absolute',
+    backgroundColor: '#2C2F4A',
+    width: 44,
+    height: 44,
+    borderRadius: 30,
+    top: 37,
+    left: 16,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
 })

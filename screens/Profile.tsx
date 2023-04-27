@@ -166,17 +166,6 @@ function Profile() {
           <CaretRight size={22} weight="bold" color="#2C2F4A" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnRectangle_2}>
-          <View style={styles.itemLeft}>
-            <View style={styles.bgIconHistory}>
-              <ClockCounterClockwise size={22} weight="fill" color="#2C2F4A" />
-            </View>
-
-            <Text style={styles.textBody}>History</Text>
-          </View>
-          <CaretRight size={22} weight="bold" color="#2C2F4A" />
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.btnRectangle_2} onPress={handleLogout}>
           <View style={styles.itemLeft}>
             <View style={styles.bgIconLogout}>
@@ -281,7 +270,7 @@ const styles = StyleSheet.create({
 
   // Footer
   btnRectangle: {
-    marginTop: 45,
+    marginTop: 50,
     marginBottom: 12,
     backgroundColor: '#FFFFFF',
     paddingLeft: 8,

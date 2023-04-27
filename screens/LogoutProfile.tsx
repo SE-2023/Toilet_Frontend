@@ -9,8 +9,8 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Button,
 } from 'react-native';
+import {CaretLeft} from 'phosphor-react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import user from '../assets/user.png';
 import {RootStackList} from '../stacks/RootStack';
@@ -31,6 +31,12 @@ function LogoutProfile() {
           <Image source={bgSUKA} style={{width, height}} />
         </View>
       </View>
+
+      <TouchableOpacity
+        style={styles.btnBack_44}
+        onPress={() => navigation.goBack()}>
+        <CaretLeft size={24} weight="bold" color="#2C2F4A" />
+      </TouchableOpacity>
 
       <View style={styles.box}>
         <View style={styles.circle}></View>
@@ -119,6 +125,18 @@ const styles = StyleSheet.create({
     height: 104,
     borderRadius: 100,
     marginTop: -112,
+  },
+  btnBack_44: {
+    position: 'absolute',
+    backgroundColor: '#F4F6FD',
+    width: 44,
+    height: 44,
+    borderRadius: 30,
+    top: 37,
+    left: 16,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnLogin: {
     backgroundColor: '#6D7DD3',

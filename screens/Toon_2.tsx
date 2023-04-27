@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, ScrollView, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import img1 from '../assets/toon/IMG_3998.jpg'
 import img2 from '../assets/toon/IMG_3999.jpg'
@@ -38,14 +38,26 @@ import img33 from '../assets/toon/IMG_4031.jpg'
 import img36 from '../assets/toon/IMG_4033.jpg'
 import img37 from '../assets/toon/IMG_4034.jpg'
 import img38 from '../assets/toon/IMG_4035.jpg'
+import { CaretLeft } from 'phosphor-react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackList} from '../stacks/RootStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 220;
 const height = width * aspectRatio;
 
 const Toon_2 = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   return (
-    <ScrollView >
+    <SafeAreaView>
+      <TouchableOpacity
+        style={styles.btnBack_44}
+        onPress={() => navigation.goBack()}>
+        <CaretLeft size={24} weight="bold" color="#F4F6FD" />
+      </TouchableOpacity>
+      
+      <ScrollView >
         <View style={styles.container} >
           <View style={{alignItems: 'center'}}>
             <View style={{height: height * 1}}>
@@ -212,9 +224,10 @@ const Toon_2 = () => {
               <Image source={img38} style={{width, height}} />
             </View>
           </View>
-          
         </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
+    
   )
 }
 
@@ -223,5 +236,18 @@ export default Toon_2
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-  }
+  },
+  btnBack_44: {
+    position: 'absolute',
+    backgroundColor: '#2C2F4A',
+    width: 44,
+    height: 44,
+    borderRadius: 30,
+    top: 37,
+    left: 16,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
 })
