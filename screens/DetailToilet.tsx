@@ -40,6 +40,7 @@ import openMap from 'react-native-open-maps';
 import ButtonHeart from '../components/ButtonHeart';
 import {getMyList} from '../services/myList';
 import RequireLogin from '../components/RequireLogin';
+import ButtonHeartDisabled from '../components/ButtonHeartDisabled';
 export interface IProfile {
   _id: string;
 }
@@ -230,6 +231,25 @@ const DetailToilet = () => {
   }, [heart]);
 
   const {isLoggedIn} = useContext(AuthContext);
+  const REVIEW = () : JSX.Element | null => {
+    if (isLoggedIn === true) {
+      return (
+        <TouchableOpacity
+                style={styles.btnReview}
+                onPress={() => setModal(true)}>
+                <Text style={styles.review}>REVIEW</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+                style={styles.btnReview}
+                onPress={() => navigation.navigate("LogoutProfile")}>
+                <Text style={styles.review}>REVIEW</Text>
+        </TouchableOpacity>
+      );
+    }
+  }
   const Heart = (): JSX.Element | null => {
     if(isLoggedIn===true){
       return(
@@ -247,7 +267,7 @@ const DetailToilet = () => {
       )
     }else{
       return(
-        null
+        <ButtonHeartDisabled></ButtonHeartDisabled>
       )
       }
   }
@@ -312,11 +332,7 @@ const DetailToilet = () => {
             </View>
 
             <View style={styles.btnContainer}>
-              <TouchableOpacity
-                style={styles.btnReview}
-                onPress={() => setModal(true)}>
-                <Text style={styles.review}>REVIEW</Text>
-              </TouchableOpacity>
+              <REVIEW></REVIEW>
               
               <Heart></Heart>
 
@@ -352,7 +368,6 @@ const DetailToilet = () => {
 
       {/* Modal */}
       <Modal isVisible={modal}>
-        <RequireLogin>
         <View style={styles.modalContainer}>
           <Image source={star} style={styles.imageStar} />
 
@@ -387,7 +402,6 @@ const DetailToilet = () => {
             </TouchableOpacity>
           </View>
         </View>
-        </RequireLogin>
       </Modal>
     </View>
   );
