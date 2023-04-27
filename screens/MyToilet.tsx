@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import bgSUKA from '../assets/bgSUKA_4.png';
-import {CaretLeft, Plus} from 'phosphor-react-native';
+import {CaretLeft} from 'phosphor-react-native';
 import ContentMyToilet from '../components/ContentMyToilet';
 import {HomeParamList} from '../stacks/HomeStack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -149,12 +149,6 @@ const MyToilet = () => {
       </TouchableOpacity>
 
       <Text style={styles.title}>My Toilet</Text>
-
-      <TouchableOpacity
-        style={styles.btnAdd_44}
-        onPress={() => navigationAddToilet.navigate('AddToilet')}>
-        <Plus size={24} weight="bold" color="#E5EAFA" />
-      </TouchableOpacity>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <RenderMytoilet></RenderMytoilet>

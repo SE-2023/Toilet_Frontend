@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, ScrollView, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import img1 from '../assets/toon5/IMG_4275.jpg'
 import img2 from '../assets/toon5/IMG_4276.jpg'
@@ -15,15 +15,26 @@ import img12 from '../assets/toon5/IMG_4286.jpg'
 import img13 from '../assets/toon5/IMG_4287.jpg'
 import img14 from '../assets/toon5/IMG_4288.jpg'
 import img15 from '../assets/toon5/IMG_4289.jpg'
-
+import { CaretLeft } from 'phosphor-react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackList} from '../stacks/RootStack';
 
 const {width} = Dimensions.get('window');
 const aspectRatio = 500 / 220;
 const height = width * aspectRatio;
 
 const Toon_5 = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackList>>();
   return (
-    <ScrollView >
+    <SafeAreaView>
+      <TouchableOpacity
+        style={styles.btnBack_44}
+        onPress={() => navigation.goBack()}>
+        <CaretLeft size={24} weight="bold" color="#F4F6FD" />
+      </TouchableOpacity>
+      
+      <ScrollView >
         <View style={styles.container} >
           <View style={{alignItems: 'center'}}>
             <View style={{height: height * 1}}>
@@ -100,10 +111,9 @@ const Toon_5 = () => {
               <Image source={img15} style={{width, height}} />
             </View>
           </View>
-          
-          
         </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -112,5 +122,18 @@ export default Toon_5
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-  }
+  },
+  btnBack_44: {
+    position: 'absolute',
+    backgroundColor: '#2C2F4A',
+    width: 44,
+    height: 44,
+    borderRadius: 30,
+    top: 37,
+    left: 16,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
 })

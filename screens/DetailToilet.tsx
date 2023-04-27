@@ -39,6 +39,7 @@ import LaunchNavigator from 'react-native-launch-navigator';
 import openMap from 'react-native-open-maps';
 import ButtonHeart from '../components/ButtonHeart';
 import {getMyList} from '../services/myList';
+import RequireLogin from '../components/RequireLogin';
 export interface IProfile {
   _id: string;
 }
@@ -74,7 +75,6 @@ const DetailToilet = () => {
   const [SumRate, setsumRate] = useState('');
   const [review, setReview] = React.useState('');
   const [rating, setRating] = useState(0);
-  const {isLoggedIn, setLoggedIn} = useContext(AuthContext);
   const TagFree = (): JSX.Element | null => {
     if (params.free === true) {
       return (
@@ -229,6 +229,28 @@ const DetailToilet = () => {
     checkHeart();
   }, [heart]);
 
+  const {isLoggedIn} = useContext(AuthContext);
+  const Heart = (): JSX.Element | null => {
+    if(isLoggedIn===true){
+      return(
+        <>
+        <ButtonHeart
+          heartIcon={heart}
+          myListID={myListId}
+          userID={userId}
+          toiletID={params._id}
+          onSelected={value => {
+          setHeart(value);
+          }}
+        />
+        </>
+      )
+    }else{
+      return(
+        null
+      )
+      }
+  }
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
@@ -295,16 +317,8 @@ const DetailToilet = () => {
                 onPress={() => setModal(true)}>
                 <Text style={styles.review}>REVIEW</Text>
               </TouchableOpacity>
-
-              <ButtonHeart
-                heartIcon={heart}
-                myListID={myListId}
-                userID={userId}
-                toiletID={params._id}
-                onSelected={value => {
-                  setHeart(value);
-                }}
-              />
+              
+              <Heart></Heart>
 
               <TouchableOpacity style={styles.btnPerson} onPress={nevi}>
                 <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
@@ -338,6 +352,7 @@ const DetailToilet = () => {
 
       {/* Modal */}
       <Modal isVisible={modal}>
+        <RequireLogin>
         <View style={styles.modalContainer}>
           <Image source={star} style={styles.imageStar} />
 
@@ -372,6 +387,7 @@ const DetailToilet = () => {
             </TouchableOpacity>
           </View>
         </View>
+        </RequireLogin>
       </Modal>
     </View>
   );

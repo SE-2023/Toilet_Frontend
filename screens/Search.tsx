@@ -14,6 +14,9 @@ import {MagnifyingGlass} from 'phosphor-react-native';
 import bgSUKA from '../assets/bgSUKA_4.png';
 import SearchResult from '../components/Search';
 import {searchToilet} from '../services/search';
+import { HomeParamList } from '../stacks/HomeStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 interface ISearch {
   free: boolean;
@@ -48,7 +51,49 @@ const Search = () => {
     }
     setIsloading(false);
   };
-
+  const Result = (): JSX.Element | null => {
+    const navigation =
+      useNavigation<NativeStackNavigationProp<HomeParamList>>();
+      return(
+        <>
+        {results.map((item: any, index) =>{
+          if(item!== undefined){
+            const onClick = () =>{
+              if(item){
+                navigation.navigate('DetailToilet',{
+                  _id: item._id,
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                  title: item.title,
+                  contact: item.contact,
+                  cost: item.cost,
+                  handicap: item.handicap,
+                  free: item.free,
+                  type: item.type,
+                  timeOpen: item.timeOpen,
+                  timeClose: item.timeClose,
+                  toiletpicture: item.toiletpicture
+                });
+              };
+            };
+            return(
+            <TouchableOpacity key={index} onPress={onClick}>
+             <SearchResult
+              free={item.free}
+              handicap={item.handicap}
+              type={item.type}
+              placename={item.title}
+              timeOpen={item.timeOpen}
+              timeClose={item.timeClose}
+              rating={item.rating}
+            />
+            </TouchableOpacity>
+            )
+          }
+        })}
+        </>
+      )
+  }
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -74,18 +119,7 @@ const Search = () => {
         <ActivityIndicator />
       ) : results?.length > 0 ? (
         <ScrollView showsVerticalScrollIndicator={false}>
-          {results.map((result: any, index) => (
-            <SearchResult
-              key={index}
-              free={result.free}
-              handicap={result.handicap}
-              type={result.type}
-              placename={result.title}
-              timeOpen={result.timeOpen}
-              timeClose={result.timeClose}
-              rating={result.rating}
-            />
-          ))}
+          <Result></Result>
           <View style={{height: height * 0.1}} />
         </ScrollView>
       ) : (

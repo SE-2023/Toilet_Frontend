@@ -22,6 +22,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {BottomTabParamList} from '../stacks/BottomTabStack';
 import {HomeParamList} from '../stacks/HomeStack';
+import RequireLogin from '../components/RequireLogin';
 
 export interface IProfile {
   _id: string;
@@ -172,6 +173,7 @@ const AddList = () => {
   };
 
   return (
+    <RequireLogin>
     <SafeAreaView style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <View style={{height: height * 0.4}}>
@@ -193,7 +195,7 @@ const AddList = () => {
           <Image source={BrokenHeart} style={styles.imageBrokenHeart} />
           <View style={styles.detailPopupContainer}>
             <Text style={styles.titlePopup}>
-              Do you want to delete this toilet ?
+              Do you want to remove this toilet ?
             </Text>
             <TouchableOpacity
               onPress={() => {
@@ -209,6 +211,7 @@ const AddList = () => {
         </View>
       </Modal>
     </SafeAreaView>
+    </RequireLogin>
   );
 };
 
