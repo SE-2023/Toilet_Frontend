@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    marginBottom: 15,
     backgroundColor: '#CACCDA',
     borderRadius: 20,
   },
