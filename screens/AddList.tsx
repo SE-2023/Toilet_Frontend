@@ -181,7 +181,7 @@ const AddList = () => {
         </View>
       </View>
 
-      <Text style={styles.title}>My List</Text>
+      <Text style={styles.title}>My Favorite</Text>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <RenderMyList></RenderMyList>

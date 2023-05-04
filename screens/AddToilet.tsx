@@ -11,7 +11,7 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {getLocation} from '../services/location';
-import {StackSimple, CaretLeft} from 'phosphor-react-native';
+import {StackSimple, CaretLeft, CaretRight} from 'phosphor-react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Buttonmap from '../components/BottomPopupMap';
@@ -181,8 +181,9 @@ const AddToilet = () => {
         </SafeAreaView>
       </View>
       <View style={styles.container}>
-        <TouchableOpacity onPress={gotoAddToilet} style={styles.btnSubmit}>
-          <Text style={styles.txtSubmit}>SUBMIT</Text>
+        <TouchableOpacity onPress={gotoAddToilet} style={styles.btnNext}>
+          <Text style={styles.txtSubmit}>NEXT</Text>
+          <CaretRight size={22} color="#F4F6FD" />
         </TouchableOpacity>
       </View>
     </View>
@@ -205,9 +206,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     alignItems: 'stretch',
     justifyContent: 'flex-end',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    elevation: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    elevation: 4,
   },
   btnBack: {
     position: 'absolute',
@@ -237,12 +238,13 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 12,
   },
-  btnSubmit: {
+  btnNext: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     backgroundColor: '#6D7DD3',
     width: '100%',
     height: 44,
     borderRadius: 8,
-    justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     bottom: 20,

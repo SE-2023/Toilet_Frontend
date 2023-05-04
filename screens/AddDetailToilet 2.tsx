@@ -481,11 +481,11 @@ const AddDetailToilet2 = () => {
         <Text style={styles.error}>{errorTime}</Text>
       </View>
 
-      <View style={styles.btnConfirmPosition}>
+      <View style={styles.btnSubmitPosition}>
         <TouchableOpacity
           onPress={submitCreateToilet}
-          style={styles.btnConfirm}>
-          <Text style={styles.txtBtn}>CONFIRM</Text>
+          style={styles.btnSubmit}>
+          <Text style={styles.txtBtn}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -523,9 +523,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     alignItems: 'stretch',
     justifyContent: 'flex-end',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    elevation: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    elevation: 4,
   },
   btnBack: {
     position: 'absolute',
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
     height: 200,
-    backgroundColor: '#CACCDA',
+    backgroundColor: '#ABADBB',
     borderRadius: 3,
   },
   btnCamera_34: {
@@ -735,7 +735,7 @@ const styles = StyleSheet.create({
   },
 
   // Button confirm
-  btnConfirm: {
+  btnSubmit: {
     backgroundColor: '#6D7DD3',
     justifyContent: 'center',
     alignItems: 'center',
@@ -743,7 +743,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 3,
   },
-  btnConfirmPosition: {
+  btnSubmitPosition: {
     paddingVertical: 20,
     paddingBottom: 10,
     paddingHorizontal: 25,

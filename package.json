@@ -44,7 +44,7 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-textinput-effects": "^0.6.3",
-    "react-native-toast-message": "^2.1.5",
+    "react-native-toast-message": "^2.1.6",
     "react-native-vector-icons": "^9.2.0",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "^5.0.6"
   },

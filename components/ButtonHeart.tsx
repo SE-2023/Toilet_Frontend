@@ -10,6 +10,7 @@ interface Iheart {
   userID : string;
   toiletID : string;
   onSelected: (value: boolean) => void;
+  onToast: (value: boolean) => void;
 }
 
 const ButtonHeart = (props:Iheart) => {
@@ -40,10 +41,12 @@ const ButtonHeart = (props:Iheart) => {
         toiletId : props.toiletID
       });
       props.onSelected(true);
+      props.onToast(true);
     }
     if(props.heartIcon===true){
       deleteMyList(props.myListID);
       props.onSelected(false);
+      props.onToast(false);
     }
     
   }

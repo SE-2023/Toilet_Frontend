@@ -9,7 +9,6 @@ import {
   LogBox,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
-import toilet from '../assets/toilet.jpg';
 import {
   CaretLeft,
   Clock,
@@ -17,8 +16,9 @@ import {
   Wheelchair,
   Star,
   CaretRight,
-  PersonSimpleWalk,
+  ChatCenteredDots,
   X,
+  NavigationArrow,
 } from 'phosphor-react-native';
 import wc from '../assets/wc.png';
 import Review from '../components/Review';
@@ -41,6 +41,7 @@ import ButtonHeart from '../components/ButtonHeart';
 import {getMyList} from '../services/myList';
 import RequireLogin from '../components/RequireLogin';
 import ButtonHeartDisabled from '../components/ButtonHeartDisabled';
+import Toast from 'react-native-toast-message';
 export interface IProfile {
   _id: string;
 }
@@ -76,6 +77,7 @@ const DetailToilet = () => {
   const [SumRate, setsumRate] = useState('');
   const [review, setReview] = React.useState('');
   const [rating, setRating] = useState(0);
+  const [ToastC, setToastC] = useState(false);
   const TagFree = (): JSX.Element | null => {
     if (params.free === true) {
       return (
@@ -229,31 +231,39 @@ const DetailToilet = () => {
   useEffect(() => {
     checkHeart();
   }, [heart]);
+  useEffect(() => {
+    if(ToastC===true){showToast();}
+  }, [ToastC]);
 
   const {isLoggedIn} = useContext(AuthContext);
   const REVIEW = () : JSX.Element | null => {
     if (isLoggedIn === true) {
       return (
-        <TouchableOpacity
-                style={styles.btnReview}
-                onPress={() => setModal(true)}>
-                <Text style={styles.review}>REVIEW</Text>
+        <TouchableOpacity style={styles.btnReview} onPress={() => setModal(true)}>
+          <ChatCenteredDots size={20} weight="fill" color="#E5EAFA" />
         </TouchableOpacity>
       );
     } else {
       return (
-        <TouchableOpacity
-                style={styles.btnReview}
-                onPress={() => navigation.navigate("LogoutProfile")}>
-                <Text style={styles.review}>REVIEW</Text>
+        <TouchableOpacity style={styles.btnReview} onPress={() => navigation.navigate("LogoutProfile")}>
+          <ChatCenteredDots size={20} weight="fill" color="#E5EAFA" />
         </TouchableOpacity>
       );
     }
   }
+  const Navigationmap = () : JSX.Element | null => {
+    return(
+      <TouchableOpacity
+        style={styles.btnNavigate}
+        onPress={nevi}>
+        <NavigationArrow size={20} weight="fill" color="#E5EAFA" />
+        <Text style={styles.review}>  NAVIGATE</Text>
+      </TouchableOpacity>
+    );
+  };
   const Heart = (): JSX.Element | null => {
     if(isLoggedIn===true){
       return(
-        <>
         <ButtonHeart
           heartIcon={heart}
           myListID={myListId}
@@ -262,15 +272,27 @@ const DetailToilet = () => {
           onSelected={value => {
           setHeart(value);
           }}
+          onToast={value => {
+            setToastC(value);
+            }}
         />
-        </>
       )
     }else{
       return(
-        <ButtonHeartDisabled></ButtonHeartDisabled>
+        <ButtonHeartDisabled/>
       )
       }
   }
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: '🥳  Add My Favorite Successfully!!!',
+      text2: 'Can you see my favorite.',
+      autoHide: true,
+      visibilityTime: 3000,
+    })
+  }
+  
   return (
     <View style={styles.container}>
       <View style={{height: height * 0.4}}>
@@ -281,7 +303,7 @@ const DetailToilet = () => {
         onPress={() => navigation.goBack()}>
         <CaretLeft size={24} weight="bold" color="#2C2F4A" />
       </TouchableOpacity>
-
+      <Toast/>
       <View>
         <ScrollView>
           <View style={{height: height * 0.5}}></View>
@@ -332,13 +354,9 @@ const DetailToilet = () => {
             </View>
 
             <View style={styles.btnContainer}>
-              <REVIEW></REVIEW>
-              
-              <Heart></Heart>
-
-              <TouchableOpacity style={styles.btnPerson} onPress={nevi}>
-                <PersonSimpleWalk size={20} weight="fill" color="#E5EAFA" />
-              </TouchableOpacity>
+              <Navigationmap/>
+              <Heart/>
+              <REVIEW/>
             </View>
 
             <TouchableOpacity
@@ -564,7 +582,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     marginTop: 15,
   },
-  btnReview: {
+  btnNavigate: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -583,7 +601,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  btnPerson: {
+  btnReview: {
     width: 44,
     height: 44,
     backgroundColor: '#2C2F4A',
